@@ -1,10 +1,6 @@
 # Day01
 
-# React Tutorial
-
-作成日：2020/02/14
-
-更新日：2020/08/26
+## React Tutorial
 
 ## React ってなに？？
 
