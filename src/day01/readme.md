@@ -46,9 +46,9 @@
 
 ```bash
 $ node -v
-v14.6.0
+v14.15.3
 $ npm -v
-6.14.6
+7.15.0
 ```
 
 ### プロジェクトの作成
@@ -104,9 +104,9 @@ import React from "react";
 
 const App = () => {
   return (
-    <div>
+    <>
       <h1>react app</h1>
-    </div>
+    </>
   );
 };
 export default App;
@@ -122,19 +122,20 @@ export default App;
 
 ```js
 // index.js
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
-serviceWorker.unregister();
+reportWebVitals();
+
 ```
 
 以下のコマンドで開発サーバを起動する．
@@ -163,14 +164,14 @@ $ npm start
 // Booklist.jsx
 import React from "react";
 
-const Booklist = (props) => {
+export const Booklist = (props) => {
   return (
-    <div>
+    <>
       <p>this is book list component</p>
-    </div>
+    </>
   );
 };
-export default Booklist;
+
 ```
 
 ### 【解説】
@@ -188,7 +189,7 @@ export default Booklist;
 
 - `import ...`は必要なライブラリを読み込む．
 - 関数`Booklist`は呼び出し元のコンポーネントから`props`を受け取り，`<div>`要素を出力する．
-- `export default Booklist`とすることで，他のコンポーネントから`import Booklist`のように記述して呼び出せるようにしている．
+- `export const Booklist = ...`とすることで，他のコンポーネントから`import { Booklist } ...`のように記述して呼び出せるようにしている．
 
 ## コンポーネントの呼び出し（1）
 
@@ -199,17 +200,18 @@ export default Booklist;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist"; // 追加（コンポーネントのimport）
+import { Booklist } from "./components/Booklist"; // 追加（コンポーネントのimport）
 
 const App = () => {
   return (
-    <div>
+    <>
       <h1>react app</h1>
-      <Booklist /> // 追加（コンポーネントを出力）
-    </div>
+      <Booklist />
+    </>
   );
 };
 export default App;
+
 ```
 
 ブラウザで表示を確認すると以下のようになっている．
@@ -229,15 +231,15 @@ export default App;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
+import { Booklist } from "./components/Booklist";
 
 const App = () => {
   return (
-    <div>
+    <>
       <h1>react app</h1>
       <Booklist />
-      <Booklist /> // 追加（コンポーネント2つめ）
-    </div>
+      <Booklist />
+    </>
   );
 };
 export default App;
@@ -253,6 +255,8 @@ export default App;
 
 `props`は呼び出し元のコンポーネント（親コンポーネント）から呼び出されたコンポーネント（子コンポーネント）に渡されるデータの塊である．
 
+Reactのコンポーネントは「関数」であり，入力と出力がある．「入力」に当たるのがこの`props`である．
+
 ### `props`でデータを渡す
 
 実際に`App`コンポーネントから`Booklist`コンポーネントに文字列のデータを渡してみよう．
@@ -262,21 +266,20 @@ export default App;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
+import { Booklist } from "./components/Booklist";
 
 const App = () => {
-  const languages = ["React", "Vue", "Angular"]; // 追加
+  const languages = ["React", "Vue", "Angular"];
   return (
-    <div>
+    <>
       <h1>react app</h1>
-      <Booklist // このあたり編集
-        language={languages[0]} // このあたり編集
-      />
+      <Booklist language={languages[0]} />
       <Booklist />
-    </div>
+    </>
   );
 };
 export default App;
+
 ```
 
 ここでは，「`App`コンポーネントから`Booklist`コンポーネントに」「`language`という名前で」「`languages[0]`の値」を渡している．
@@ -291,51 +294,48 @@ export default App;
 // Booklist.jsx
 import React from "react";
 
-const Booklist = (props) => {
+export const Booklist = ({ language }) => {
   return (
-    <div>
-      <p>this is {props.language} list component</p> // ここを編集
-    </div>
+    <>
+      <p>this is {language} list component</p>
+    </>
   );
 };
-export default Booklist;
+
 ```
 
 ブラウザで画面を確認すると以下のような状態になる．
 
-1 つめのコンポーネントは`React`の文字列が追加されているが，2 つめのコンポーネントには追加されていない．なぜだろうか．
+1つめのコンポーネントは`React`の文字列が追加されているが，2つめのコンポーネントには追加されていない．なぜだろうか．
 
 ![メイン画面4](./img/mainview04.png)
 
-1 つめのコンポーネントには`App.jsx`で`language={languages[0]}`が記述されているが，2 つめでは記述されていない．そのため，2 つめのコンポーネントでは`props`が空の状態となっており表示が追加されない．
+1つめのコンポーネントには`App.jsx`で`language={languages[0]}`が記述されているが，2つめでは記述されていない．そのため，2つめのコンポーネントでは`props`が空の状態となっており表示が追加されない．
 
 ### 追加！
 
-2 つめのコンポーネントにもデータを渡すには次のように`App.jsx`を編集する．
+2つめのコンポーネントにもデータを渡すには次のように`App.jsx`を編集する．
 
 （ついでにコンポーネントを追加！）
 
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
+import { Booklist } from "./components/Booklist";
 
 const App = () => {
   const languages = ["React", "Vue", "Angular"];
   return (
-    <div>
+    <>
       <h1>react app</h1>
       <Booklist language={languages[0]} />
-      <Booklist
-        language={languages[1]} // ここは'Vue'を渡す
-      />
-      <Booklist
-        language={languages[2]} // ここは'Angular'を渡す
-      />
-    </div>
+      <Booklist language={languages[1]} />
+      <Booklist language={languages[2]} />
+    </>
   );
 };
 export default App;
+
 ```
 
 こうなる！
@@ -379,14 +379,12 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';  // 追加
 const App = () => {
   const languages = ['React', 'Vue', 'Angular'];
   return (
-    <BrowserRouter>   // 追加（ルーティングは<BrowserRouter>の中で行う）
-      <div>
-        <h1>react app</h1>
-        <Route exact path='/' component={Booklist} />   // 編集
-        <Route path='/vue' component={Booklist} />      // 編集
-        <Route path='/angular' component={Booklist} />  // 編集
-      </div>
-    </BrowserRouter>  // 追加
+    <BrowserRouter>
+      <h1>react app</h1>
+      <Route exact path='/' component={Booklist} />
+      <Route path='/vue' component={Booklist} />
+      <Route path='/angular' component={Booklist} />
+    </BrowserRouter>
   );
 }
 export default App;
@@ -407,34 +405,32 @@ export default App;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Booklist } from "./components/Booklist";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 const App = () => {
   const languages = ["React", "Vue", "Angular"];
   return (
     <BrowserRouter>
-      <div>
-        <h1>react app</h1>
-        <Route
-          exact
-          path="/"
-          render={(props) => <Booklist language={languages[0]} />}
-        /> // 編集
-        <Route
-          path="/vue"
-          render={(props) => <Booklist language={languages[1]} />}
-        />{" "}
-        // 編集
-        <Route
-          path="/angular"
-          render={(props) => <Booklist language={languages[2]} />}
-        /> // 編集
-      </div>
+      <h1>react app</h1>
+      <Route
+        exact
+        path="/"
+        render={(props) => <Booklist language={languages[0]} />}
+      />
+      <Route
+        path="/vue"
+        render={(props) => <Booklist language={languages[1]} />}
+      />
+      <Route
+        path="/angular"
+        render={(props) => <Booklist language={languages[2]} />}
+      />
     </BrowserRouter>
   );
 };
 export default App;
+
 ```
 
 こうするとルーティングと props を併用できる．
@@ -454,44 +450,44 @@ export default App;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Booklist } from "./components/Booklist";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 const App = () => {
   const languages = ["React", "Vue", "Angular"];
   return (
     <BrowserRouter>
-      <div>
-        <h1>react app</h1>
-        <ul>
-          {" "}
-          // この辺から追加
-          <li>
-            <Link to="/">React</Link>
-          </li>
-          <li>
-            <Link to="/vue">Vue</Link>
-          </li>
-          <li>
-            <Link to="/angular">Angular</Link>
-          </li>
-        </ul>
-        <hr /> // この辺まで追加
-        <Route
-          exact
-          path="/"
-          render={(props) => <Booklist language={languages[0]} />}
-        />
-        <Route
-          path="/vue"
-          render={(props) => <Booklist language={languages[1]} />}
-        />
-        <Route path="/angular" render={(props) => <Booklist language={languages[2]} />} />
-      </div>
+      <h1>react app</h1>
+      <ul>
+        <li>
+          <Link to="/">React</Link>
+        </li>
+        <li>
+          <Link to="/vue">Vue</Link>
+        </li>
+        <li>
+          <Link to="/angular">Angular</Link>
+        </li>
+      </ul>
+      <hr />
+      <Route
+        exact
+        path="/"
+        render={(props) => <Booklist language={languages[0]} />}
+      />
+      <Route
+        path="/vue"
+        render={(props) => <Booklist language={languages[1]} />}
+      />
+      <Route
+        path="/angular"
+        render={(props) => <Booklist language={languages[2]} />}
+      />
     </BrowserRouter>
   );
 };
 export default App;
+
 ```
 
 `<Link>`タグの`to`部分に移動したい URL を書いておくと，`<a>`タグのようにリンクしてくれる．
@@ -513,55 +509,50 @@ export default App;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-
-// 入力値に`books`を追加して出力するシンプルな関数を定義
-const getDataFromAPI = (keyword) => {
-  return `${keyword} books`;
-};
+import { Booklist } from "./components/Booklist";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 const App = () => {
+
+  // 関数を追加
+  const getDataFromAPI = (keyword) => {
+    return `${keyword} books`;
+  };
+
   const languages = ["React", "Vue", "Angular"];
   return (
     <BrowserRouter>
-      <div>
-        <h1>react app</h1>
-        <ul>
-          <li>
-            <Link to="/">React</Link>
-          </li>
-          <li>
-            <Link to="/vue">Vue</Link>
-          </li>
-          <li>
-            <Link to="/angular">Angular</Link>
-          </li>
-        </ul>
-        <hr />
-        <Route
-          exact
-          path="/"
-          render={(props) => (
-            <Booklist
-              language={languages[0]}
-              getData={(keyword) => getDataFromAPI(keyword)} // getDataという名前で関数を渡す
-            />
-          )}
-        />
-        <Route
-          path="/vue"
-          render={(props) => <Booklist language={languages[1]} />}
-        />
-        <Route
-          path="/angular"
-          render={(props) => <Booklist language={languages[2]} />}
-        />
-      </div>
+      <h1>react app</h1>
+      <ul>
+        <li>
+          <Link to="/">React</Link>
+        </li>
+        <li>
+          <Link to="/vue">Vue</Link>
+        </li>
+        <li>
+          <Link to="/angular">Angular</Link>
+        </li>
+      </ul>
+      <hr />
+      <Route
+        exact
+        path="/"
+        render={(props) => <Booklist language={languages[0]} getData={getDataFromAPI} />}
+      />
+      <Route
+        path="/vue"
+        render={(props) => <Booklist language={languages[1]} />}
+      />
+      <Route
+        path="/angular"
+        render={(props) => <Booklist language={languages[2]} />}
+      />
     </BrowserRouter>
   );
 };
 export default App;
+
 ```
 
 ここでは「`getData`」という名前で「keyword を入力すると getDataFromApi(keyword)を実行する関数」を「`Booklist`コンポーネント」に渡している．
@@ -576,15 +567,17 @@ export default App;
 // Booklist.jsx
 import React from "react";
 
-const Booklist = (props) => {
-  const result = props.getData?.(props.language); // `?`を使用することで，`getData`が存在する場合のみ関数を実行できる
+export const Booklist = ({ language, getData }) => {
+
+  const result = getData?.(language); // `?`を使用することで，`getData`が存在する場合のみ関数を実行できる
+
   return (
-    <div>
+    <>
       <p>this is {result} list component</p>
-    </div>
+    </>
   );
 };
-export default Booklist;
+
 ```
 
 ブラウザで確認すると「react books」のように表示がされていることがわかる．`Vue`と`Angular`の部分は関数を渡していないので表示がされない状態で OK．
@@ -596,64 +589,48 @@ export default Booklist;
 ```jsx
 // App.jsx
 import React from "react";
-import Booklist from "./components/Booklist";
-import { BrowserRouter, Route, Link } from "react-router-dom";
-
-const getDataFromAPI = (keyword) => {
-  return `${keyword} books`;
-};
+import { Booklist } from "./components/Booklist";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 const App = () => {
+  const getDataFromAPI = (keyword) => {
+    return `${keyword} books`;
+  };
+
   const languages = ["React", "Vue", "Angular"];
   return (
     <BrowserRouter>
-      <div>
-        <h1>react app</h1>
-        <ul>
-          <li>
-            <Link to="/">React</Link>
-          </li>
-          <li>
-            <Link to="/vue">Vue</Link>
-          </li>
-          <li>
-            <Link to="/angular">Angular</Link>
-          </li>
-        </ul>
-        <hr />
-        <Route
-          exact
-          path="/"
-          render={(props) => (
-            <Booklist
-              language={languages[0]}
-              getData={(keyword) => getDataFromAPI(keyword)} // getDataという名前で関数を渡す
-            />
-          )}
-        />
-        <Route
-          path="/vue"
-          render={(props) => (
-            <Booklist
-              language={languages[1]}
-              getData={(keyword) => getDataFromAPI(keyword)}
-            />
-          )}
-        />
-        <Route
-          path="/angular"
-          render={(props) => (
-            <Booklist
-              language={languages[2]}
-              getData={(keyword) => getDataFromAPI(keyword)}
-            />
-          )}
-        />
-      </div>
+      <h1>react app</h1>
+      <ul>
+        <li>
+          <Link to="/">React</Link>
+        </li>
+        <li>
+          <Link to="/vue">Vue</Link>
+        </li>
+        <li>
+          <Link to="/angular">Angular</Link>
+        </li>
+      </ul>
+      <hr />
+      <Route
+        exact
+        path="/"
+        render={(props) => <Booklist language={languages[0]} getData={getDataFromAPI} />}
+      />
+      <Route
+        path="/vue"
+        render={(props) => <Booklist language={languages[1]} getData={getDataFromAPI} />}
+      />
+      <Route
+        path="/angular"
+        render={(props) => <Booklist language={languages[2]} getData={getDataFromAPI} />}
+      />
     </BrowserRouter>
   );
 };
 export default App;
+
 ```
 
 ブラウザで操作し，うまくいけば OK．これで親コンポーネントで定義した関数を子コンポーネントに渡すことができた．
@@ -679,16 +656,20 @@ $ npm install axios
 `App.jsx`の`getDataFromAPI`関数を編集する．
 
 ```jsx
-// Api.jsx
+// App.jsx
 import axios from 'axios';	// 追加
-...
+
+// ...省略
+
 // 関数の内容を編集
-const getDataFromAPI = async keyword => {
+const getDataFromAPI = async (keyword) => {
   const requestUrl = 'https://www.googleapis.com/books/v1/volumes?q=intitle:'
   const result = await axios.get(`${requestUrl}${keyword}`);
   return result;
 }
-...
+
+// ...省略
+
 ```
 
 ※この記述だけでは動きません！！
@@ -710,21 +691,24 @@ const getDataFromAPI = async keyword => {
 // Booklist.jsx
 import React, { useState, useEffect } from "react"; // 追加
 
-const Booklist = (props) => {
+export const Booklist = ({ language, getData }) => {
+
   const [bookData, setBookData] = useState(null); // ここから追加
+
   useEffect(() => {
-    const result = props
-      .getData?.(props.language)
+    const result = getData?.(language)
       .then((response) => setBookData(response));
-  }, [props]); // ここまで追加
+  }, [language, getData]);
+
+  // ここまで追加
+
   return (
-    <div>
-      <p>this is {JSON.stringify(bookData)} list component</p> //
-      編集（オブジェクトはそのまま表示できないのでJSON.stringify()する）
-    </div>
+    <>
+      <p>this is {JSON.stringify(bookData)} list component</p>
+    </>
   );
 };
-export default Booklist;
+
 ```
 
 ブラウザで確認すると，以下のように取得したデータが文字列で表示される．
@@ -748,7 +732,8 @@ export default Booklist;
 ```jsx
   useEffect(() => {
     実行したい処理
-  }, [ここに書いた値（今回はprops）が更新されたときのみ，上の{}内が実行される．ここに値を書くときは配列で書く])
+  }, [ここに書いた値（今回は`language`と`getData`）が更新されたときのみ，上の{}内が実行される．ここに値を書くときは配列で書く])
+
 ```
 
 ## 表示を整える
@@ -761,24 +746,21 @@ booksData から必要なデータを取り出して`map()`関数で`<li>`タグ
 // Booklist.jsx
 import React, { useState, useEffect } from "react";
 
-const Booklist = (props) => {
+export const Booklist = ({ language, getData }) => {
   const [bookData, setBookData] = useState(null);
   useEffect(() => {
-    const result = props
-      .getData?.(props.language)
+    const result = getData?.(language)
       .then((response) => setBookData(response));
-  }, [props]);
+  }, [language, getData]);
   return (
-    <div>
-      <ul>
-        {bookData.data.items.map((x) => (
-          <li>{x.volumeInfo.title}</li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {bookData.data.items.map((x) => (
+        <li>{x.volumeInfo.title}</li>
+      ))}
+    </ul>
   );
 };
-export default Booklist;
+
 ```
 
 ブラウザで表示を確認するとエラーになる．
@@ -796,31 +778,23 @@ export default Booklist;
 // Booklist.jsx
 import React, { useState, useEffect } from "react";
 
-const Booklist = (props) => {
+export const Booklist = ({ language, getData }) => {
   const [bookData, setBookData] = useState(null);
   useEffect(() => {
-    const result = props
-      .getData?.(props.language)
+    const result = getData?.(language)
       .then((response) => setBookData(response));
-  }, [props]);
+  }, [language, getData]);
   return (
-    <div>
-      <ul>
-        {
-          // このあたり編集
-          bookData === null ? (
-            <p>now loading...</p>
-          ) : (
-            bookData.data.items.map((x, index) => (
-              <li key={index}>{x.volumeInfo.title}</li>
-            ))
-          )
-        }
-      </ul>
-    </div>
+    <ul>
+      {
+        bookData === null
+          ? <p>now loading...</p>
+          : bookData.data.items.map((x, index) => (<li key={index}>{x.volumeInfo.title}</li>))
+      }
+    </ul>
   );
 };
-export default Booklist;
+
 ```
 
 このように表示されれば OK！
