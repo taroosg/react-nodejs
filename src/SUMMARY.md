@@ -14,6 +14,15 @@
 
 - [Day02](./day02/readme.md)
 
+  - [Node.js とは](./day02/about-nodejs.md)
+  - [API 実装の準備](./day02/prepare-api.md)
+  - [Expressのインストール](./day02/install-express.md)
+  - [API実装1（おみくじ初級編）](./day02/omikuji-api01.md)
+  - [コマンドの追加](./day02/add-command.md)
+  - [API実装2（おみくじ中級編）](./day02/omikuji-api02.md)
+  - [API実装3（じゃんけん）](./day02/janken-api.md)
+  - [まとめ](./day02/summary.md)
+
 - [Day03](./day03/readme.md)
 
 - [Day04](./day04/readme.md)
