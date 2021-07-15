@@ -13,11 +13,12 @@
 
 各要素の役割は以下の通り．
 
-| 項目        | 意味合い                                                                        |
-| ----------- | ------------------------------------------------------------------------------- |
-| routes      | URI と実行する処理の対応．                                                      |
-| controllers | リクエストパラメータの検証，レスポンス送信．                                    |
-| services    | リクエストに対する処理のメインロジック．DB 扱う場合はここに CRUD 処理など記述． |
+|項目|意味合い|
+|-|-|
+|routes|URI と実行する処理の対応．|
+|controllers| リクエストパラメータの検証，レスポンス送信．|
+|services|リクエストに対する処理のメインロジックを記述．|
+|repositories|DB関連の処理を記述．今回は出番なし．|
 
 このような役割分担とするため，以下のようにディレクトリとファイルを作成する．
 
@@ -45,11 +46,13 @@
 
 ```js
 // app.js
-const express = require("express");
+
+import express from "express";
+// おみくじのrouterを読み込む
+import { omikujiRouter } from "./routes/omikuji.route.js";
+
 const app = express();
 const port = 3001;
-// おみくじのrouterを読み込む
-const omikujiRouter = require("./routes/omikuji.route");
 
 app.get("/", (req, res) => {
   res.json({
@@ -80,14 +83,13 @@ URI と対応するコントローラの処理を記述する．
 
 ```js
 // routes/omikuji.route.js
-const express = require("express");
-const router = express.Router();
 
-const OmikujiController = require("../controllers/omikuji.controller");
+import express from "express";
+import { getResult } from "../controllers/omikuji.controller.js"
 
-router.get("/", (req, res) => OmikujiController.getResult(req, res));
+export const omikujiRouter = express.Router();
 
-module.exports = router;
+omikujiRouter.get("/", (req, res) => getResult(req, res));
 
 ```
 
@@ -100,11 +102,12 @@ module.exports = router;
 
 ```js
 // controllers/omikuji.controller.js
-const OmikujiService = require("../services/omikuji.service");
 
-exports.getResult = async (req, res, next) => {
+import { getOmikuji } from "../services/omikuji.service.js";
+
+export const getResult = async (req, res, next) => {
   try {
-    const result = await OmikujiService.getOmikuji({});
+    const result = await getOmikuji({});
     return res.status(200).json({
       status: 200,
       result: result,
@@ -126,7 +129,8 @@ exports.getResult = async (req, res, next) => {
 
 ```js
 // services/omikuji.service.js
-exports.getOmikuji = async (query) => {
+
+export const getOmikuji = async (query) => {
   try {
     const omikuji = ["大吉", "中吉", "小吉", "凶", "大凶"];
     const min = 0;

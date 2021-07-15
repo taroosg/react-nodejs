@@ -7,7 +7,10 @@
 ファイルを作成したら下記の内容を記述する．
 
 ```js
-const express = require("express");
+// app.js
+
+import express from "express";
+
 const app = express();
 const port = 3001;
 
@@ -61,7 +64,10 @@ Hello Node.js!
 `app.js`を以下のように編集する．`/omikuji`，`/janken`の 2 つの URI を追加し，各レスポンスを JSON 形式で返すよう変更している．
 
 ```js
-const express = require("express");
+// app.js
+
+import express from "express";
+
 const app = express();
 const port = 3001;
 
@@ -141,7 +147,10 @@ $ curl localhost:3001/omikuji
 実装例：
 
 ```js
+// app.js
+
 // 省略
+
 app.get("/omikuji", (req, res) => {
   const omikuji = ["大吉", "中吉", "小吉", "凶", "大凶"];
   const min = 0;
@@ -152,6 +161,7 @@ app.get("/omikuji", (req, res) => {
     message: omikuji[index],
   });
 });
+
 // 省略
 
 ```

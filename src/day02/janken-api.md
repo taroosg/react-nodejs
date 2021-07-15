@@ -31,21 +31,22 @@
 
 `app.js`を以下のように編集する．
 
-じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには`body-parser`が必要になるため読み込んでいる．
+じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには`express.urlencoded({ extended: true })`とJSONデータの扱いで`express.json()`が必要になるため読み込んでいる．
 
 ```js
 // app.js
-const express = require("express");
+
+import express from "express";
+import { omikujiRouter } from "./routes/omikuji.route.js";
+// じゃんけんのルーティングを読み込む
+import { jankenRouter } from "./routes/janken.route.js";
+
 const app = express();
 // ↓POSTでデータを受け取るために必要
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 const port = 3001;
-
-const omikujiRouter = require("./routes/omikuji.route");
-
-// じゃんけんのルーティングを読み込む
-const jankenRouter = require("./routes/janken.route");
 
 app.get("/", (req, res) => {
   res.json({
@@ -73,14 +74,13 @@ URI と対応するコントローラの処理を記述する．今回は POST �
 
 ```js
 // routes/janken.route.js
-const express = require("express");
-const router = express.Router();
 
-const JankenController = require("../controllers/janken.controller");
+import express from "express";
+import { getResult } from "../controllers/janken.controller.js";
 
-router.post("/", (req, res) => JankenController.getResult(req, res));
+export const jankenRouter = express.Router();
 
-module.exports = router;
+jankenRouter.post("/", (req, res) => getResult(req, res));
 
 ```
 
@@ -93,11 +93,12 @@ module.exports = router;
 
 ```js
 // controllers/janken.controller.js
-const JankenService = require("../services/janken.service");
 
-exports.getResult = async (req, res, next) => {
+import { getJanken } from "../services/janken.service.js";
+
+export const getResult = async (req, res, next) => {
   try {
-    const result = await JankenService.getJanken(req.body);
+    const result = await getJanken(req.body);
     return res.status(200).json({
       status: 200,
       result: result,
@@ -119,7 +120,8 @@ exports.getResult = async (req, res, next) => {
 
 ```js
 // services/janken.service.js
-exports.getJanken = async (query) => {
+
+export const getJanken = async (query) => {
   try {
     return { yourHand: query.myhand, comHand: "グー", result: "テスト中" };
   } catch (e) {
@@ -179,7 +181,8 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"無敵のア�
 
 ```js
 // services/janken.service.js
-exports.getJanken = async (query) => {
+
+export const getJanken = async (query) => {
   try {
     const hand = ["グー", "チョキ", "パー"];
     const myIndex = hand.indexOf(query.myhand);

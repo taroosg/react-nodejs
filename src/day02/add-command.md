@@ -14,6 +14,7 @@ $ node app.js
 {
   "name": "express-project",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {

@@ -82,3 +82,36 @@ Is this OK? (yes)
 | script      | 開発者が任意に作成するコマンド．                                           |
 | auther      | 開発者情報．1 人のみ記述する．                                             |
 | license     | ライセンス情報．                                                           |
+
+
+## `package.json`に追記
+
+下記の内容を追記する．
+
+```json
+"type": "module",
+```
+
+追記後は以下のような状態．
+
+```json
+{
+  "name": "express-project",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+```
+
+>**💡 Key Point**
+>
+>`package.json`に`"type": "module"`を追記することで`import`形式で別ファイルを読みこむことができる．
+>この追記を行わない場合，外部ファイルを読み込む際には`require()`関数を用いる．
+>前回のReactなどでは`import`が基本となっており，こちらに揃えておいたほうがメリットが大きくオススメである．
