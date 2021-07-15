@@ -169,7 +169,10 @@
 <h2 id="実行用ファイルの作成"><a class="header" href="#実行用ファイルの作成">実行用ファイルの作成</a></h2>
 <p>実行するための<code>app.js</code>ファイルを作成する．エディタから作成すれば OK．</p>
 <p>ファイルを作成したら下記の内容を記述する．</p>
-<pre><code class="language-js">const express = require(&quot;express&quot;);
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
 const app = express();
 const port = 3001;
 
@@ -201,7 +204,10 @@ Hello Node.js!
 <h2 id="uri-の追加"><a class="header" href="#uri-の追加">URI の追加</a></h2>
 <p><code>/</code>以外にも URI と作成してみる．</p>
 <p><code>app.js</code>を以下のように編集する．<code>/omikuji</code>，<code>/janken</code>の 2 つの URI を追加し，各レスポンスを JSON 形式で返すよう変更している．</p>
-<pre><code class="language-js">const express = require(&quot;express&quot;);
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
 const app = express();
 const port = 3001;
 
@@ -264,7 +270,10 @@ $ curl localhost:3001/omikuji
 
 </code></pre>
 <p>実装例：</p>
-<pre><code class="language-js">// 省略
+<pre><code class="language-js">// app.js
+
+// 省略
+
 app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
   const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
   const min = 0;
@@ -275,6 +284,7 @@ app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
     message: omikuji[index],
   });
 });
+
 // 省略
 
 </code></pre>

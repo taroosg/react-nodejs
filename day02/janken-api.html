@@ -188,19 +188,20 @@
 </code></pre>
 <h2 id="各ファイルの実装"><a class="header" href="#各ファイルの実装">各ファイルの実装</a></h2>
 <p><code>app.js</code>を以下のように編集する．</p>
-<p>じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには<code>body-parser</code>が必要になるため読み込んでいる．</p>
+<p>じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには<code>express.urlencoded({ extended: true })</code>とJSONデータの扱いで<code>express.json()</code>が必要になるため読み込んでいる．</p>
 <pre><code class="language-js">// app.js
-const express = require(&quot;express&quot;);
+
+import express from &quot;express&quot;;
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+// じゃんけんのルーティングを読み込む
+import { jankenRouter } from &quot;./routes/janken.route.js&quot;;
+
 const app = express();
 // ↓POSTでデータを受け取るために必要
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 const port = 3001;
-
-const omikujiRouter = require(&quot;./routes/omikuji.route&quot;);
-
-// じゃんけんのルーティングを読み込む
-const jankenRouter = require(&quot;./routes/janken.route&quot;);
 
 app.get(&quot;/&quot;, (req, res) =&gt; {
   res.json({
@@ -222,25 +223,25 @@ app.listen(port, () =&gt; {
 <p><code>routes/janken.route.js</code>に以下の内容を記述する．</p>
 <p>URI と対応するコントローラの処理を記述する．今回は POST で受け取る点と送信されてきたデータが<code>req</code>に入っている点に注意．</p>
 <pre><code class="language-js">// routes/janken.route.js
-const express = require(&quot;express&quot;);
-const router = express.Router();
 
-const JankenController = require(&quot;../controllers/janken.controller&quot;);
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/janken.controller.js&quot;;
 
-router.post(&quot;/&quot;, (req, res) =&gt; JankenController.getResult(req, res));
+export const jankenRouter = express.Router();
 
-module.exports = router;
+jankenRouter.post(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
 
 </code></pre>
 <h2 id="コントローラの実装"><a class="header" href="#コントローラの実装">コントローラの実装</a></h2>
 <p><code>controllers/janken.controller.js</code>に以下の内容を記述する．</p>
 <p>おみくじの場合とほぼ同じ．</p>
 <pre><code class="language-js">// controllers/janken.controller.js
-const JankenService = require(&quot;../services/janken.service&quot;);
 
-exports.getResult = async (req, res, next) =&gt; {
+import { getJanken } from &quot;../services/janken.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
   try {
-    const result = await JankenService.getJanken(req.body);
+    const result = await getJanken(req.body);
     return res.status(200).json({
       status: 200,
       result: result,
@@ -256,7 +257,8 @@ exports.getResult = async (req, res, next) =&gt; {
 <p><code>services/janken.service.js</code>に以下の内容を記述する．</p>
 <p>とりあえず毎回同じ結果を返している．</p>
 <pre><code class="language-js">// services/janken.service.js
-exports.getJanken = async (query) =&gt; {
+
+export const getJanken = async (query) =&gt; {
   try {
     return { yourHand: query.myhand, comHand: &quot;グー&quot;, result: &quot;テスト中&quot; };
   } catch (e) {
@@ -297,7 +299,8 @@ $ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&q
 </code></pre>
 <p>実装例：</p>
 <pre><code class="language-js">// services/janken.service.js
-exports.getJanken = async (query) =&gt; {
+
+export const getJanken = async (query) =&gt; {
   try {
     const hand = [&quot;グー&quot;, &quot;チョキ&quot;, &quot;パー&quot;];
     const myIndex = hand.indexOf(query.myhand);

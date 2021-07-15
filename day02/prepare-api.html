@@ -235,6 +235,31 @@ Is this OK? (yes)
 <tr><td>auther</td><td>開発者情報．1 人のみ記述する．</td></tr>
 <tr><td>license</td><td>ライセンス情報．</td></tr>
 </tbody></table>
+<h2 id="packagejsonに追記"><a class="header" href="#packagejsonに追記"><code>package.json</code>に追記</a></h2>
+<p>下記の内容を追記する．</p>
+<pre><code class="language-json">&quot;type&quot;: &quot;module&quot;,
+</code></pre>
+<p>追記後は以下のような状態．</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+</code></pre>
+<blockquote>
+<p><strong>💡 Key Point</strong></p>
+<p><code>package.json</code>に<code>&quot;type&quot;: &quot;module&quot;</code>を追記することで<code>import</code>形式で別ファイルを読みこむことができる．
+この追記を行わない場合，外部ファイルを読み込む際には<code>require()</code>関数を用いる．
+前回のReactなどでは<code>import</code>が基本となっており，こちらに揃えておいたほうがメリットが大きくオススメである．</p>
+</blockquote>
 
                     </main>
 

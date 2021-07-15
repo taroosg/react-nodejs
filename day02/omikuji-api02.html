@@ -175,7 +175,8 @@
 <table><thead><tr><th>項目</th><th>意味合い</th></tr></thead><tbody>
 <tr><td>routes</td><td>URI と実行する処理の対応．</td></tr>
 <tr><td>controllers</td><td>リクエストパラメータの検証，レスポンス送信．</td></tr>
-<tr><td>services</td><td>リクエストに対する処理のメインロジック．DB 扱う場合はここに CRUD 処理など記述．</td></tr>
+<tr><td>services</td><td>リクエストに対する処理のメインロジックを記述．</td></tr>
+<tr><td>repositories</td><td>DB関連の処理を記述．今回は出番なし．</td></tr>
 </tbody></table>
 <p>このような役割分担とするため，以下のようにディレクトリとファイルを作成する．</p>
 <pre><code class="language-bash">.
@@ -195,11 +196,13 @@
 <p><code>app.js</code>を以下のように編集する．</p>
 <p>ルーティングは routes 以下のファイルに任せ，指定したファイルを読み込むよう記述．</p>
 <pre><code class="language-js">// app.js
-const express = require(&quot;express&quot;);
+
+import express from &quot;express&quot;;
+// おみくじのrouterを読み込む
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+
 const app = express();
 const port = 3001;
-// おみくじのrouterを読み込む
-const omikujiRouter = require(&quot;./routes/omikuji.route&quot;);
 
 app.get(&quot;/&quot;, (req, res) =&gt; {
   res.json({
@@ -224,25 +227,25 @@ app.listen(port, () =&gt; {
 <p><code>routes/omikuji.route.js</code>に以下の内容を記述する．</p>
 <p>URI と対応するコントローラの処理を記述する．</p>
 <pre><code class="language-js">// routes/omikuji.route.js
-const express = require(&quot;express&quot;);
-const router = express.Router();
 
-const OmikujiController = require(&quot;../controllers/omikuji.controller&quot;);
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/omikuji.controller.js&quot;
 
-router.get(&quot;/&quot;, (req, res) =&gt; OmikujiController.getResult(req, res));
+export const omikujiRouter = express.Router();
 
-module.exports = router;
+omikujiRouter.get(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
 
 </code></pre>
 <h2 id="コントローラの実装"><a class="header" href="#コントローラの実装">コントローラの実装</a></h2>
 <p><code>controllers/omikuji.controller.js</code>に以下の内容を記述する．</p>
 <p>サービスを呼び出して実行したいメソッドを指定し，結果によってレスポンスを指定する．</p>
 <pre><code class="language-js">// controllers/omikuji.controller.js
-const OmikujiService = require(&quot;../services/omikuji.service&quot;);
 
-exports.getResult = async (req, res, next) =&gt; {
+import { getOmikuji } from &quot;../services/omikuji.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
   try {
-    const result = await OmikujiService.getOmikuji({});
+    const result = await getOmikuji({});
     return res.status(200).json({
       status: 200,
       result: result,
@@ -258,7 +261,8 @@ exports.getResult = async (req, res, next) =&gt; {
 <p><code>services/omikuji.service.js</code>に以下の内容を記述する．</p>
 <p>サービスでは実行したいロジックを書く．ここでおみくじのロジックを実装している．</p>
 <pre><code class="language-js">// services/omikuji.service.js
-exports.getOmikuji = async (query) =&gt; {
+
+export const getOmikuji = async (query) =&gt; {
   try {
     const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
     const min = 0;

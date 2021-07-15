@@ -949,6 +949,31 @@ Is this OK? (yes)
 <tr><td>auther</td><td>開発者情報．1 人のみ記述する．</td></tr>
 <tr><td>license</td><td>ライセンス情報．</td></tr>
 </tbody></table>
+<h2 id="packagejsonに追記"><a class="header" href="#packagejsonに追記"><code>package.json</code>に追記</a></h2>
+<p>下記の内容を追記する．</p>
+<pre><code class="language-json">&quot;type&quot;: &quot;module&quot;,
+</code></pre>
+<p>追記後は以下のような状態．</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+</code></pre>
+<blockquote>
+<p><strong>💡 Key Point</strong></p>
+<p><code>package.json</code>に<code>&quot;type&quot;: &quot;module&quot;</code>を追記することで<code>import</code>形式で別ファイルを読みこむことができる．
+この追記を行わない場合，外部ファイルを読み込む際には<code>require()</code>関数を用いる．
+前回のReactなどでは<code>import</code>が基本となっており，こちらに揃えておいたほうがメリットが大きくオススメである．</p>
+</blockquote>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="expressのインストール"><a class="header" href="#expressのインストール">Expressのインストール</a></h1>
 <p>今回は Express のフレームワークを使用するため，下記コマンドで</p>
 <pre><code class="language-bash">$ npm i express
@@ -984,7 +1009,10 @@ found 0 vulnerabilities
 <h2 id="実行用ファイルの作成"><a class="header" href="#実行用ファイルの作成">実行用ファイルの作成</a></h2>
 <p>実行するための<code>app.js</code>ファイルを作成する．エディタから作成すれば OK．</p>
 <p>ファイルを作成したら下記の内容を記述する．</p>
-<pre><code class="language-js">const express = require(&quot;express&quot;);
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
 const app = express();
 const port = 3001;
 
@@ -1016,7 +1044,10 @@ Hello Node.js!
 <h2 id="uri-の追加"><a class="header" href="#uri-の追加">URI の追加</a></h2>
 <p><code>/</code>以外にも URI と作成してみる．</p>
 <p><code>app.js</code>を以下のように編集する．<code>/omikuji</code>，<code>/janken</code>の 2 つの URI を追加し，各レスポンスを JSON 形式で返すよう変更している．</p>
-<pre><code class="language-js">const express = require(&quot;express&quot;);
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
 const app = express();
 const port = 3001;
 
@@ -1079,7 +1110,10 @@ $ curl localhost:3001/omikuji
 
 </code></pre>
 <p>実装例：</p>
-<pre><code class="language-js">// 省略
+<pre><code class="language-js">// app.js
+
+// 省略
+
 app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
   const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
   const min = 0;
@@ -1090,6 +1124,7 @@ app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
     message: omikuji[index],
   });
 });
+
 // 省略
 
 </code></pre>
@@ -1102,6 +1137,7 @@ app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;express-project&quot;,
   &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
   &quot;description&quot;: &quot;&quot;,
   &quot;main&quot;: &quot;index.js&quot;,
   &quot;scripts&quot;: {
@@ -1131,7 +1167,8 @@ app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
 <table><thead><tr><th>項目</th><th>意味合い</th></tr></thead><tbody>
 <tr><td>routes</td><td>URI と実行する処理の対応．</td></tr>
 <tr><td>controllers</td><td>リクエストパラメータの検証，レスポンス送信．</td></tr>
-<tr><td>services</td><td>リクエストに対する処理のメインロジック．DB 扱う場合はここに CRUD 処理など記述．</td></tr>
+<tr><td>services</td><td>リクエストに対する処理のメインロジックを記述．</td></tr>
+<tr><td>repositories</td><td>DB関連の処理を記述．今回は出番なし．</td></tr>
 </tbody></table>
 <p>このような役割分担とするため，以下のようにディレクトリとファイルを作成する．</p>
 <pre><code class="language-bash">.
@@ -1151,11 +1188,13 @@ app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
 <p><code>app.js</code>を以下のように編集する．</p>
 <p>ルーティングは routes 以下のファイルに任せ，指定したファイルを読み込むよう記述．</p>
 <pre><code class="language-js">// app.js
-const express = require(&quot;express&quot;);
+
+import express from &quot;express&quot;;
+// おみくじのrouterを読み込む
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+
 const app = express();
 const port = 3001;
-// おみくじのrouterを読み込む
-const omikujiRouter = require(&quot;./routes/omikuji.route&quot;);
 
 app.get(&quot;/&quot;, (req, res) =&gt; {
   res.json({
@@ -1180,25 +1219,25 @@ app.listen(port, () =&gt; {
 <p><code>routes/omikuji.route.js</code>に以下の内容を記述する．</p>
 <p>URI と対応するコントローラの処理を記述する．</p>
 <pre><code class="language-js">// routes/omikuji.route.js
-const express = require(&quot;express&quot;);
-const router = express.Router();
 
-const OmikujiController = require(&quot;../controllers/omikuji.controller&quot;);
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/omikuji.controller.js&quot;
 
-router.get(&quot;/&quot;, (req, res) =&gt; OmikujiController.getResult(req, res));
+export const omikujiRouter = express.Router();
 
-module.exports = router;
+omikujiRouter.get(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
 
 </code></pre>
 <h2 id="コントローラの実装"><a class="header" href="#コントローラの実装">コントローラの実装</a></h2>
 <p><code>controllers/omikuji.controller.js</code>に以下の内容を記述する．</p>
 <p>サービスを呼び出して実行したいメソッドを指定し，結果によってレスポンスを指定する．</p>
 <pre><code class="language-js">// controllers/omikuji.controller.js
-const OmikujiService = require(&quot;../services/omikuji.service&quot;);
 
-exports.getResult = async (req, res, next) =&gt; {
+import { getOmikuji } from &quot;../services/omikuji.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
   try {
-    const result = await OmikujiService.getOmikuji({});
+    const result = await getOmikuji({});
     return res.status(200).json({
       status: 200,
       result: result,
@@ -1214,7 +1253,8 @@ exports.getResult = async (req, res, next) =&gt; {
 <p><code>services/omikuji.service.js</code>に以下の内容を記述する．</p>
 <p>サービスでは実行したいロジックを書く．ここでおみくじのロジックを実装している．</p>
 <pre><code class="language-js">// services/omikuji.service.js
-exports.getOmikuji = async (query) =&gt; {
+
+export const getOmikuji = async (query) =&gt; {
   try {
     const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
     const min = 0;
@@ -1280,19 +1320,20 @@ $ curl localhost:3001/omikuji
 </code></pre>
 <h2 id="各ファイルの実装"><a class="header" href="#各ファイルの実装">各ファイルの実装</a></h2>
 <p><code>app.js</code>を以下のように編集する．</p>
-<p>じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには<code>body-parser</code>が必要になるため読み込んでいる．</p>
+<p>じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには<code>express.urlencoded({ extended: true })</code>とJSONデータの扱いで<code>express.json()</code>が必要になるため読み込んでいる．</p>
 <pre><code class="language-js">// app.js
-const express = require(&quot;express&quot;);
+
+import express from &quot;express&quot;;
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+// じゃんけんのルーティングを読み込む
+import { jankenRouter } from &quot;./routes/janken.route.js&quot;;
+
 const app = express();
 // ↓POSTでデータを受け取るために必要
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 const port = 3001;
-
-const omikujiRouter = require(&quot;./routes/omikuji.route&quot;);
-
-// じゃんけんのルーティングを読み込む
-const jankenRouter = require(&quot;./routes/janken.route&quot;);
 
 app.get(&quot;/&quot;, (req, res) =&gt; {
   res.json({
@@ -1314,25 +1355,25 @@ app.listen(port, () =&gt; {
 <p><code>routes/janken.route.js</code>に以下の内容を記述する．</p>
 <p>URI と対応するコントローラの処理を記述する．今回は POST で受け取る点と送信されてきたデータが<code>req</code>に入っている点に注意．</p>
 <pre><code class="language-js">// routes/janken.route.js
-const express = require(&quot;express&quot;);
-const router = express.Router();
 
-const JankenController = require(&quot;../controllers/janken.controller&quot;);
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/janken.controller.js&quot;;
 
-router.post(&quot;/&quot;, (req, res) =&gt; JankenController.getResult(req, res));
+export const jankenRouter = express.Router();
 
-module.exports = router;
+jankenRouter.post(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
 
 </code></pre>
 <h2 id="コントローラの実装-1"><a class="header" href="#コントローラの実装-1">コントローラの実装</a></h2>
 <p><code>controllers/janken.controller.js</code>に以下の内容を記述する．</p>
 <p>おみくじの場合とほぼ同じ．</p>
 <pre><code class="language-js">// controllers/janken.controller.js
-const JankenService = require(&quot;../services/janken.service&quot;);
 
-exports.getResult = async (req, res, next) =&gt; {
+import { getJanken } from &quot;../services/janken.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
   try {
-    const result = await JankenService.getJanken(req.body);
+    const result = await getJanken(req.body);
     return res.status(200).json({
       status: 200,
       result: result,
@@ -1348,7 +1389,8 @@ exports.getResult = async (req, res, next) =&gt; {
 <p><code>services/janken.service.js</code>に以下の内容を記述する．</p>
 <p>とりあえず毎回同じ結果を返している．</p>
 <pre><code class="language-js">// services/janken.service.js
-exports.getJanken = async (query) =&gt; {
+
+export const getJanken = async (query) =&gt; {
   try {
     return { yourHand: query.myhand, comHand: &quot;グー&quot;, result: &quot;テスト中&quot; };
   } catch (e) {
@@ -1389,7 +1431,8 @@ $ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&q
 </code></pre>
 <p>実装例：</p>
 <pre><code class="language-js">// services/janken.service.js
-exports.getJanken = async (query) =&gt; {
+
+export const getJanken = async (query) =&gt; {
   try {
     const hand = [&quot;グー&quot;, &quot;チョキ&quot;, &quot;パー&quot;];
     const myIndex = hand.indexOf(query.myhand);
