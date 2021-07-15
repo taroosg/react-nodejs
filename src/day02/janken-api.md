@@ -38,9 +38,8 @@
 const express = require("express");
 const app = express();
 // ↓POSTでデータを受け取るために必要
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 const port = 3001;
 
 const omikujiRouter = require("./routes/omikuji.route");

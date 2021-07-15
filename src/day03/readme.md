@@ -2,7 +2,7 @@
 
 ## 今回のゴール
 
-- CloudFirestore を用いたデータの永続化を実装する．
+- Cloud Firestore を用いたデータの永続化を実装する．
 - todo リストを実装し，CRUD 処理とデータの構造を把握する．
 - 外部データ取得 -> データ保存の流れを実装し，複数の処理を連携させる感覚を掴む．
 
@@ -36,7 +36,6 @@ RDB と比較して後発のためにより直感的に扱えるものが多い�
 - Neo4j
 
 
-
 ## Cloud Firestore の準備
 
 今回は NoSQL である Firebase Cloud Firestore を用いて CRUD 処理を実装してみる．
@@ -64,7 +63,7 @@ Node.js で CloudFirestore を操作するには，設定ファイルを用意�
 
 - `firebase.js`ファイルに ↑ で開いたコンソール画面から Admin SDK 構成スニペットをコピペする．
 - `var serviceAccount = require("...");`の部分の`require()`内を json ファイルのパスに書き換える．
-  最下行に`module.exports = admin;`を追記する．
+- 最下行に`module.exports = admin;`を追記する．
 
 `firebase.js`は以下のような状態．
 
@@ -77,6 +76,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 module.exports = admin;
+
 ```
 
 ### `.gitignore`に追記
@@ -92,7 +92,7 @@ module.exports = admin;
 
 ### 必要なパッケージのインストール
 
-下記コマンドでインストールする．
+下記コマンドでインストールする．必ずプロジェクトのディレクトリで行うこと．
 
 ```bash
 $ npm i firebase-admin
@@ -100,7 +100,6 @@ $ npm i firebase-admin
 + firebase-admin@9.5.0
 added 120 packages from 109 contributors and audited 230 packages in 21.873s
 ```
-
 
 
 ## 既存ファイルへの追記と新規ファイルの準備
@@ -111,14 +110,12 @@ added 120 packages from 109 contributors and audited 230 packages in 21.873s
 const express = require("express");
 const app = express();
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const port = 3001;
 const omikujiRouter = require("./routes/omikuji.route");
 const jankenRouter = require("./routes/janken.route");
-const scrapingRouter = require("./routes/scraping.route");
 // ↓追加
 const todoRouter = require("./routes/todo.route");
 
@@ -131,13 +128,13 @@ app.get("/", (req, res) => {
 
 app.use("/omikuji", (req, res) => omikujiRouter(req, res));
 app.use("/janken", (req, res) => jankenRouter(req, res));
-app.use("/scraping", (req, res) => scrapingRouter(req, res));
 // ↓追加
 app.use("/todo", (req, res) => todoRouter(req, res));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
 ```
 
 新しく以下のファイルを作成する．
@@ -160,6 +157,7 @@ const TodoController = require("../controllers/todo.controller");
 router.get("/", (req, res) => TodoController.readTodoData(req, res));
 
 module.exports = router;
+
 ```
 
 コントローラではリクエストとレスポンスを定義．
@@ -180,6 +178,7 @@ exports.readTodoData = async (req, res, next) => {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
 ```
 
 サービスでは一旦決まったメッセージを返す．
@@ -193,6 +192,7 @@ exports.readTodoData = async () => {
     throw Error("Error while getting Todo Data");
   }
 };
+
 ```
 
 動作確認する．以下のコマンドでレスポンスが返ってくれば OK．
@@ -207,8 +207,8 @@ $ curl localhost:3001/todo
   },
   "message": "Succesfully get Todo Data!"
 }
-```
 
+```
 
 
 ## CRUD 処理の作成
@@ -233,6 +233,7 @@ router.get("/", (req, res) => TodoController.readTodoData(req, res));
 router.post("/", (req, res) => TodoController.createTodoData(req, res));
 
 module.exports = router;
+
 ```
 
 コントローラでは，データを整理してサービスに渡す．また，サービスの処理結果を元にレスポンスを返す．
@@ -264,6 +265,7 @@ exports.createTodoData = async (req, res, next) => {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
 ```
 
 サービスでは受け取ったデータに`created_at`など必要なデータを追加し，Firebase に送信する．本来は Firebase にデータを保存する処理は`repositories`など別レイヤーに分割することが望ましい．
@@ -302,6 +304,7 @@ exports.createTodoData = async ({ data }) => {
     throw Error("Error while posting Todo Data");
   }
 };
+
 ```
 
 処理を追加したら動作確認する．サーバを起動して下記コマンドでデータを送信し，成功のレスポンスが返ってくれば OK．
@@ -336,6 +339,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"todo":"node.js","deadli
   },
   "message": "Succesfully post Firestore Data!"
 }
+
 ```
 
 ### Read の処理
@@ -375,6 +379,7 @@ exports.readTodoData = async () => {
 exports.createTodoData = async ({ collection, data }) => {
   // 省略
 };
+
 ```
 
 記述したら動作確認する．下記コマンドを実行して，保存されているデータが全件取得できれば OK（下記はデータ 2 件登録時の例）．
@@ -408,6 +413,7 @@ $ curl localhost:3001/todo
   ],
   "message": "Succesfully get Todo Data!"
 }
+
 ```
 
 ### Update の処理
@@ -429,6 +435,7 @@ router.post("/", (req, res) => TodoController.createTodoData(req, res));
 router.put("/:id", (req, res) => TodoController.updateTodoData(req, res));
 
 module.exports = router;
+
 ```
 
 コントローラでは，リクエストから`更新対象のドキュメントのid`と`更新データ`の 2 つを受け取る．送信されたデータの中から，これら 2 つのデータを抽出し，サービスに渡す．
@@ -466,6 +473,7 @@ exports.updateTodoData = async (req, res, next) => {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
 ```
 
 サービスでは，受け取ったデータで DB を更新する．`deadline`を Firestore の形式に変換し，同時に`updated_at`に実行日時を設定して送信する．
@@ -502,6 +510,7 @@ exports.updateTodoData = async ({ id, data }) => {
     throw Error("Error while updating Todo Data");
   }
 };
+
 ```
 
 動作確認する．document は既存のデータから適当に指定する．Read の処理結果などから存在する document 名 を確認しておこう．
@@ -529,6 +538,7 @@ $ curl -X PUT -H "Content-Type: application/json" -d '{"todo":"nest.js","deadlin
   },
   "message": "Succesfully update Todo Data!"
 }
+
 ```
 
 ### Delete の処理
@@ -549,6 +559,7 @@ router.put("/:id", (req, res) => TodoController.updateTodoData(req, res));
 router.delete("/:id", (req, res) => TodoController.deleteTodoData(req, res));
 
 module.exports = router;
+
 ```
 
 コントローラでは document 名を受け取り，collection 名と document 名を指定してサービスの処理を実行する．
@@ -589,6 +600,7 @@ exports.deleteTodoData = async (req, res, next) => {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
 ```
 
 サービスでは DB からデータを削除する．collection 名と document 名があればデータを指定して削除することができる．
@@ -621,6 +633,7 @@ exports.deleteTodoData = async ({ collection, id }) => {
     throw Error("Error while deleting Todo Data");
   }
 };
+
 ```
 
 動作確認する．document 名 は既存のデータから適当に指定する．
@@ -637,289 +650,8 @@ $ curl -X DELETE localhost:3001/todo/yQjmX9lHuRM5WxIUCAjg
   },
   "message": "Succesfully delete Todo Data!"
 }
+
 ```
-
-
-
-## スクレイピングと連携
-
-前回扱ったスクレイピングと連携させてみよう．
-
-今回は，以下の処理を実装する．
-
-- データ保存
-
-  1. スクレイピングによりデータ取得．
-  2. 取得したデータを CloudFirestore に保存．
-
-- データ読み出し
-  1. CloudFirestore に保存してあるデータを新しい順に取得．
-
-### データ保存
-
-まずはルーティングを作成する．スクレイピングのルーティングに記述しよう．
-
-```js
-// routes/scraping.route.js
-const express = require("express");
-const router = express.Router();
-
-const ScrapingController = require("../controllers/scraping.controller");
-
-router.get("/gethtml", (req, res) => ScrapingController.getHtml(req, res));
-router.get("/get-recent-contents", (req, res) =>
-  ScrapingController.getRecentContents(req, res)
-);
-router.get("/get-many-contents", (req, res) =>
-  ScrapingController.getManyContents(req, res)
-);
-// ↓追加
-router.get("/create", (req, res) =>
-  ScrapingController.createScrapingData(req, res)
-);
-
-module.exports = router;
-```
-
-コントローラではリクエストとレスポンスを定義する．今回は 2 つの処理が必要になるので，サービスの処理を 2 つ呼び出している（片方は前回作成したもの）．
-
-```js
-// controllers/scraping.controller.js
-const ScrapingService = require("../services/scraping.service");
-
-exports.getHtml = async (req, res, next) => {
-  // 省略
-};
-
-exports.getRecentContents = async (req, res, next) => {
-  // 省略
-};
-
-exports.getManyContents = async (req, res, next) => {
-  // 省略
-};
-
-// ↓追加
-exports.createScrapingData = async (req, res, next) => {
-  try {
-    const scrapingData = await ScrapingService.getManyContents({});
-    const result = await ScrapingService.createScrapingData({
-      data: scrapingData,
-    });
-    return res.status(200).json({
-      status: 200,
-      result: result,
-      message: "Succesfully post Scraping Data!",
-    });
-  } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
-  }
-};
-```
-
-スクレイピングしたデータを Firestore に保存する処理を追加する．`scraping`コレクションに保存することとする．
-
-やっていることは todo リストのデータ作成と同様．
-
-```js
-// services/scraping.service.js
-const fetch = require("node-fetch");
-const puppeteer = require("puppeteer");
-// ↓2行追加
-const admin = require("../model/firebase");
-const db = admin.firestore();
-
-exports.getHtml = async (query) => {
-  // 省略
-};
-
-exports.getRecentContents = async (query) => {
-  // 省略
-};
-
-exports.getManyContents = async (query) => {
-  // 省略
-};
-
-// ↓追加
-exports.createScrapingData = async ({ data }) => {
-  try {
-    const postData = {
-      data: data,
-      created_at: admin.firestore.Timestamp.now(),
-    };
-    const ref = await db.collection("scraping").add(postData);
-    return {
-      id: ref.id,
-      data: postData,
-    };
-  } catch (e) {
-    throw Error("Error while posting Scraping Data");
-  }
-};
-```
-
-動作確認する．スクレイピングの処理が走り，その後 Firestore に 120 件のデータが保存されれば OK！
-
-Firestore のコンソール画面で確認しよう．
-
-```bash
-$ curl localhost:3001/scraping/create
-
-{
-  "status": 200,
-  "result": {
-    "id": "NUHcdv9quiDme44b2j1q",
-    "data": {
-      "data": [
-        # データたくさん
-      ],
-      "created_at": {
-        "_seconds": 1613146029,
-        "_nanoseconds": 649000000
-      }
-    }
-  },
-  "message": "Succesfully post Scraping Data!"
-}
-```
-
-### データ読み出し
-
-ルーテイングの作成．特に変わったところはない．
-
-```js
-// routes/scraping.route.js
-const express = require("express");
-const router = express.Router();
-
-const ScrapingController = require("../controllers/scraping.controller");
-
-router.get("/gethtml", (req, res) => ScrapingController.getHtml(req, res));
-router.get("/get-recent-contents", (req, res) =>
-  ScrapingController.getRecentContents(req, res)
-);
-router.get("/get-many-contents", (req, res) =>
-  ScrapingController.getManyContents(req, res)
-);
-router.get("/create", (req, res) =>
-  ScrapingController.createScrapingData(req, res)
-);
-// ↓追加
-router.get("/read", (req, res) =>
-  ScrapingController.readScrapingData(req, res)
-);
-
-module.exports = router;
-```
-
-こちらもリクエストとレスポンスを定義し，サービスの処理を呼び出すだけ．
-
-```js
-// controllers/scraping.controller.js
-const ScrapingService = require("../services/scraping.service");
-
-exports.getHtml = async (req, res, next) => {
-  // 省略
-};
-
-exports.getRecentContents = async (req, res, next) => {
-  // 省略
-};
-
-exports.getManyContents = async (req, res, next) => {
-  // 省略
-};
-
-exports.createScrapingData = async (req, res, next) => {
-  // 省略
-};
-
-// ↓追加
-exports.readScrapingData = async (req, res, next) => {
-  try {
-    const result = await ScrapingService.readScrapingData({});
-    return res.status(200).json({
-      status: 200,
-      result: result,
-      message: "Succesfully post Scraping Data!",
-    });
-  } catch (e) {
-    return res.status(400).json({ status: 400, message: e.message });
-  }
-};
-```
-
-データを取得する処理を作成する．
-
-```js
-// services/scraping.service.js
-const fetch = require("node-fetch");
-const puppeteer = require("puppeteer");
-const admin = require("../model/firebase");
-const db = admin.firestore();
-
-exports.getHtml = async (query) => {
-  // 省略
-};
-
-exports.getRecentContents = async (query) => {
-  // 省略
-};
-
-exports.getManyContents = async (query) => {
-  // 省略
-};
-
-exports.createScrapingData = async ({ data }) => {
-  // 省略
-};
-
-// ↓追加
-exports.readScrapingData = async (query) => {
-  try {
-    const scrapingSnapshot = await db
-      .collection("scraping")
-      .orderBy("created_at", "desc")
-      .get();
-    const scrapingData = scrapingSnapshot.docs.map((x) => {
-      return {
-        id: x.id,
-        data: {
-          ...x.data(),
-          created_at: x.data().created_at.toDate(),
-        },
-      };
-    });
-    return scrapingData;
-  } catch (e) {
-    throw Error("Error while reading Scraping Data");
-  }
-};
-```
-
-実行結果．前項で保存したスクレイピングのデータが表示されれば OK．データが多いので，ブラウザで確認したほうが良いかも．
-
-```bash
-$ curl localhost:3001/scraping/read
-
-{
-  "status": 200,
-  "result": [
-    {
-      "id": "NUHcdv9quiDme44b2j1q",
-      "data": {
-        "created_at": "2021-02-12T16:07:09.649Z",
-        "data": [
-          # データたくさん
-        ]
-      }
-    }
-  ],
-  "message": "Succesfully post Scraping Data!"
-}
-```
-
 
 
 ## まとめ
@@ -927,7 +659,5 @@ $ curl localhost:3001/scraping/read
 今回は Node.js におけるデータの永続化を扱った．DB は Firestore を用いたが，他の DB でも処理の手順は同様である．
 
 本来は DB 関連の処理は別のレイヤーに切り出すことが望ましい．そうすることで，DB 変更時にもコードの修正を該当レイヤーのみに閉じ込めることができる．
-
-また，前回実装したスクレイピングと組み合わせることで，複数処理の組み合わせや流れの感覚がつかんでもらえれば幸いである．
 
 今回は以上である( `･ω･´)b
