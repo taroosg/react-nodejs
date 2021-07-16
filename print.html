@@ -1523,7 +1523,8 @@ export const getJanken = async (query) =&gt; {
 </li>
 </ul>
 <p><code>firebase.js</code>は以下のような状態．</p>
-<pre><code class="language-js">var admin = require(&quot;firebase-admin&quot;);
+<pre><code class="language-js">// import * as admin from 'firebase-admin';
+var admin = require(&quot;firebase-admin&quot;);
 
 var serviceAccount = require(&quot;./hogehoge-22c0e-firebase-adminsdk-hhdd7-1234567890.json&quot;);
 
@@ -1531,6 +1532,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 module.exports = admin;
+// export default admin;
 
 </code></pre>
 <h3 id="gitignoreに追記"><a class="header" href="#gitignoreに追記"><code>.gitignore</code>に追記</a></h3>
