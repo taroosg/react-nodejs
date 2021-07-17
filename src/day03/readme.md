@@ -1,5 +1,19 @@
 # Day03
 
+
+## todo: add
+
+- やることの説明
+- sqliteの説明
+- sqliteのインストール
+- repositoryフォルダとファイルの作成
+- データ渡しの確認
+- create_table
+- create
+- read
+- update
+- delete
+
 ## 今回のゴール
 
 - Cloud Firestore を用いたデータの永続化を実装する．
