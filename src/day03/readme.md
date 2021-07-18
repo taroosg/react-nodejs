@@ -1,9 +1,10 @@
 # Day03
 
 
-## todo: add
+## todo
 
 - やることの説明
+- リポジトリパターンの説明
 - sqliteの説明
 - sqliteのインストール
 - repositoryフォルダとファイルの作成
