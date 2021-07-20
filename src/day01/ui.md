@@ -20,9 +20,7 @@ export const Booklist = ({ language, getData }) => {
 
   return (
     <ul>
-      {bookData.data.items.map((x) => (
-        <li>{x.volumeInfo.title}</li>
-      ))}
+      {bookData.data.items.map((x, index) => <li key={index}>{x.volumeInfo.title}</li>)}
     </ul>
   );
 };
@@ -55,7 +53,7 @@ export const Booklist = ({ language, getData }) => {
       {
         bookData === null
           ? <p>now loading...</p>
-          : bookData.data.items.map((x, index) => (<li key={index}>{x.volumeInfo.title}</li>))
+          : bookData.data.items.map((x, index) => <li key={index}>{x.volumeInfo.title}</li>)
       }
     </ul>
   );
