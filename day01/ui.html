@@ -182,9 +182,7 @@ export const Booklist = ({ language, getData }) =&gt; {
 
   return (
     &lt;ul&gt;
-      {bookData.data.items.map((x) =&gt; (
-        &lt;li&gt;{x.volumeInfo.title}&lt;/li&gt;
-      ))}
+      {bookData.data.items.map((x, index) =&gt; &lt;li key={index}&gt;{x.volumeInfo.title}&lt;/li&gt;)}
     &lt;/ul&gt;
   );
 };
@@ -212,7 +210,7 @@ export const Booklist = ({ language, getData }) =&gt; {
       {
         bookData === null
           ? &lt;p&gt;now loading...&lt;/p&gt;
-          : bookData.data.items.map((x, index) =&gt; (&lt;li key={index}&gt;{x.volumeInfo.title}&lt;/li&gt;))
+          : bookData.data.items.map((x, index) =&gt; &lt;li key={index}&gt;{x.volumeInfo.title}&lt;/li&gt;)
       }
     &lt;/ul&gt;
   );
