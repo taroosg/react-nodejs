@@ -5,15 +5,13 @@
 
 - やることの説明
 - リポジトリパターンの説明
-- sqliteの説明
-- sqliteのインストール
-- repositoryフォルダとファイルの作成
+- repositoryフォルダとファイルの作成を追記
 - データ渡しの確認
-- create_table
 - create
 - read
 - update
 - delete
+
 
 ## 今回のゴール
 
