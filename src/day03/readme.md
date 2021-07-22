@@ -87,6 +87,7 @@ Node.js で CloudFirestore を操作するには，設定ファイルを用意�
 `firebase.js`は以下のような状態．
 
 ```js
+// 要検証
 // import * as admin from 'firebase-admin';
 var admin = require("firebase-admin");
 
