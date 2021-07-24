@@ -129,6 +129,7 @@ added 120 packages from 109 contributors and audited 230 packages in 21.873s
 `app.js`にルーティングを追記する．
 
 ```js
+// importに書き換え
 const express = require("express");
 const app = express();
 
