@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>propsの活用 - React-Node.js</title>
+        <title>Day02 - React-Node.js</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../day01/index.html"><strong aria-hidden="true">1.</strong> Day01</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day01/about-react.html"><strong aria-hidden="true">1.1.</strong> Reactとは</a></li><li class="chapter-item expanded "><a href="../day01/construct-app.html"><strong aria-hidden="true">1.2.</strong> アプリケーション実装の準備</a></li><li class="chapter-item expanded "><a href="../day01/use-component.html"><strong aria-hidden="true">1.3.</strong> コンポーネント</a></li><li class="chapter-item expanded "><a href="../day01/use-props.html" class="active"><strong aria-hidden="true">1.4.</strong> propsの活用</a></li><li class="chapter-item expanded "><a href="../day01/use-router.html"><strong aria-hidden="true">1.5.</strong> router機能</a></li><li class="chapter-item expanded "><a href="../day01/props-function.html"><strong aria-hidden="true">1.6.</strong> 子コンポーネントへの関数入力</a></li><li class="chapter-item expanded "><a href="../day01/http-request.html"><strong aria-hidden="true">1.7.</strong> httpリクエストの実装</a></li><li class="chapter-item expanded "><a href="../day01/ui.html"><strong aria-hidden="true">1.8.</strong> 表示の調整</a></li><li class="chapter-item expanded "><a href="../day01/work.html"><strong aria-hidden="true">1.9.</strong> 課題（任意）</a></li></ol></li><li class="chapter-item expanded "><a href="../day02/index.html"><strong aria-hidden="true">2.</strong> Day02</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day02/about-nodejs.html"><strong aria-hidden="true">2.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="../day02/prepare-api.html"><strong aria-hidden="true">2.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="../day02/install-express.html"><strong aria-hidden="true">2.3.</strong> Expressのインストール</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api01.html"><strong aria-hidden="true">2.4.</strong> API実装1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="../day02/add-command.html"><strong aria-hidden="true">2.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api02.html"><strong aria-hidden="true">2.6.</strong> API実装2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="../day02/janken-api.html"><strong aria-hidden="true">2.7.</strong> API実装3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="../day02/summary.html"><strong aria-hidden="true">2.8.</strong> まとめ</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../day01/index.html"><strong aria-hidden="true">1.</strong> Day01</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day01/about-react.html"><strong aria-hidden="true">1.1.</strong> Reactとは</a></li><li class="chapter-item expanded "><a href="../day01/construct-app.html"><strong aria-hidden="true">1.2.</strong> アプリケーション実装の準備</a></li><li class="chapter-item expanded "><a href="../day01/use-component.html"><strong aria-hidden="true">1.3.</strong> コンポーネント</a></li><li class="chapter-item expanded "><a href="../day01/use-props.html"><strong aria-hidden="true">1.4.</strong> propsの活用</a></li><li class="chapter-item expanded "><a href="../day01/use-router.html"><strong aria-hidden="true">1.5.</strong> router機能</a></li><li class="chapter-item expanded "><a href="../day01/props-function.html"><strong aria-hidden="true">1.6.</strong> 子コンポーネントへの関数入力</a></li><li class="chapter-item expanded "><a href="../day01/http-request.html"><strong aria-hidden="true">1.7.</strong> httpリクエストの実装</a></li><li class="chapter-item expanded "><a href="../day01/ui.html"><strong aria-hidden="true">1.8.</strong> 表示の調整</a></li><li class="chapter-item expanded "><a href="../day01/work.html"><strong aria-hidden="true">1.9.</strong> 課題（任意）</a></li></ol></li><li class="chapter-item expanded "><a href="../day02/index.html" class="active"><strong aria-hidden="true">2.</strong> Day02</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day02/about-nodejs.html"><strong aria-hidden="true">2.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="../day02/prepare-api.html"><strong aria-hidden="true">2.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="../day02/install-express.html"><strong aria-hidden="true">2.3.</strong> Expressのインストール</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api01.html"><strong aria-hidden="true">2.4.</strong> API実装1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="../day02/add-command.html"><strong aria-hidden="true">2.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api02.html"><strong aria-hidden="true">2.6.</strong> API実装2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="../day02/janken-api.html"><strong aria-hidden="true">2.7.</strong> API実装3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="../day02/summary.html"><strong aria-hidden="true">2.8.</strong> まとめ</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,92 +165,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="propsの活用"><a class="header" href="#propsの活用">propsの活用</a></h1>
-<p><code>props</code>は呼び出し元のコンポーネント（親コンポーネント）から呼び出されたコンポーネント（子コンポーネント）に渡されるデータの塊である．</p>
-<blockquote>
-<p><strong>💡 Key Point</strong></p>
-<p>Reactのコンポーネントは「関数」であり，入力と出力がある．「入力」に当たるのがこの<code>props</code>である．</p>
-</blockquote>
-<h2 id="propsでデータを渡す"><a class="header" href="#propsでデータを渡す"><code>props</code>でデータを渡す</a></h2>
-<p>実際に<code>App</code>コンポーネントから<code>Booklist</code>コンポーネントに文字列のデータを渡してみよう．</p>
-<p><code>App.jsx</code>を以下のように編集する．</p>
-<pre><code class="language-jsx">// App.jsx
-import React from &quot;react&quot;;
-import { Booklist } from &quot;./components/Booklist&quot;;
-
-const App = () =&gt; {
-  const languages = [&quot;React&quot;, &quot;Vue&quot;, &quot;Angular&quot;];
-  return (
-    &lt;&gt;
-      &lt;h1&gt;react app&lt;/h1&gt;
-      &lt;Booklist language={languages[0]} /&gt;
-      &lt;Booklist /&gt;
-    &lt;/&gt;
-  );
-};
-export default App;
-
-</code></pre>
-<p>ここでは，「<code>App</code>コンポーネントから<code>Booklist</code>コンポーネントに」「<code>language</code>という名前で」「<code>languages[0]</code>の値」を渡している．</p>
-<p>タグ内に変数を入れるときは<code>{}</code>を使用する．</p>
-<h2 id="propsでデータを受け取る"><a class="header" href="#propsでデータを受け取る"><code>props</code>でデータを受け取る</a></h2>
-<p>続いて，値を渡される<code>Booklist.jsx</code>を以下のように編集する．</p>
-<pre><code class="language-jsx">// Booklist.jsx
-import React from &quot;react&quot;;
-
-export const Booklist = ({ language }) =&gt; {
-  return (
-    &lt;&gt;
-      &lt;p&gt;this is {language} list component&lt;/p&gt;
-    &lt;/&gt;
-  );
-};
-
-</code></pre>
-<p>ブラウザで画面を確認すると以下のような状態になる．</p>
-<p>1つめのコンポーネントは<code>React</code>の文字列が追加されているが，2つめのコンポーネントには追加されていない．なぜだろうか．</p>
-<p><img src="./img/mainview04.png" alt="メイン画面4" /></p>
-<p>1つめのコンポーネントには<code>App.jsx</code>で<code>language={languages[0]}</code>が記述されているが，2つめでは記述されていない．そのため，2つめのコンポーネントでは<code>props</code>が空の状態となっており表示が追加されない．</p>
-<h2 id="追加"><a class="header" href="#追加">追加！</a></h2>
-<p>2つめのコンポーネントにもデータを渡すには次のように<code>App.jsx</code>を編集する．</p>
-<p>（ついでにコンポーネントを追加！）</p>
-<pre><code class="language-jsx">// App.jsx
-import React from &quot;react&quot;;
-import { Booklist } from &quot;./components/Booklist&quot;;
-
-const App = () =&gt; {
-  const languages = [&quot;React&quot;, &quot;Vue&quot;, &quot;Angular&quot;];
-  return (
-    &lt;&gt;
-      &lt;h1&gt;react app&lt;/h1&gt;
-      &lt;Booklist language={languages[0]} /&gt;
-      &lt;Booklist language={languages[1]} /&gt;
-      &lt;Booklist language={languages[2]} /&gt;
-    &lt;/&gt;
-  );
-};
-export default App;
-
-</code></pre>
-<p>こうなる！</p>
-<p><img src="./img/mainview05.png" alt="メイン画面5" /></p>
-<blockquote>
-<p><strong>💡 Key Point</strong></p>
-<p>このように，関数コンポーネントは<code>props</code>を受け取り，要素を返す関数となる．実装するときは「何を入力して」「何を出力するのか」を意識すると（多分）混乱せずすすめることができる．</p>
-</blockquote>
+                        <h1 id="day02"><a class="header" href="#day02">Day02</a></h1>
+<h2 id="今回のゴール"><a class="header" href="#今回のゴール">今回のゴール</a></h2>
+<ul>
+<li>Node.js と Express で簡単な API を体験する．</li>
+<li>実装のしかたを複数学び，見通しの良いコードの構造を把握する．</li>
+<li>サーバで動作する「おみくじ」と「じゃんけん」を実装する．</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../day01/use-component.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../day01/work.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../day01/use-router.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../day02/about-nodejs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -262,13 +196,13 @@ export default App;
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../day01/use-component.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../day01/work.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../day01/use-router.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../day02/about-nodejs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

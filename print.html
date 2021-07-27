@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="day01/index.html"><strong aria-hidden="true">1.</strong> Day01</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day01/about-react.html"><strong aria-hidden="true">1.1.</strong> Reactとは</a></li><li class="chapter-item expanded "><a href="day01/construct-app.html"><strong aria-hidden="true">1.2.</strong> アプリケーション実装の準備</a></li><li class="chapter-item expanded "><a href="day01/use-component.html"><strong aria-hidden="true">1.3.</strong> コンポーネント</a></li><li class="chapter-item expanded "><a href="day01/use-props.html"><strong aria-hidden="true">1.4.</strong> propsの活用</a></li><li class="chapter-item expanded "><a href="day01/use-router.html"><strong aria-hidden="true">1.5.</strong> router機能</a></li><li class="chapter-item expanded "><a href="day01/props-function.html"><strong aria-hidden="true">1.6.</strong> 子コンポーネントへの関数入力</a></li><li class="chapter-item expanded "><a href="day01/http-request.html"><strong aria-hidden="true">1.7.</strong> httpリクエストの実装</a></li><li class="chapter-item expanded "><a href="day01/ui.html"><strong aria-hidden="true">1.8.</strong> 表示の調整</a></li><li class="chapter-item expanded "><a href="day01/work.html"><strong aria-hidden="true">1.9.</strong> 課題（任意）</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="day01/index.html"><strong aria-hidden="true">1.</strong> Day01</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day01/about-react.html"><strong aria-hidden="true">1.1.</strong> Reactとは</a></li><li class="chapter-item expanded "><a href="day01/construct-app.html"><strong aria-hidden="true">1.2.</strong> アプリケーション実装の準備</a></li><li class="chapter-item expanded "><a href="day01/use-component.html"><strong aria-hidden="true">1.3.</strong> コンポーネント</a></li><li class="chapter-item expanded "><a href="day01/use-props.html"><strong aria-hidden="true">1.4.</strong> propsの活用</a></li><li class="chapter-item expanded "><a href="day01/use-router.html"><strong aria-hidden="true">1.5.</strong> router機能</a></li><li class="chapter-item expanded "><a href="day01/props-function.html"><strong aria-hidden="true">1.6.</strong> 子コンポーネントへの関数入力</a></li><li class="chapter-item expanded "><a href="day01/http-request.html"><strong aria-hidden="true">1.7.</strong> httpリクエストの実装</a></li><li class="chapter-item expanded "><a href="day01/ui.html"><strong aria-hidden="true">1.8.</strong> 表示の調整</a></li><li class="chapter-item expanded "><a href="day01/work.html"><strong aria-hidden="true">1.9.</strong> 課題（任意）</a></li></ol></li><li class="chapter-item expanded "><a href="day02/index.html"><strong aria-hidden="true">2.</strong> Day02</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day02/about-nodejs.html"><strong aria-hidden="true">2.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="day02/prepare-api.html"><strong aria-hidden="true">2.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="day02/install-express.html"><strong aria-hidden="true">2.3.</strong> Expressのインストール</a></li><li class="chapter-item expanded "><a href="day02/omikuji-api01.html"><strong aria-hidden="true">2.4.</strong> API実装1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="day02/add-command.html"><strong aria-hidden="true">2.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="day02/omikuji-api02.html"><strong aria-hidden="true">2.6.</strong> API実装2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="day02/janken-api.html"><strong aria-hidden="true">2.7.</strong> API実装3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="day02/summary.html"><strong aria-hidden="true">2.8.</strong> まとめ</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -859,6 +859,605 @@ export const Booklist = ({ language, getData }) =&gt; {
 <li>別の API を使用してデータをブラウザに表示．</li>
 </ul>
 <p>今回はここまで( `･ω･)b</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="day02"><a class="header" href="#day02">Day02</a></h1>
+<h2 id="今回のゴール-1"><a class="header" href="#今回のゴール-1">今回のゴール</a></h2>
+<ul>
+<li>Node.js と Express で簡単な API を体験する．</li>
+<li>実装のしかたを複数学び，見通しの良いコードの構造を把握する．</li>
+<li>サーバで動作する「おみくじ」と「じゃんけん」を実装する．</li>
+</ul>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="nodejs-とは"><a class="header" href="#nodejs-とは">Node.js とは</a></h1>
+<p>サーバで JavaScript を動かす環境のこと．
+「Node.js」という言語があるわけではないので認識違いに注意．</p>
+<h2 id="web-アプリケーションの仕組みapi-を実装する場合"><a class="header" href="#web-アプリケーションの仕組みapi-を実装する場合">Web アプリケーションの仕組み（API を実装する場合）</a></h2>
+<p>基本は「リクエスト」と「レスポンス」．PHP など他の言語と同じ．</p>
+<p>サーバ側でリクエストを受ける URI（Uniform Resource Identifier の略．URL とほぼ同義）を用意しておき，そこにクライアント（ブラウザなど）からリクエストを送信する．</p>
+<p>リクエストを受けると記述されたコードが実行され，データなどが返される（JSON 形式が多い）．</p>
+<h2 id="express"><a class="header" href="#express">Express</a></h2>
+<p>Express は Node.js を用いて Web アプリケーションを構築するためのフレームワーク．</p>
+<p>Node.js は自由度が非常に高く，そのまま書くと人によって千差万別となる．したがって，Web 開発をするときは Express を使用するのがデファクトスタンダードとなっている状態である（他にもフレームワークは存在するが，Express を基にしたものが多い）．</p>
+<p>Express は構造が簡易であり，API の実装も非常に簡単である．今回は Express を使っていくつかの API を実装してみる．</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="api-実装の準備"><a class="header" href="#api-実装の準備">API 実装の準備</a></h1>
+<p>Node.js のプロジェクトを実装し，動かしてみる．</p>
+<h2 id="プロジェクト作成"><a class="header" href="#プロジェクト作成">プロジェクト作成</a></h2>
+<p>プロジェクトを作成するには，下記のコマンドを実行する．</p>
+<pre><code class="language-bash">$ mkdir express-project &amp;&amp; cd express-project
+$ npm init
+</code></pre>
+<p><code>npm</code>は<code>node package module</code>の略であり，Node.js 上で動くパッケージを管理するツールである．Node.js で開発を行う場合はこれを用いることがほとんどである．</p>
+<p>ダイアログが出てくるので，答えていく．全部そのまま Enter で OK．</p>
+<pre><code class="language-bash">This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help init` for definitive documentation on these fields
+and exactly what they do.
+
+Use `npm install &lt;pkg&gt;` afterwards to install a package and
+save it as a dependency in the package.json file.
+
+Press ^C at any time to quit.
+package name: (express-project)
+version: (1.0.0)
+description:
+entry point: (index.js)
+test command:
+git repository:
+keywords:
+author:
+license: (ISC)
+About to write to /home/taroosg/Desktop/express-project/package.json:
+
+{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+
+Is this OK? (yes)
+
+</code></pre>
+<p>完了したらエディタで開く．</p>
+<p>エディタで開いたら<code>package.json</code>が作成されているので，中身を確認する．</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+</code></pre>
+<table><thead><tr><th>項目</th><th>意味合い</th></tr></thead><tbody>
+<tr><td>name</td><td>プロダクト名．</td></tr>
+<tr><td>version</td><td>プロダクトのバージョン．</td></tr>
+<tr><td>description</td><td>プロダクトの説明．</td></tr>
+<tr><td>main</td><td>プロダクトをパッケージとして公開する場合に入り口となるファイルを指定する．</td></tr>
+<tr><td>script</td><td>開発者が任意に作成するコマンド．</td></tr>
+<tr><td>auther</td><td>開発者情報．1 人のみ記述する．</td></tr>
+<tr><td>license</td><td>ライセンス情報．</td></tr>
+</tbody></table>
+<h2 id="packagejsonに追記"><a class="header" href="#packagejsonに追記"><code>package.json</code>に追記</a></h2>
+<p>下記の内容を追記する．</p>
+<pre><code class="language-json">&quot;type&quot;: &quot;module&quot;,
+</code></pre>
+<p>追記後は以下のような状態．</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+</code></pre>
+<blockquote>
+<p><strong>💡 Key Point</strong></p>
+<p><code>package.json</code>に<code>&quot;type&quot;: &quot;module&quot;</code>を追記することで<code>import</code>形式で別ファイルを読みこむことができる．
+この追記を行わない場合，外部ファイルを読み込む際には<code>require()</code>関数を用いる．
+前回のReactなどでは<code>import</code>が基本となっており，こちらに揃えておいたほうがメリットが大きくオススメである．</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="expressのインストール"><a class="header" href="#expressのインストール">Expressのインストール</a></h1>
+<p>今回は Express のフレームワークを使用するため，下記コマンドで</p>
+<pre><code class="language-bash">$ npm i express
+</code></pre>
+<p>実行結果</p>
+<pre><code class="language-bash">+ express@4.17.1
+added 50 packages from 37 contributors and audited 50 packages in 1.687s
+found 0 vulnerabilities
+
+</code></pre>
+<p>完了したら，再度<code>package.json</code>を開き，以下の内容が追加されていることを確認する．</p>
+<pre><code class="language-json">&quot;dependencies&quot;: {
+  &quot;express&quot;: &quot;^4.17.1&quot;
+}
+
+</code></pre>
+<table><thead><tr><th>項目</th><th>意味合い</th></tr></thead><tbody>
+<tr><td>dependencies</td><td>このプロダクトが依存するパッケージの一覧．</td></tr>
+</tbody></table>
+<p><code>dependencies</code>の中にインストールしたパッケージが追加される仕組み．パッケージとはいろいろな機能をまとめてインストールできるようにしたものであり，様々なものが公開されている．ライブラリとほぼ同義．</p>
+<p>また，インストールされたパッケージは同時に作成される<code>node_modules</code>ディレクトリ内に保存される．このディレクトリはパッケージ専用なので，自分で触ることは殆ど無い．</p>
+<p><code>package-lock.json</code>には実際にインストールしたパッケージのバージョンが記載される．基本的に触らない．</p>
+<p><code>package.json</code>にはプロダクトに必要なパッケージがすべて記載される．コマンド<code>npm install</code>を実行すると，ここに記載されたパッケージがすべてインストールされる．</p>
+<p>プロダクトで使用されているライブラリなどを確認できるため，他の人が書いたコードを見るときもチェックすることをオススメ．</p>
+<h2 id="gitignoreファイルの作成"><a class="header" href="#gitignoreファイルの作成"><code>.gitignore</code>ファイルの作成</a></h2>
+<p>ソースコードを Git で管理することは周知のことであるが，プロジェクト内には Git で管理したくないファイルやディレクトリも存在する．</p>
+<p>例えば，上記で作成された<code>node_modules</code>ディレクトリにはインストールしたパッケージだけでなく，「パッケージが必要としている別のパッケージ」もインストールされる．そのため，これらすべてを Git で管理するとファイル数が膨大になってしまう．</p>
+<p>そのため，<code>node_modules</code>ディレクトリ（とその他 Git 管理したくないファイル）を<code>.gitignore</code>と呼ばれるファイルにリストアップすることで Git の管理外に措くことができる．</p>
+<p>エディタで<code>.gitignore</code>を作成する．必ずプロジェクト直下に作成すること．</p>
+<p>作成したら以下の内容を記述しよう．<code>.gitignore</code>から見た相対パスで Git 管理外にしたいファイルやディレクトリを指定している．</p>
+<pre><code class="language-txt">/node_modules
+</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="api実装1おみくじ初級編"><a class="header" href="#api実装1おみくじ初級編">API実装1（おみくじ初級編）</a></h1>
+<h2 id="実行用ファイルの作成"><a class="header" href="#実行用ファイルの作成">実行用ファイルの作成</a></h2>
+<p>実行するための<code>app.js</code>ファイルを作成する．エディタから作成すれば OK．</p>
+<p>ファイルを作成したら下記の内容を記述する．</p>
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
+const app = express();
+const port = 3001;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.send(&quot;Hello Node.js!&quot;);
+});
+
+app.listen(port, () =&gt; {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+</code></pre>
+<p>上記のコードは<code>app.js</code>が実行されると，<code>http://localhost:3001</code>でサーバが立ち上がることを示している．</p>
+<p>また，<code>http://localhost:3001/</code>に<code>GET</code>でリクエストが来ると，<code>Hello Node.js!</code>というレスポンスを返すよう記述している．</p>
+<h2 id="動作確認"><a class="header" href="#動作確認">動作確認</a></h2>
+<p>上記を記述したら，ターミナルで以下のコマンドを実行し，サーバを起動する．実行する際には作業ディレクトリに移動しておくこと．</p>
+<pre><code class="language-bash">$ node app.js
+</code></pre>
+<p>実行結果．下記のようにサーバが立ち上がれば成功．</p>
+<pre><code class="language-bash">Example app listening at http://localhost:3001
+</code></pre>
+<p>立ち上がったら，別のターミナルで下記コマンドを実行し，リクエストとレスポンスが適切に処理されることを確認する．</p>
+<p>コマンドを実行してメッセージが返ってくれば成功．</p>
+<pre><code class="language-bash">$ curl localhost:3001
+Hello Node.js!
+</code></pre>
+<p><code>curl</code>はターミナルから http リクエストを送るコマンド．インストールされていない場合はインストールしておく．</p>
+<p>サーバを終了する場合は<code>ctrl + c</code>で終了できる．</p>
+<h2 id="uri-の追加"><a class="header" href="#uri-の追加">URI の追加</a></h2>
+<p><code>/</code>以外にも URI と作成してみる．</p>
+<p><code>app.js</code>を以下のように編集する．<code>/omikuji</code>，<code>/janken</code>の 2 つの URI を追加し，各レスポンスを JSON 形式で返すよう変更している．</p>
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+
+const app = express();
+const port = 3001;
+
+// 編集
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.json({
+    uri: &quot;/&quot;,
+    message: &quot;Hello Node.js!&quot;,
+  });
+});
+
+// 追加
+app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
+  res.json({
+    uri: &quot;/omikuji&quot;,
+    message: &quot;This is Omikuji URI!&quot;,
+  });
+});
+
+// 追加
+app.get(&quot;/janken&quot;, (req, res) =&gt; {
+  res.json({
+    uri: &quot;/janken&quot;,
+    message: &quot;This is Janken URI!&quot;,
+  });
+});
+
+app.listen(port, () =&gt; {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+</code></pre>
+<h2 id="動作確認-1"><a class="header" href="#動作確認-1">動作確認</a></h2>
+<p>記述したら，再度下記コマンドでサーバを立ち上げる．</p>
+<pre><code class="language-bash">$ node app.js
+</code></pre>
+<p>別のターミナルから，<code>curl</code>コマンドで動作を確認する．</p>
+<pre><code class="language-bash">$ curl localhost:3001/
+{&quot;uri&quot;:&quot;/&quot;,&quot;message&quot;:&quot;Hello Node.js!&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;uri&quot;:&quot;/omikuji&quot;,&quot;message&quot;:&quot;This is Omikuji URI!&quot;}
+
+$ curl localhost:3001/janken
+{&quot;uri&quot;:&quot;/janken&quot;,&quot;message&quot;:&quot;This is Janken URI!&quot;}
+
+</code></pre>
+<p>簡単であるがこれだけで API を実装することができた．</p>
+<h2 id="演習おみくじ処理の追加"><a class="header" href="#演習おみくじ処理の追加">【演習】おみくじ処理の追加</a></h2>
+<p>実際におみくじの処理を追加してみよう．</p>
+<p><code>app.js</code>の以下の部分におみくじの処理を書いて動作を確認しよう．サーバを起動し，以下のような結果になるように実装する．何回か実行して異なる結果が返ってくれば OK！</p>
+<pre><code class="language-bash">$ curl localhost:3001/omikuji
+{&quot;uri&quot;:&quot;/omikuji&quot;,&quot;message&quot;:&quot;大吉&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;uri&quot;:&quot;/omikuji&quot;,&quot;message&quot;:&quot;凶&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;uri&quot;:&quot;/omikuji&quot;,&quot;message&quot;:&quot;中吉&quot;}
+
+</code></pre>
+<p>実装例：</p>
+<pre><code class="language-js">// app.js
+
+// 省略
+
+app.get(&quot;/omikuji&quot;, (req, res) =&gt; {
+  const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
+  const min = 0;
+  const max = omikuji.length - 1;
+  const index = Math.floor(Math.random() * (max - min + 1)) + min;
+  res.json({
+    uri: &quot;/omikuji&quot;,
+    message: omikuji[index],
+  });
+});
+
+// 省略
+
+</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="コマンドの追加"><a class="header" href="#コマンドの追加">コマンドの追加</a></h1>
+<p>ここまで，下記コマンドでサーバを実行していた．</p>
+<pre><code class="language-bash">$ node app.js
+</code></pre>
+<p>これとは別に，プロジェクトに対して自分でコマンドを作成することができる．</p>
+<p>コマンドを追加する場合は<code>package.json</code>に記述する．下記の内容を追記してみよう．</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;express-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+    &quot;__comment&quot;: &quot;↓ここを追記（この行は書かなくてOK）&quot;,
+    &quot;start&quot;: &quot;node app.js&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;,
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^4.17.1&quot;
+  }
+}
+</code></pre>
+<p>このように記述すると，<code>npm start</code>というコマンドを実行すると<code>node app.js</code>が実行される．</p>
+<p>プロジェクトが複雑になると，場面に応じて様々なコマンドを実行したい場合がある．そのようなときに，統一されたコマンドを準備しておくことで開発をスムーズに進めることができる．</p>
+<p>下記を実行するとサーバが立ち上がる．これまでと同じ動作であることを確認しよう．</p>
+<pre><code class="language-bash">$ npm start
+</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="api実装2おみくじ中級編"><a class="header" href="#api実装2おみくじ中級編">API実装2（おみくじ中級編）</a></h1>
+<p>簡単な API を実装するだけならば，ここまでの内容で十分である．おみくじの処理部分に適当な記述をすれば問題ないであろう．</p>
+<p>しかし，コードの記述量が増えてくると，見通しが悪くなってしまい，保守管理にも支障をきたす．</p>
+<p>そこで，処理中の役割毎に別ファイルに記述できるようにディレクトリ構成を変更する（責務の分離，などと呼ばれる）．</p>
+<h2 id="ディレクトリ構造と役割"><a class="header" href="#ディレクトリ構造と役割">ディレクトリ構造と役割</a></h2>
+<p>大きく<code>routes</code>，<code>controllers</code>，<code>services</code>の 3 つに分離する．DB などと組み合わせてデータを扱う場合は他に<code>model</code>を用意するが今回は省略する．</p>
+<p>各要素の役割は以下の通り．</p>
+<table><thead><tr><th>項目</th><th>意味合い</th></tr></thead><tbody>
+<tr><td>routes</td><td>URI と実行する処理の対応．</td></tr>
+<tr><td>controllers</td><td>リクエストパラメータの検証，レスポンス送信．</td></tr>
+<tr><td>services</td><td>リクエストに対する処理のメインロジックを記述．</td></tr>
+<tr><td>repositories</td><td>DB関連の処理を記述．今回は出番なし．</td></tr>
+</tbody></table>
+<p>このような役割分担とするため，以下のようにディレクトリとファイルを作成する．</p>
+<pre><code class="language-bash">.
+├── app.js
+├── controllers
+│   └── omikuji.controller.js
+├── node_modules
+├── package.json
+├── package-lock.json
+├── routes
+│   └── omikuji.route.js
+└── services
+    └── omikuji.service.js
+
+</code></pre>
+<h2 id="実行ファイルの実装"><a class="header" href="#実行ファイルの実装">実行ファイルの実装</a></h2>
+<p><code>app.js</code>を以下のように編集する．</p>
+<p>ルーティングは routes 以下のファイルに任せ，指定したファイルを読み込むよう記述．</p>
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+// おみくじのrouterを読み込む
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+
+const app = express();
+const port = 3001;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.json({
+    uri: &quot;/&quot;,
+    message: &quot;Hello Node.js!&quot;,
+  });
+});
+
+// おみくじのルーティングを変更
+app.use(&quot;/omikuji&quot;, (req, res) =&gt; omikujiRouter(req, res));
+
+app.get(&quot;/janken&quot;, (req, res) =&gt; {
+  res.json({ message: &quot;This is Janken URI!&quot; });
+});
+
+app.listen(port, () =&gt; {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+</code></pre>
+<h2 id="ルーティングの実装"><a class="header" href="#ルーティングの実装">ルーティングの実装</a></h2>
+<p><code>routes/omikuji.route.js</code>に以下の内容を記述する．</p>
+<p>URI と対応するコントローラの処理を記述する．</p>
+<pre><code class="language-js">// routes/omikuji.route.js
+
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/omikuji.controller.js&quot;
+
+export const omikujiRouter = express.Router();
+
+omikujiRouter.get(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
+
+</code></pre>
+<h2 id="コントローラの実装"><a class="header" href="#コントローラの実装">コントローラの実装</a></h2>
+<p><code>controllers/omikuji.controller.js</code>に以下の内容を記述する．</p>
+<p>サービスを呼び出して実行したいメソッドを指定し，結果によってレスポンスを指定する．</p>
+<pre><code class="language-js">// controllers/omikuji.controller.js
+
+import { getOmikuji } from &quot;../services/omikuji.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
+  try {
+    const result = await getOmikuji({});
+    return res.status(200).json({
+      status: 200,
+      result: result,
+      message: &quot;Succesfully get Omikuji!&quot;,
+    });
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+</code></pre>
+<h2 id="サービスの実装"><a class="header" href="#サービスの実装">サービスの実装</a></h2>
+<p><code>services/omikuji.service.js</code>に以下の内容を記述する．</p>
+<p>サービスでは実行したいロジックを書く．ここでおみくじのロジックを実装している．</p>
+<pre><code class="language-js">// services/omikuji.service.js
+
+export const getOmikuji = async (query) =&gt; {
+  try {
+    const omikuji = [&quot;大吉&quot;, &quot;中吉&quot;, &quot;小吉&quot;, &quot;凶&quot;, &quot;大凶&quot;];
+    const min = 0;
+    const max = omikuji.length - 1;
+    const index = Math.floor(Math.random() * (max - min + 1)) + min;
+    return { result: omikuji[index] };
+  } catch (e) {
+    throw Error(&quot;Error while getting Omikuji.&quot;);
+  }
+};
+
+</code></pre>
+<p>処理の順序としては以下のようになる．</p>
+<pre><code class="language-txt">リクエスト               レスポンス
+   ↓                       ↑
+routes/omikuji.route.js    |
+   ↓                       |
+controllers/omikuji.controller.js
+   ↓           ↑
+ervices/omikuji.service.js
+
+</code></pre>
+<h2 id="動作確認-2"><a class="header" href="#動作確認-2">動作確認</a></h2>
+<p>サーバを立ち上げ，以下のコマンドでリクエストを送信する．</p>
+<pre><code class="language-bash">$ curl localhost:3001/omikuji
+</code></pre>
+<p>おみくじの結果が返ってくれば成功．数回実行し，異なる結果が返ってくることを確認しておこう．</p>
+<pre><code class="language-bash">$ curl localhost:3001/omikuji
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;result&quot;:&quot;凶&quot;},&quot;message&quot;:&quot;Succesfully get Omikuji!&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;result&quot;:&quot;大凶&quot;},&quot;message&quot;:&quot;Succesfully get Omikuji!&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;result&quot;:&quot;中吉&quot;},&quot;message&quot;:&quot;Succesfully get Omikuji!&quot;}
+
+$ curl localhost:3001/omikuji
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;result&quot;:&quot;大吉&quot;},&quot;message&quot;:&quot;Succesfully get Omikuji!&quot;}
+
+</code></pre>
+<p>ユーザに返すレスポンスを変更したい場合はコントローラを，処理の内容を更新したい場合はサービスを書き換えれば良い．このように，各責務を別の場所に置くことでメンテナンスしやすいプロダクトになる．</p>
+<p>これでおみくじの実装は完了である．</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="api実装3じゃんけん"><a class="header" href="#api実装3じゃんけん">API実装3（じゃんけん）</a></h1>
+<p>おみくじの実装ができたので，ユーザ側からデータを送信してじゃんけんの結果を返す API を実装してみる．</p>
+<h2 id="アプリケーションの全体像"><a class="header" href="#アプリケーションの全体像">アプリケーションの全体像</a></h2>
+<p>ユーザはリクエスト時に<code>post</code>メソッドで自分の手を送信する．サーバ側はユーザから送信された手に対してランダムで手を出し，「ユーザの手」「サーバの手」「勝敗」をレスポンスで返却する．</p>
+<p>下図を参考に，必要なファイルを作成する．</p>
+<pre><code class="language-bash">.
+├── app.js
+├── controllers
+│   ├── janken.controller.js
+│   └── omikuji.controller.js
+├── node_modules
+├── package.json
+├── package-lock.json
+├── routes
+│   ├── janken.route.js
+│   └── omikuji.route.js
+└── services
+    ├── janken.service.js
+    └── omikuji.service.js
+
+</code></pre>
+<h2 id="各ファイルの実装"><a class="header" href="#各ファイルの実装">各ファイルの実装</a></h2>
+<p><code>app.js</code>を以下のように編集する．</p>
+<p>じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには<code>express.urlencoded({ extended: true })</code>とJSONデータの扱いで<code>express.json()</code>が必要になるため読み込んでいる．</p>
+<pre><code class="language-js">// app.js
+
+import express from &quot;express&quot;;
+import { omikujiRouter } from &quot;./routes/omikuji.route.js&quot;;
+// じゃんけんのルーティングを読み込む
+import { jankenRouter } from &quot;./routes/janken.route.js&quot;;
+
+const app = express();
+// ↓POSTでデータを受け取るために必要
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+const port = 3001;
+
+app.get(&quot;/&quot;, (req, res) =&gt; {
+  res.json({
+    uri: &quot;/&quot;,
+    message: &quot;Hello Node.js!&quot;,
+  });
+});
+
+app.use(&quot;/omikuji&quot;, (req, res) =&gt; omikujiRouter(req, res));
+// じゃんけんのルーティングを追加
+app.use(&quot;/janken&quot;, (req, res) =&gt; jankenRouter(req, res));
+
+app.listen(port, () =&gt; {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
+</code></pre>
+<h2 id="ルーティングの実装-1"><a class="header" href="#ルーティングの実装-1">ルーティングの実装</a></h2>
+<p><code>routes/janken.route.js</code>に以下の内容を記述する．</p>
+<p>URI と対応するコントローラの処理を記述する．今回は POST で受け取る点と送信されてきたデータが<code>req</code>に入っている点に注意．</p>
+<pre><code class="language-js">// routes/janken.route.js
+
+import express from &quot;express&quot;;
+import { getResult } from &quot;../controllers/janken.controller.js&quot;;
+
+export const jankenRouter = express.Router();
+
+jankenRouter.post(&quot;/&quot;, (req, res) =&gt; getResult(req, res));
+
+</code></pre>
+<h2 id="コントローラの実装-1"><a class="header" href="#コントローラの実装-1">コントローラの実装</a></h2>
+<p><code>controllers/janken.controller.js</code>に以下の内容を記述する．</p>
+<p>おみくじの場合とほぼ同じ．</p>
+<pre><code class="language-js">// controllers/janken.controller.js
+
+import { getJanken } from &quot;../services/janken.service.js&quot;;
+
+export const getResult = async (req, res, next) =&gt; {
+  try {
+    const result = await getJanken(req.body);
+    return res.status(200).json({
+      status: 200,
+      result: result,
+      message: &quot;Succesfully get Janken!&quot;,
+    });
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+</code></pre>
+<h2 id="サービスの実装-1"><a class="header" href="#サービスの実装-1">サービスの実装</a></h2>
+<p><code>services/janken.service.js</code>に以下の内容を記述する．</p>
+<p>とりあえず毎回同じ結果を返している．</p>
+<pre><code class="language-js">// services/janken.service.js
+
+export const getJanken = async (query) =&gt; {
+  try {
+    return { yourHand: query.myhand, comHand: &quot;グー&quot;, result: &quot;テスト中&quot; };
+  } catch (e) {
+    throw Error(&quot;Error while getting Janken&quot;);
+  }
+};
+
+</code></pre>
+<h2 id="動作確認-3"><a class="header" href="#動作確認-3">動作確認</a></h2>
+<p>サーバを立ち上げて，<code>curl</code>コマンドでリクエストを送信する．POST する場合は下記の書式で実行する．</p>
+<p>結果が返ってくれば成功．</p>
+<pre><code class="language-bash">$ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&quot;:&quot;パー&quot;}' localhost:3001/janken
+
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;yourHand&quot;:&quot;パー&quot;,&quot;comHand&quot;:&quot;グー&quot;,&quot;result&quot;:&quot;テスト中&quot;},&quot;message&quot;:&quot;Succesfully get Janken!&quot;}
+</code></pre>
+<p>サーバに対して<code>{&quot;myhand&quot;:&quot;パー&quot;}</code>という JSON 形式のデータを POST メソッドで送信している．</p>
+<h2 id="演習じゃんけんの実装"><a class="header" href="#演習じゃんけんの実装">【演習】じゃんけんの実装</a></h2>
+<p>上記で記述した<code>services/janken.service.js</code>にじゃんけんのロジックを実装してみよう．</p>
+<p>サーバを立ち上げて，以下のようにじゃんけんができれば OK！</p>
+<pre><code class="language-js">$ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&quot;:&quot;グー&quot;}' localhost:3001/janken
+
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;yourHand&quot;:&quot;グー&quot;,&quot;comHand&quot;:&quot;チョキ&quot;,&quot;result&quot;:&quot;Win&quot;},&quot;message&quot;:&quot;Succesfully get Janken!&quot;}
+
+$ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&quot;:&quot;チョキ&quot;}' localhost:3001/janken
+
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;yourHand&quot;:&quot;チョキ&quot;,&quot;comHand&quot;:&quot;パー&quot;,&quot;result&quot;:&quot;Win&quot;},&quot;message&quot;:&quot;Succesfully get Janken!&quot;}
+
+$ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&quot;:&quot;パー&quot;}' localhost:3001/janken
+
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;yourHand&quot;:&quot;パー&quot;,&quot;comHand&quot;:&quot;チョキ&quot;,&quot;result&quot;:&quot;Lose&quot;},&quot;message&quot;:&quot;Succesfully get Janken!&quot;}
+
+</code></pre>
+<p>じゃんけんができたら，グーチョキパー以外の手を送信すると NG なメッセージが返す実装にもチャレンジ！</p>
+<pre><code class="language-bash">$ curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;myhand&quot;:&quot;無敵のアレ&quot;}' localhost:3001/janken
+
+{&quot;status&quot;:200,&quot;result&quot;:{&quot;message&quot;:&quot;Invalid hand...&quot;},&quot;message&quot;:&quot;Succesfully get Janken!&quot;}
+
+</code></pre>
+<p>実装例：</p>
+<pre><code class="language-js">// services/janken.service.js
+
+export const getJanken = async (query) =&gt; {
+  try {
+    const hand = [&quot;グー&quot;, &quot;チョキ&quot;, &quot;パー&quot;];
+    const myIndex = hand.indexOf(query.myhand);
+    if (myIndex === -1) return { message: &quot;Invalid hand...&quot; };
+    const comIndex = Math.floor(Math.random() * 3);
+    const resultSheet = [
+      [&quot;Draw&quot;, &quot;Win&quot;, &quot;Lose&quot;],
+      [&quot;Lose&quot;, &quot;Draw&quot;, &quot;Win&quot;],
+      [&quot;Win&quot;, &quot;Lose&quot;, &quot;Draw&quot;],
+    ];
+    return {
+      yourHand: query.myhand,
+      comHand: hand[comIndex],
+      result: resultSheet[myIndex][comIndex],
+    };
+  } catch (e) {
+    throw Error(&quot;Error while getting Janken&quot;);
+  }
+};
+
+</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h1>
+<p>今回は Node.js を用いて API サーバを実装してみた．</p>
+<p>おみくじやじゃんけんの実装を通じて，必要な処理に含まれる責務を分離し，別々のファイルに実装した．</p>
+<p>Node.js はシンプルな構成で柔軟な API を構築できる魅力的な技術である．興味を持った方は，じゃんけんの勝率変更や DB 連携などにも挑戦してみると良いだろう．</p>
+<p>今回は以上である( `･ω･)b</p>
 
                     </main>
 
