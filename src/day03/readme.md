@@ -77,27 +77,24 @@ Node.js で CloudFirestore を操作するには，設定ファイルを用意�
 ## JSON ファイルの配置と構成ファイルの作成
 
 - プロジェクト直下に`model`ディレクトリを作成する．`model`ディレクトリの中に ↑ でダウンロードした json ファイルを移動する．
-
 - `model`ディレクトリの中に`firebase.js`ファイルを作成する．
-
-- `firebase.js`ファイルに ↑ で開いたコンソール画面から Admin SDK 構成スニペットをコピペする．
-- `var serviceAccount = require("...");`の部分の`require()`内を json ファイルのパスに書き換える．
-- 最下行に`module.exports = admin;`を追記する．
+- 下記の内容を記述する．
+- `const serviceAccount = require('...');`の部分の`require()`内を json ファイルのパスに書き換える．
 
 `firebase.js`は以下のような状態．
 
 ```js
-// 要検証
-// import * as admin from 'firebase-admin';
-var admin = require("firebase-admin");
+import admin from 'firebase-admin';
 
-var serviceAccount = require("./hogehoge-22c0e-firebase-adminsdk-hhdd7-1234567890.json");
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const serviceAccount = require('./hoge-firebase-adminsdk-fuga-piyo.json')
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount)
 });
-module.exports = admin;
-// export default admin;
+
+export default admin;
 
 ```
 
@@ -109,7 +106,7 @@ module.exports = admin;
 
 ```
 /node_modules
-/model/hogehoge-22c0e-firebase-adminsdk-hhdd7-1234567890.json
+/model/hoge-firebase-adminsdk-fuga-piyo.json
 ```
 
 ## 必要なパッケージのインストール
@@ -130,13 +127,18 @@ added 120 packages from 109 contributors and audited 230 packages in 21.873s
 
 ```js
 // importに書き換え
-const express = require("express");
+import express from "express";
+import { omikujiRouter } from "./routes/omikuji.route.js";
+import { jankenRouter } from "./routes/janken.route.js";
+import { tweetRouter } from "./routes/tweet.route.js";
+
 const app = express();
 
+const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 const port = 3001;
+
 const omikujiRouter = require("./routes/omikuji.route");
 const jankenRouter = require("./routes/janken.route");
 // ↓追加
@@ -172,31 +174,29 @@ app.listen(port, () => {
 まずはルーティングを作成．
 
 ```js
-// routes/todo.route.js
-const express = require("express");
-const router = express.Router();
+// routes/tweet.route.js
+import express from "express";
+import { readTweetData } from "../controllers/tweet.controller.js";
 
-const TodoController = require("../controllers/todo.controller");
+export const tweetRouter = express.Router();
 
-router.get("/", (req, res) => TodoController.readTodoData(req, res));
-
-module.exports = router;
+tweetRouter.get("/", (req, res) => readTweetData(req, res));
 
 ```
 
 コントローラではリクエストとレスポンスを定義．
 
 ```js
-// controllers/todo.controller.js
-const TodoService = require("../services/todo.service");
+// controllers/tweet.controller.js
+import { getTweetData, insertTodoData } from "../services/tweet.service.js"
 
-exports.readTodoData = async (req, res, next) => {
+export const readTweetData = async (req, res, next) => {
   try {
-    const result = await TodoService.readTodoData();
+    const result = await getTweetData();
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully get Todo Data!",
+      message: "Succesfully get Tweet Data!",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -205,13 +205,15 @@ exports.readTodoData = async (req, res, next) => {
 
 ```
 
-サービスでは一旦決まったメッセージを返す．
+サービスではリポジトリの関数を呼び出す．
 
 ```js
-// services/todo.service.js
-exports.readTodoData = async () => {
+// services/tweet.service.js
+import { findAll } from '../repositories/tweet.repository.js';
+
+export const getTweetData = async () => {
   try {
-    return { message: "OK" };
+    return findAll();
   } catch (e) {
     throw Error("Error while getting Todo Data");
   }
@@ -219,17 +221,27 @@ exports.readTodoData = async () => {
 
 ```
 
+リポジトリは一旦決まったメッセージを返す．
+
+```js
+// repositories/tweet.repository.js
+export const findAll = () => {
+  return { message: "OK" };
+};
+
+```
+
 動作確認する．以下のコマンドでレスポンスが返ってくれば OK．
 
 ```bash
-$ curl localhost:3001/todo
+$ curl localhost:3001/tweet
 
 {
   "status": 200,
   "result": {
     "message": "OK"
   },
-  "message": "Succesfully get Todo Data!"
+  "message": "Succesfully get Tweet Data!"
 }
 
 ```
@@ -247,16 +259,14 @@ $ curl localhost:3001/todo
 
 ```js
 // routes/todo.route.js
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import { readTweetData, createTweetData } from "../controllers/tweet.controller.js";
 
-const TodoController = require("../controllers/todo.controller");
+export const tweetRouter = express.Router();
 
-router.get("/", (req, res) => TodoController.readTodoData(req, res));
+tweetRouter.get("/", (req, res) => readTweetData(req, res));
 // ↓追加
-router.post("/", (req, res) => TodoController.createTodoData(req, res));
-
-module.exports = router;
+tweetRouter.post("/", (req, res) => createTweetData(req, res));
 
 ```
 
@@ -264,26 +274,27 @@ module.exports = router;
 
 ```js
 // controllers/todo.controller.js
-const TodoService = require("../services/todo.service");
+import { getTweetData, insertTodoData } from "../services/tweet.service.js"
 
-exports.readTodoData = async (req, res, next) => {
+export const readTweetData = async (req, res, next) => {
   // 省略
 };
 
 // ↓追加
-exports.createTodoData = async (req, res, next) => {
+export const createTweetData = async (req, res, next) => {
   try {
-    const { todo, deadline } = req.body;
-    if (!(todo && deadline)) {
+    const { tweet, user_id } = req.body;
+    if (!(tweet && user_id)) {
       throw new Error("something is blank");
     }
-    const result = await TodoService.createTodoData({
-      data: { todo: todo, deadline: deadline },
+    const result = await insertTodoData({
+      data: { tweet: tweet, user_id: user_id },
     });
+    console.log(result);
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully post Todo Data!",
+      message: "Succesfully post Tweet Data!",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -292,40 +303,65 @@ exports.createTodoData = async (req, res, next) => {
 
 ```
 
-サービスでは受け取ったデータに`created_at`など必要なデータを追加し，Firebase に送信する．本来は Firebase にデータを保存する処理は`repositories`など別レイヤーに分割することが望ましい．
-
-また，Cloud Firestore では日時が独自形式なので，`deadline`を変換している．
+サービスではロジックが必要な場合は記述するが，今回はデータをそのまま渡すだけ．実際に Firebase にデータを保存する処理は`repositories`レイヤーに分割する．
 
 collection が存在しない場合は自動的に作成される．処理が実行されると，作成された Document の ID と追加データが返される．
 
 ```js
 // services/todo.service.js
 
-// ↓追加
-const admin = require("../model/firebase");
-const db = admin.firestore();
+import { findAll, store } from '../repositories/tweet.repository.js';
 
-exports.readTodoData = async () => {
+export const getTweetData = async () => {
   // 省略
 };
 
-// ↓追加
-exports.createTodoData = async ({ data }) => {
+export const insertTodoData = async ({ data }) => {
+  try {
+    const ref = await store(data);
+    return {
+      id: ref.id,
+      data: data,
+    };
+  } catch (e) {
+    throw Error("Error while posting Tweet Data");
+  }
+};
+
+```
+
+リポジトリにデータを保存する処理を作成する．
+
+
+
+
+
+このへん説明追加する
+
+
+
+
+```js
+// repositories/tweet.repository.js
+
+import admin from "../model/firebase.js";
+const db = admin.firestore();
+
+export const findAll = () => {
+  return { message: "OK" };
+};
+
+export const store = async (data) => {
   try {
     const postData = {
       ...data,
-      deadline: admin.firestore.Timestamp.fromDate(new Date(data.deadline)),
-      done: false,
       created_at: admin.firestore.Timestamp.now(),
       updated_at: admin.firestore.Timestamp.now(),
     };
-    const ref = await db.collection("todo").add(postData);
-    return {
-      id: ref.id,
-      data: postData,
-    };
+    const ref = await db.collection("tweet").add(postData);
+    return ref;
   } catch (e) {
-    throw Error("Error while posting Todo Data");
+    throw Error("Error while store Tweet Data");
   }
 };
 
@@ -338,7 +374,7 @@ exports.createTodoData = async ({ data }) => {
 動作が確認できたら，2-3 件データを入れておこう．
 
 ```bash
-$ curl -X POST -H "Content-Type: application/json" -d '{"todo":"node.js","deadline":"2021-02-17"}' localhost:3001/todo
+$ curl -X POST -H "Content-Type: application/json" -d '{"tweet":"node.js","user_id":1}' localhost:3002/tweet
 
 {
   "status": 200,
