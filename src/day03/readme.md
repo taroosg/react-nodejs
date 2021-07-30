@@ -300,7 +300,6 @@ export const createTweetData = async (req, res, next) => {
     const result = await insertTweetData({
       data: { tweet: tweet, user_id: user_id },
     });
-    console.log(result);
     return res.status(200).json({
       status: 200,
       result: result,
@@ -328,7 +327,7 @@ export const getAllTweetData = async () => {
 
 export const insertTweetData = async ({ data }) => {
   try {
-    const ref = await store(data);
+    const ref = await store({ data: data });
     return {
       id: ref.id,
       data: data,
@@ -361,7 +360,7 @@ export const findAll = () => {
   return { message: "OK" };
 };
 
-export const store = async (data) => {
+export const store = async ({ data }) => {
   try {
     const postData = {
       ...data,
@@ -434,7 +433,7 @@ export const findAll = async () => {
   }
 };
 
-export const store = async (data) => {
+export const store = async ({ data }) => {
   // 省略
 };
 
@@ -503,7 +502,8 @@ export const readAllTweetData = async (req, res, next) => {
 // ↓追加
 export const readOneTweetData = async (req, res, next) => {
   try {
-    const result = await getOneTweetData(req.params.id);
+    const { id } = req.params;
+    const result = await getOneTweetData({ id: id, });
     return res.status(200).json({
       status: 200,
       result: result,
@@ -530,9 +530,9 @@ export const getAllTweetData = async () => {
 };
 
 // ↓追加
-export const getOneTweetData = async (id) => {
+export const getOneTweetData = async ({ id }) => {
   try {
-    return find(id);
+    return find({ id: id });
   } catch (e) {
     throw Error("Error while getting One Tweet Data");
   }
@@ -555,7 +555,7 @@ export const findAll = async () => {
 };
 
 // ↓追加
-export const find = async (id) => {
+export const find = async ({ id }) => {
   try {
     const tweetSnapshot = await db.collection("tweet").doc(id).get();
     return {
@@ -571,15 +571,34 @@ export const find = async (id) => {
   }
 };
 
-export const store = async (data) => {
+export const store = async ({ data }) => {
   // 省略
 };
 
 ```
 
-2021/07/30
-ここから続き書く
+動作確認
 
+下記コマンドで動作をチェック．全件取得した中から適当なidを入力し，該当のデータが取得できればOK．
+
+```bash
+$ curl localhost:3002/tweet/1JXLilqdOqU7rCrwjEpA
+
+{
+  "status": 200,
+  "result": {
+    "id": "1JXLilqdOqU7rCrwjEpA",
+    "data": {
+      "updated_at": "2021-07-29T11:38:38.006Z",
+      "user_id": 1,
+      "created_at": "2021-07-29T11:38:38.005Z",
+      "tweet": "node.js"
+    }
+  },
+  "message": "Succesfully get One Tweet Data!"
+}
+
+```
 
 ### Update の処理
 
@@ -589,17 +608,16 @@ GETの場合と同様にid指定する．`/hoge`に`PUT`でリクエストを送
 
 ```js
 // routes/todo.route.js
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import { readAllTweetData, readOneTweetData, createTweetData, editTweetData } from "../controllers/tweet.controller.js";
 
-const TodoController = require("../controllers/todo.controller");
+export const tweetRouter = express.Router();
 
-router.get("/", (req, res) => TodoController.readTodoData(req, res));
-router.post("/", (req, res) => TodoController.createTodoData(req, res));
+tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
+tweetRouter.get("/:id", (req, res) => readOneTweetData(req, res));
+tweetRouter.post("/", (req, res) => createTweetData(req, res));
 // ↓追加
-router.put("/:id", (req, res) => TodoController.updateTodoData(req, res));
-
-module.exports = router;
+tweetRouter.put("/:id", (req, res) => editTweetData(req, res));
 
 ```
 
@@ -607,32 +625,36 @@ module.exports = router;
 
 ```js
 // controllers/todo.controller.js
-const TodoService = require("../services/todo.service");
+import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData } from "../services/tweet.service.js"
 
-exports.readTodoData = async (req, res, next) => {
+export const readAllTweetData = async (req, res, next) => {
   // 省略
 };
 
-exports.createTodoData = async (req, res, next) => {
+export const readOneTweetData = async (req, res, next) => {
+  // 省略
+};
+
+export const createTweetData = async (req, res, next) => {
   // 省略
 };
 
 // ↓追加
-exports.updateTodoData = async (req, res, next) => {
+export const editTweetData = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { todo, deadline, done } = req.body;
-    if (!(id && todo && deadline && typeof done === "boolean")) {
+    const { tweet, user_id } = req.body;
+    if (!(id && tweet && user_id)) {
       throw new Error("something is blank");
     }
-    const result = await TodoService.updateTodoData({
+    const result = await updateTweetData({
       id: id,
-      data: { todo: todo, deadline: deadline, done: done },
+      data: { tweet: tweet, user_id: user_id },
     });
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully update Todo Data!",
+      message: "Succesfully edit Tweet Data!",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -641,39 +663,63 @@ exports.updateTodoData = async (req, res, next) => {
 
 ```
 
-サービスでは，受け取ったデータで DB を更新する．`deadline`を Firestore の形式に変換し，同時に`updated_at`に実行日時を設定して送信する．
+
+```js
+// services/todo.service.js
+import { findAll, find, store, update } from '../repositories/tweet.repository.js';
+
+export const getAllTweetData = async () => {
+  // 省略
+};
+
+export const getOneTweetData = async ({ id }) => {
+  // 省略
+};
+
+export const insertTweetData = async ({ data }) => {
+  // 省略
+};
+
+export const updateTweetData = async ({ id, data }) => {
+  try {
+    return await update({ id, data });
+  } catch (e) {
+    throw Error("Error while updating Tweet Data");
+  }
+};
+
+```
+リポジトリでは，受け取ったデータで DB を更新する．`deadline`を Firestore の形式に変換し，同時に`updated_at`に実行日時を設定して送信する．
 
 collection 名と document 名を指定して`update()`でデータを更新できる．実行完了後には，更新ドキュメントの id と更新データを返す．
 
 ```js
-// services/todo.service.js
-const admin = require("../model/firebase");
+import admin from "../model/firebase.js";
 const db = admin.firestore();
 
-exports.readTodoData = async () => {
+export const findAll = async () => {
   // 省略
 };
 
-exports.createTodoData = async ({ data }) => {
+export const find = async ({ id }) => {
   // 省略
 };
+
+export const store = async ({ data }) => {
+  // 省略
+}
 
 // ↓追加
-exports.updateTodoData = async ({ id, data }) => {
-  try {
-    const updateData = {
-      ...data,
-      deadline: admin.firestore.Timestamp.fromDate(new Date(data.deadline)),
-      updated_at: admin.firestore.Timestamp.now(),
-    };
-    const ref = await db.collection("todo").doc(id).update(updateData);
-    return {
-      id: ref.id,
-      data: updateData,
-    };
-  } catch (e) {
-    throw Error("Error while updating Todo Data");
-  }
+export const update = async ({ id, data }) => {
+  const updateData = {
+    ...data,
+    updated_at: admin.firestore.Timestamp.now(),
+  };
+  const ref = await db.collection("tweet").doc(id).update(updateData);
+  return {
+    id: id,
+    data: updateData,
+  };
 };
 
 ```
@@ -683,26 +729,24 @@ exports.updateTodoData = async ({ id, data }) => {
 コンソール画面 or 前項の Read 処理でデータを確認し，データが更新されていれば OK！
 
 ```bash
-$ curl -X PUT -H "Content-Type: application/json" -d '{"todo":"nest.js","deadline":"2021-02-28","done":true}' localhost:3001/todo/yQjmX9lHuRM5WxIUCAjg
+$ $ curl -X PUT -H "Content-Type: application/json" -d '{"tweet":"Nest.js","user_id":2}' localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
 
 {
   "status": 200,
   "result": {
+    "id": "1JXLilqdOqU7rCrwjEpA",
     "data": {
-      "todo": "nest.js",
-      "deadline": {
-        "_seconds": 1614470400,
-        "_nanoseconds": 0
-      },
-      "done": true,
+      "tweet": "Nest.js",
+      "user_id": 2,
       "updated_at": {
-        "_seconds": 1613122454,
-        "_nanoseconds": 165000000
+        "_seconds": 1627610411,
+        "_nanoseconds": 470000000
       }
     }
   },
-  "message": "Succesfully update Todo Data!"
+  "message": "Succesfully edit Tweet Data!"
 }
+
 
 ```
 
@@ -712,18 +756,17 @@ $ curl -X PUT -H "Content-Type: application/json" -d '{"todo":"nest.js","deadlin
 
 ```js
 // routes/todo.route.js
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import { readAllTweetData, readOneTweetData, createTweetData, editTweetData, deleteTweetData } from "../controllers/tweet.controller.js";
 
-const TodoController = require("../controllers/todo.controller");
+export const tweetRouter = express.Router();
 
-router.get("/", (req, res) => TodoController.readTodoData(req, res));
-router.post("/", (req, res) => TodoController.createTodoData(req, res));
-router.put("/:id", (req, res) => TodoController.updateTodoData(req, res));
+tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
+tweetRouter.get("/:id", (req, res) => readOneTweetData(req, res));
+tweetRouter.post("/", (req, res) => createTweetData(req, res));
+tweetRouter.put("/:id", (req, res) => editTweetData(req, res));
 // ↓追加
-router.delete("/:id", (req, res) => TodoController.deleteTodoData(req, res));
-
-module.exports = router;
+tweetRouter.delete("/:id", (req, res) => deleteTweetData(req, res));
 
 ```
 
@@ -731,35 +774,39 @@ module.exports = router;
 
 ```js
 // controllers/todo.controller.js
-const TodoService = require("../services/todo.service");
 
-exports.readTodoData = async (req, res, next) => {
+import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData, destroyTodoData } from "../services/tweet.service.js"
+
+export const readAllTweetData = async (req, res, next) => {
   // 省略
 };
 
-exports.createTodoData = async (req, res, next) => {
+export const readOneTweetData = async (req, res, next) => {
   // 省略
 };
 
-exports.updateTodoData = async (req, res, next) => {
+export const createTweetData = async (req, res, next) => {
+  // 省略
+};
+
+export const editTweetData = async (req, res, next) => {
   // 省略
 };
 
 // ↓追加
-exports.deleteTodoData = async (req, res, next) => {
+export const deleteTweetData = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!id) {
       throw new Error("something is blank");
     }
-    const result = await TodoService.deleteTodoData({
-      collection: "todo",
+    const result = await destroyTodoData({
       id: id,
     });
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully delete Todo Data!",
+      message: "Succesfully delete Tweet Data!",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -768,37 +815,70 @@ exports.deleteTodoData = async (req, res, next) => {
 
 ```
 
-サービスでは DB からデータを削除する．collection 名と document 名があればデータを指定して削除することができる．
+サービス
 
 ```js
 // services/todo.service.js
-const admin = require("../model/firebase");
-const db = admin.firestore();
+import { findAll, find, store, update, destroy } from '../repositories/tweet.repository.js';
 
-exports.readTodoData = async () => {
+export const getAllTweetData = async () => {
   // 省略
 };
 
-exports.createTodoData = async ({ data }) => {
+export const getOneTweetData = async ({ id }) => {
   // 省略
 };
 
-exports.updateTodoData = async ({ id, data }) => {
+export const insertTweetData = async ({ data }) => {
+  // 省略
+};
+
+export const updateTweetData = async ({ id, data }) => {
   // 省略
 };
 
 // ↓追加
-exports.deleteTodoData = async ({ collection, id }) => {
+export const destroyTodoData = async ({ id }) => {
   try {
-    const ref = await db.collection(collection).doc(id).delete();
-    return {
-      id: id,
-    };
+    return await destroy({ id: id, });
+  } catch (e) {
+    throw Error("Error while deleting Tweet Data");
+  }
+};
+
+```
+
+リポジトリでは DB からデータを削除する．collection 名と document 名があればデータを指定して削除することができる．
+
+```js
+import admin from "../model/firebase.js";
+const db = admin.firestore();
+
+export const findAll = async () => {
+  // 省略
+};
+
+export const find = async ({ id }) => {
+  // 省略
+};
+
+export const store = async ({ data }) => {
+  // 省略
+}
+
+export const update = async ({ id, data }) => {
+  // 省略
+};
+
+// ↓追加
+export const destroy = async ({ id }) => {
+  try {
+    const ref = await db.collection('tweet').doc(id).delete();
+    return { id: id, };
   } catch (e) {
     throw Error("Error while deleting Todo Data");
   }
 };
-
 ```
 
 動作確認する．document 名 は既存のデータから適当に指定する．
@@ -806,14 +886,14 @@ exports.deleteTodoData = async ({ collection, id }) => {
 コンソール画面 or 前項の Read 処理でデータを確認し，データが削除されていれば OK！
 
 ```bash
-$ curl -X DELETE localhost:3001/todo/yQjmX9lHuRM5WxIUCAjg
+$ curl -X DELETE localhost:3001/tweet/TPev9ejBQd7WkxWRuNKk
 
 {
   "status": 200,
   "result": {
-    "id": "yQjmX9lHuRM5WxIUCAjg"
+    "id": "TPev9ejBQd7WkxWRuNKk"
   },
-  "message": "Succesfully delete Todo Data!"
+  "message": "Succesfully delete Tweet Data!"
 }
 
 ```
