@@ -29,8 +29,8 @@ Not Only SQL．SQL を前提としたデータ構造に縛られない DB．「�
 RDB と比較して後発のためにより直感的に扱えるものが多い一方で，データの格納および取得が高度に最適化されているが故に，機能性を最小限にしているものもある．
 
 - MongoDB
-- Firebase Realtime DB
-- Firebase Cloud Firestore
+- Firebase Firestore Database
+- Firebase Realtime Database
 - Redis
 - DynamoDB
 - Neo4j

@@ -13,12 +13,12 @@ Read の処理では，ルーティングとコントローラとサービスは
 ```js
 // repositories/tweet.repository.js
 
-import admin from "../model/firebase.js";
+import admin from '../model/firebase.js';
 const db = admin.firestore();
 
 export const findAll = async () => {
   try {
-    const tweetSnapshot = await db.collection("tweet").get();
+    const tweetSnapshot = await db.collection('tweet').get();
     const tweets = tweetSnapshot.docs.map((x) => {
       return {
         id: x.id,
@@ -31,7 +31,7 @@ export const findAll = async () => {
     });
     return tweets;
   } catch (e) {
-    throw Error("Error while getting Tweet Data");
+    throw Error('Error while getting Tweet Data');
   }
 };
 

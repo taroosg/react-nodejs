@@ -4,6 +4,8 @@
 
 これから実装していく機能は以下のとおり．基本的なCRUD処理を実装する．
 
+前回講義の役割分担表も参照．
+
 |URI|method|name|description|
 |-|-|-|-|
 |`/tweet`|GET|findAll|データ全件取得|
@@ -20,10 +22,11 @@
 ```js
 // app.js
 
-import express from "express";
-import { omikujiRouter } from "./routes/omikuji.route.js";
-import { jankenRouter } from "./routes/janken.route.js";
-import { tweetRouter } from "./routes/tweet.route.js";
+import express from 'express';
+import { omikujiRouter } from './routes/omikuji.route.js';
+import { jankenRouter } from './routes/janken.route.js';
+// ↓追加
+import { tweetRouter } from './routes/tweet.route.js';
 
 const app = express();
 
@@ -32,22 +35,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const port = 3001;
 
-const omikujiRouter = require("./routes/omikuji.route");
-const jankenRouter = require("./routes/janken.route");
-// ↓追加
-const tweetRouter = require("./routes/tweet.route");
-
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.json({
-    uri: "/",
-    message: "Hello Node.js!",
+    uri: '/',
+    message: 'Hello Node.js!',
   });
 });
 
-app.use("/omikuji", (req, res) => omikujiRouter(req, res));
-app.use("/janken", (req, res) => jankenRouter(req, res));
+app.use('/omikuji', (req, res) => omikujiRouter(req, res));
+app.use('/janken', (req, res) => jankenRouter(req, res));
 // ↓追加
-app.use("/tweet", (req, res) => tweetRouter(req, res));
+app.use('/tweet', (req, res) => tweetRouter(req, res));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
@@ -57,7 +55,7 @@ app.listen(port, () => {
 
 ## 必要なファイルの作成
 
-新しく以下のファイルを作成する．
+新しく以下のファイルを作成する．前回の役割に加えて，今回は DB 関連の処理が必要となるため `repositories` フォルダを作成してファイルを追加する．
 
 - `routes/tweet.route.js`
 - `controllers/tweet.controller.js`
@@ -73,12 +71,12 @@ app.listen(port, () => {
 ```js
 // routes/tweet.route.js
 
-import express from "express";
-import { readAllTweetData } from "../controllers/tweet.controller.js";
+import express from 'express';
+import { readAllTweetData } from '../controllers/tweet.controller.js';
 
 export const tweetRouter = express.Router();
 
-tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
+tweetRouter.get('/', (req, res) => readAllTweetData(req, res));
 
 ```
 
@@ -89,7 +87,7 @@ tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData } from "../services/tweet.service.js"
+import { getAllTweetData } from '../services/tweet.service.js';
 
 export const readAllTweetData = async (req, res, next) => {
   try {
@@ -97,7 +95,7 @@ export const readAllTweetData = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully get All Tweet Data!",
+      message: 'Succesfully get All Tweet Data!',
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -108,7 +106,7 @@ export const readAllTweetData = async (req, res, next) => {
 
 ## サービスの作成
 
-サービスではリポジトリの関数を呼び出す．
+サービスではリポジトリの関数（`findAll()`）を呼び出す．
 
 ```js
 // services/tweet.service.js
@@ -119,7 +117,7 @@ export const getAllTweetData = async () => {
   try {
     return findAll();
   } catch (e) {
-    throw Error("Error while getting All Tweet Data");
+    throw Error('Error while getting All Tweet Data');
   }
 };
 
@@ -133,7 +131,7 @@ export const getAllTweetData = async () => {
 // repositories/tweet.repository.js
 
 export const findAll = () => {
-  return { message: "OK" };
+  return { message: 'OK' };
 };
 
 ```

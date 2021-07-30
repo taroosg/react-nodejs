@@ -7,15 +7,15 @@
 ```js
 // routes/tweet.route.js
 
-import express from "express";
-import { readAllTweetData, readOneTweetData, createTweetData } from "../controllers/tweet.controller.js";
+import express from 'express';
+import { readAllTweetData, readOneTweetData, createTweetData } from '../controllers/tweet.controller.js';
 
 export const tweetRouter = express.Router();
 
-tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
+tweetRouter.get('/', (req, res) => readAllTweetData(req, res));
 // ↓追加
-tweetRouter.get("/:id", (req, res) => readOneTweetData(req, res));
-tweetRouter.post("/", (req, res) => createTweetData(req, res));
+tweetRouter.get('/:id', (req, res) => readOneTweetData(req, res));
+tweetRouter.post('/', (req, res) => createTweetData(req, res));
 
 ```
 
@@ -26,7 +26,7 @@ URLに付加したidを`req.params.id`で取得する．
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData, getOneTweetData, insertTweetData } from "../services/tweet.service.js"
+import { getAllTweetData, getOneTweetData, insertTweetData } from '../services/tweet.service.js';
 
 export const readAllTweetData = async (req, res, next) => {
   // 省略
@@ -40,7 +40,7 @@ export const readOneTweetData = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully get One Tweet Data!",
+      message: 'Succesfully get One Tweet Data!',
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -71,7 +71,7 @@ export const getOneTweetData = async ({ id }) => {
   try {
     return find({ id: id });
   } catch (e) {
-    throw Error("Error while getting One Tweet Data");
+    throw Error('Error while getting One Tweet Data');
   }
 };
 
@@ -86,7 +86,7 @@ export const insertTweetData = async ({ data }) => {
 ```js
 // repositories/tweet.repository.js
 
-import admin from "../model/firebase.js";
+import admin from '../model/firebase.js';
 const db = admin.firestore();
 
 export const findAll = async () => {
@@ -96,7 +96,7 @@ export const findAll = async () => {
 // ↓追加
 export const find = async ({ id }) => {
   try {
-    const tweetSnapshot = await db.collection("tweet").doc(id).get();
+    const tweetSnapshot = await db.collection('tweet').doc(id).get();
     return {
       id: tweetSnapshot.id,
       data: {
@@ -106,7 +106,7 @@ export const find = async ({ id }) => {
       }
     }
   } catch (e) {
-    throw Error("Error while getting One tweet Data");
+    throw Error('Error while getting One tweet Data');
   }
 };
 

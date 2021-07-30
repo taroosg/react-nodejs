@@ -11,14 +11,14 @@
 ```js
 // routes/tweet.route.js
 
-import express from "express";
-import { readAllTweetData, createTweetData } from "../controllers/tweet.controller.js";
+import express from 'express';
+import { readAllTweetData, createTweetData } from '../controllers/tweet.controller.js';
 
 export const tweetRouter = express.Router();
 
-tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
+tweetRouter.get('/', (req, res) => readAllTweetData(req, res));
 // ↓追加
-tweetRouter.post("/", (req, res) => createTweetData(req, res));
+tweetRouter.post('/', (req, res) => createTweetData(req, res));
 
 ```
 
@@ -29,7 +29,7 @@ tweetRouter.post("/", (req, res) => createTweetData(req, res));
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData, insertTweetData } from "../services/tweet.service.js"
+import { getAllTweetData, insertTweetData } from '../services/tweet.service.js'
 
 export const readAllTweetData = async (req, res, next) => {
   // 省略
@@ -40,7 +40,7 @@ export const createTweetData = async (req, res, next) => {
   try {
     const { tweet, user_id } = req.body;
     if (!(tweet && user_id)) {
-      throw new Error("something is blank");
+      throw new Error('something is blank');
     }
     const result = await insertTweetData({
       data: { tweet: tweet, user_id: user_id },
@@ -48,7 +48,7 @@ export const createTweetData = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully post Tweet Data!",
+      message: 'Succesfully post Tweet Data!',
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -78,7 +78,7 @@ export const insertTweetData = async ({ data }) => {
       data: data,
     };
   } catch (e) {
-    throw Error("Error while posting Tweet Data");
+    throw Error('Error while posting Tweet Data');
   }
 };
 
@@ -99,11 +99,11 @@ Firestore に関するポイントは以下のとおり．
 ```js
 // repositories/tweet.repository.js
 
-import admin from "../model/firebase.js";
+import admin from '../model/firebase.js';
 const db = admin.firestore();
 
 export const findAll = () => {
-  return { message: "OK" };
+  return { message: 'OK' };
 };
 
 export const store = async ({ data }) => {
@@ -113,10 +113,10 @@ export const store = async ({ data }) => {
       created_at: admin.firestore.Timestamp.now(),
       updated_at: admin.firestore.Timestamp.now(),
     };
-    const ref = await db.collection("tweet").add(postData);
+    const ref = await db.collection('tweet').add(postData);
     return ref;
   } catch (e) {
-    throw Error("Error while store Tweet Data");
+    throw Error('Error while store Tweet Data');
   }
 };
 

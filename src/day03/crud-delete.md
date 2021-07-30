@@ -7,28 +7,28 @@
 ```js
 // routes/tweet.route.js
 
-import express from "express";
-import { readAllTweetData, readOneTweetData, createTweetData, editTweetData, deleteTweetData } from "../controllers/tweet.controller.js";
+import express from 'express';
+import { readAllTweetData, readOneTweetData, createTweetData, editTweetData, deleteTweetData } from '../controllers/tweet.controller.js';
 
 export const tweetRouter = express.Router();
 
-tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
-tweetRouter.get("/:id", (req, res) => readOneTweetData(req, res));
-tweetRouter.post("/", (req, res) => createTweetData(req, res));
-tweetRouter.put("/:id", (req, res) => editTweetData(req, res));
+tweetRouter.get('/', (req, res) => readAllTweetData(req, res));
+tweetRouter.get('/:id', (req, res) => readOneTweetData(req, res));
+tweetRouter.post('/', (req, res) => createTweetData(req, res));
+tweetRouter.put('/:id', (req, res) => editTweetData(req, res));
 // ↓追加
-tweetRouter.delete("/:id", (req, res) => deleteTweetData(req, res));
+tweetRouter.delete('/:id', (req, res) => deleteTweetData(req, res));
 
 ```
 
 ## コントローラの作成
 
-コントローラでは document 名を受け取り，collection 名と document 名を指定してサービスの処理を実行する．
+コントローラでは document 名（id）を受け取り，サービスの処理を実行する．
 
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData, destroyTodoData } from "../services/tweet.service.js"
+import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData, destroyTodoData } from '../services/tweet.service.js';
 
 export const readAllTweetData = async (req, res, next) => {
   // 省略
@@ -51,7 +51,7 @@ export const deleteTweetData = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!id) {
-      throw new Error("something is blank");
+      throw new Error('something is blank');
     }
     const result = await destroyTodoData({
       id: id,
@@ -59,7 +59,7 @@ export const deleteTweetData = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully delete Tweet Data!",
+      message: 'Succesfully delete Tweet Data!',
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -69,6 +69,8 @@ export const deleteTweetData = async (req, res, next) => {
 ```
 
 ## サービスの作成
+
+サービスではid指定してリポジトリで定義した関数を実行する．
 
 ```js
 // services/tweet.service.js
@@ -96,7 +98,7 @@ export const destroyTodoData = async ({ id }) => {
   try {
     return await destroy({ id: id, });
   } catch (e) {
-    throw Error("Error while deleting Tweet Data");
+    throw Error('Error while deleting Tweet Data');
   }
 };
 
@@ -109,7 +111,7 @@ export const destroyTodoData = async ({ id }) => {
 ```js
 // repositories/tweet.repository.js
 
-import admin from "../model/firebase.js";
+import admin from '../model/firebase.js';
 const db = admin.firestore();
 
 export const findAll = async () => {
@@ -134,7 +136,7 @@ export const destroy = async ({ id }) => {
     const ref = await db.collection('tweet').doc(id).delete();
     return { id: id, };
   } catch (e) {
-    throw Error("Error while deleting Todo Data");
+    throw Error('Error while deleting Todo Data');
   }
 };
 ```

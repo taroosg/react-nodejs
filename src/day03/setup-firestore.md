@@ -1,23 +1,25 @@
 # Firestore の準備
 
-## Cloud Firestore の準備
+## Firestore Database の準備
 
-今回は NoSQL である Firebase Cloud Firestore を用いて CRUD 処理を実装してみる．
+今回は NoSQL である Firebase Firestore Database を用いて CRUD 処理を実装してみる．
+
+DB がオンライン上にあるので，環境問わず使えるところが魅力．
 
 ## DB の作成
 
 - Firebase のコンソールにアクセスし，今回のプロジェクトのページを表示．
-- 左側メニューの「Cloud Firestore」をクリックし，DB を作成する．必ず「テストモード」にチェックを入れて作成すること．リージョンは任意．
+- 左側メニューの「Firestore Database」をクリックし，DB を作成する．必ず「テストモード」にチェックを入れて作成すること．リージョンは任意．
 
 ## JSON ファイルのダウンロード
 
-Node.js で CloudFirestore を操作するには，設定ファイルを用意する必要がある．Firebase で適当なプロジェクトを作成したら，下記の手順で必要なファイルをダウンロードする．
+Node.js で Firestore を操作するには，設定ファイルを用意する必要がある．Firebase で適当なプロジェクトを作成したら，下記の手順で必要なファイルをダウンロードする．
 
-- Firebase のコンソールにアクセスし，今回のプロジェクトのページを表示．
-- ⚙ -> プロジェクトを設定 で設定画面を表示．
-- 「サービスアカウント」タブ -> 「サービスアカウントを作成」ボタン -> 「新しい秘密鍵の作成」ボタン -> 「キーの生成」ボタンの順にクリック．
-- 適当な場所に json ファイルを保存する．
-- コンソール画面は開いたままにしておこう．
+1. Firebase のコンソールにアクセスし，今回のプロジェクトのページを表示．
+2. ⚙ -> プロジェクトを設定 で設定画面を表示．
+3. 「サービスアカウント」タブ -> 「サービスアカウントを作成」ボタン -> 「新しい秘密鍵の作成」ボタン -> 「キーの生成」ボタンの順にクリック．
+4. 適当な場所（デスクトップなど）に json ファイルを保存する．
+5. コンソール画面は開いたままにしておこう．
 
 ## JSON ファイルの配置と構成ファイルの作成
 
@@ -30,8 +32,8 @@ Node.js で CloudFirestore を操作するには，設定ファイルを用意�
 
 ```js
 import admin from 'firebase-admin';
+import { createRequire } from 'module';
 
-import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 const serviceAccount = require('./hoge-firebase-adminsdk-fuga-piyo.json')
 
@@ -45,7 +47,7 @@ export default admin;
 
 ## `.gitignore`に追記
 
-下記を追記しておく．ダウンロードした JSON ファイルには Firebase プロジェクトの情報が含まれているためである．
+ダウンロードした JSON ファイルには Firebase プロジェクトの情報が含まれているため， GitHub に push しないよう Git 管理から外しておく．
 
 サーバにデプロイする場合にも必要になるため，その場合は環境変数などを使用して工夫する必要がある．
 
@@ -57,6 +59,8 @@ export default admin;
 ## 必要なパッケージのインストール
 
 下記コマンドでインストールする．必ずプロジェクトのディレクトリで行うこと．
+
+エラーがでなければOK．
 
 ```bash
 $ npm i firebase-admin

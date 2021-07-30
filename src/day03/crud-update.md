@@ -9,16 +9,16 @@ GETの場合と同様にid指定する．`/hoge`に`PUT`でリクエストを送
 ```js
 // routes/tweet.route.js
 
-import express from "express";
-import { readAllTweetData, readOneTweetData, createTweetData, editTweetData } from "../controllers/tweet.controller.js";
+import express from 'express';
+import { readAllTweetData, readOneTweetData, createTweetData, editTweetData } from '../controllers/tweet.controller.js';
 
 export const tweetRouter = express.Router();
 
-tweetRouter.get("/", (req, res) => readAllTweetData(req, res));
-tweetRouter.get("/:id", (req, res) => readOneTweetData(req, res));
-tweetRouter.post("/", (req, res) => createTweetData(req, res));
+tweetRouter.get('/', (req, res) => readAllTweetData(req, res));
+tweetRouter.get('/:id', (req, res) => readOneTweetData(req, res));
+tweetRouter.post('/', (req, res) => createTweetData(req, res));
 // ↓追加
-tweetRouter.put("/:id", (req, res) => editTweetData(req, res));
+tweetRouter.put('/:id', (req, res) => editTweetData(req, res));
 
 ```
 
@@ -29,7 +29,7 @@ tweetRouter.put("/:id", (req, res) => editTweetData(req, res));
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData } from "../services/tweet.service.js"
+import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData } from '../services/tweet.service.js';
 
 export const readAllTweetData = async (req, res, next) => {
   // 省略
@@ -49,7 +49,7 @@ export const editTweetData = async (req, res, next) => {
     const { id } = req.params;
     const { tweet, user_id } = req.body;
     if (!(id && tweet && user_id)) {
-      throw new Error("something is blank");
+      throw new Error('something is blank');
     }
     const result = await updateTweetData({
       id: id,
@@ -58,7 +58,7 @@ export const editTweetData = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully edit Tweet Data!",
+      message: 'Succesfully edit Tweet Data!',
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
@@ -90,7 +90,7 @@ export const updateTweetData = async ({ id, data }) => {
   try {
     return await update({ id, data });
   } catch (e) {
-    throw Error("Error while updating Tweet Data");
+    throw Error('Error while updating Tweet Data');
   }
 };
 
@@ -105,7 +105,7 @@ collection 名と document 名を指定して`update()`でデータを更新で�
 ```js
 // repositories/tweet.repository.js
 
-import admin from "../model/firebase.js";
+import admin from '../model/firebase.js';
 const db = admin.firestore();
 
 export const findAll = async () => {
@@ -126,7 +126,7 @@ export const update = async ({ id, data }) => {
     ...data,
     updated_at: admin.firestore.Timestamp.now(),
   };
-  const ref = await db.collection("tweet").doc(id).update(updateData);
+  const ref = await db.collection('tweet').doc(id).update(updateData);
   return {
     id: id,
     data: updateData,
