@@ -23,7 +23,7 @@
   - [API実装3（じゃんけん）](./day02/janken-api.md)
   - [まとめ](./day02/summary.md)
 
-<!-- - [Day03](./day03/readme.md)
+- [Day03](./day03/readme.md)
 
   - [データの永続化について](./day03/about-perpetuation.md)
   - [Firestore の準備](./day03/setup-firestore.md)
@@ -33,7 +33,7 @@
   - [Read の処理（1件）](./day03/crud-read-one.md)
   - [Update の処理](./day03/crud-update.md)
   - [Delete の処理](./day03/crud-delete.md)
-  - [まとめ](./day03/summary.md) -->
+  - [まとめ](./day03/summary.md)
 
 <!-- - [Day04](./day04/readme.md) -->
 
