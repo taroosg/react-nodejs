@@ -28,7 +28,7 @@ tweetRouter.delete('/:id', (req, res) => deleteTweetData(req, res));
 ```js
 // controllers/tweet.controller.js
 
-import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData, destroyTodoData } from '../services/tweet.service.js';
+import { getAllTweetData, getOneTweetData, insertTweetData, updateTweetData, destroyTweetData } from '../services/tweet.service.js';
 
 export const readAllTweetData = async (req, res, next) => {
   // 省略
@@ -53,7 +53,7 @@ export const deleteTweetData = async (req, res, next) => {
     if (!id) {
       throw new Error('something is blank');
     }
-    const result = await destroyTodoData({
+    const result = await destroyTweetData({
       id: id,
     });
     return res.status(200).json({
@@ -94,7 +94,7 @@ export const updateTweetData = async ({ id, data }) => {
 };
 
 // ↓追加
-export const destroyTodoData = async ({ id }) => {
+export const destroyTweetData = async ({ id }) => {
   try {
     return await destroy({ id: id, });
   } catch (e) {
@@ -136,7 +136,7 @@ export const destroy = async ({ id }) => {
     const ref = await db.collection('tweet').doc(id).delete();
     return { id: id, };
   } catch (e) {
-    throw Error('Error while deleting Todo Data');
+    throw Error('Error while deleting Tweet Data');
   }
 };
 ```

@@ -62,7 +62,7 @@ app.listen(port, () => {
 - `services/tweet.service.js`
 - `repositories/tweet.repository.js`
 
-作成したらそれぞれの処理を実装する．
+まずそれぞれのファイルが連携できることを確認するため，DB と接続せずに固定のデータを返す処理を実装する．
 
 ## ルーティングの作成
 
