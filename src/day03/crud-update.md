@@ -1,5 +1,13 @@
 # Update の処理
 
+## データ更新の処理
+
+既存のデータを上書きする処理を実装する．`PUT`形式でデータを送信する．
+
+>**Key Point**💡
+>
+>`PUT`形式は`GET`と`POST`が合わさったような形式で，`req.params.id`で id を送信し，同時に`req.body`で上書きするデータを送信する．
+
 ## ルーティングの作成
 
 update のルーティングを追加．
@@ -69,6 +77,8 @@ export const editTweetData = async (req, res, next) => {
 
 ## サービスの作成
 
+送信されたデータを渡すのみなのでこれまでの処理と同様．
+
 ```js
 // services/tweet.service.js
 
@@ -135,7 +145,7 @@ export const update = async ({ id, data }) => {
 
 ```
 
-## 動作確認
+## 動作確認（更新）
 
 動作確認する．document は既存のデータから適当に指定する．Read の処理結果などから存在する document 名 を確認しておこう．
 

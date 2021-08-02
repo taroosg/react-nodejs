@@ -4,8 +4,6 @@
 
 これから実装していく機能は以下のとおり．基本的なCRUD処理を実装する．
 
-前回講義の役割分担表も参照．今回は repository に DB 関連の処理を実装する．
-
 |URI|method|name|description|
 |-|-|-|-|
 |`/tweet`|GET|findAll|データ全件取得|
@@ -13,6 +11,20 @@
 |`/tweet`|POST|store|データ作成処理|
 |`/tweet/:id`|PUT|update|データ更新処理|
 |`/tweet/:id`|DELETE|delete|データ削除処理|
+
+## 役割分担
+
+前回講義の役割分担表も参照．今回は repository に DB 関連の処理を実装する．
+
+repository に DB 関連の処理を任せることで，DB が変更された場合でも他のコードの影響せずに運用することができる．このような役割分担をリポジトリパターンと呼ぶ．
+
+
+|項目|意味合い|
+|-|-|
+|routes|URI と実行する処理の対応．|
+|controllers| リクエストパラメータの検証，レスポンス送信．|
+|services|リクエストに対する処理のメインロジックを記述．|
+|repositories|DB関連の処理を記述．今回は Firestore Database とやり取りする処理を記述する．|
 
 
 ## 既存ファイルへの追記と新規ファイルの準備

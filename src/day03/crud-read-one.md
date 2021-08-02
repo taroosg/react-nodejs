@@ -1,8 +1,18 @@
 # Read の処理（1件）
 
+## データ1件取得の処理
+
+前項でデータを全件取得する処理を実装したので，次はidを指定して1件のデータを取得する処理を実装する．
+
+Firestore Database はドキュメントの id がわかれば指定の1件を取得できるため，クライアント側から GET で id の文字列を送信し，データを取得する流れとなる．
+
+（他の RDB などでも id がわかれば指定のレコードを取得できるため，処理の流れは同様である．）
+
 ## ルーティングの作成
 
-`:id`はユーザが付加したパラメータを指定する．コントローラで`req.params.id`で取得する．
+>**Key Point**💡
+>
+>`:id`はユーザが付加したパラメータを指定する．コントローラで`req.params.id`で取得する．
 
 ```js
 // routes/tweet.route.js
@@ -21,7 +31,7 @@ tweetRouter.post('/', (req, res) => createTweetData(req, res));
 
 ## コントローラの作成
 
-URLに付加したidを`req.params.id`で取得する．
+URLに付加したidを`req.params.id`で取得する．サービスに id を渡す．
 
 ```js
 // controllers/tweet.controller.js
@@ -55,7 +65,7 @@ export const createTweetData = async (req, res, next) => {
 
 ## サービスの作成
 
-データを1件取得するにはidがあればOK．リポジトリの処理にidを渡す．
+今回は特にロジックなし．リポジトリの処理に id を渡す．
 
 ```js
 // services/tweet.service.js
@@ -82,6 +92,10 @@ export const insertTweetData = async ({ data }) => {
 ```
 
 ## リポジトリの作成
+
+id を受け取ったら，コレクション名とドキュメント id を指定して`.get()`でデータを取得できる．
+
+取得したデータは不要なものも含まれているので，必要なもののみ取り出して日付時刻を扱いやすい形式に変換する．
 
 ```js
 // repositories/tweet.repository.js
@@ -116,7 +130,7 @@ export const store = async ({ data }) => {
 
 ```
 
-## 動作確認
+## 動作確認（1 件取得）
 
 下記コマンドで動作をチェック．全件取得した中から適当なidを入力し，該当のデータが取得できればOK．
 
