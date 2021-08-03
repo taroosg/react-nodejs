@@ -135,7 +135,7 @@ export const store = async ({ data }) => {
 下記コマンドで動作をチェック．全件取得した中から適当なidを入力し，該当のデータが取得できればOK．
 
 ```bash
-$ curl localhost:3002/tweet/1JXLilqdOqU7rCrwjEpA
+$ curl localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
 
 {
   "status": 200,
