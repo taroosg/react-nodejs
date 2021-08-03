@@ -152,7 +152,7 @@ export const update = async ({ id, data }) => {
 コンソール画面 or 前項の Read 処理でデータを確認し，データが更新されていれば OK！
 
 ```bash
-$ $ curl -X PUT -H "Content-Type: application/json" -d '{"tweet":"Nest.js","user_id":2}' localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
+$ curl -X PUT -H "Content-Type: application/json" -d '{"tweet":"Nest.js","user_id":2}' localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
 
 {
   "status": 200,
