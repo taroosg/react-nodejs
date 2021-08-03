@@ -294,7 +294,7 @@ export const update = async ({ id, data }) =&gt; {
 <h2 id="動作確認更新"><a class="header" href="#動作確認更新">動作確認（更新）</a></h2>
 <p>動作確認する．document は既存のデータから適当に指定する．Read の処理結果などから存在する document 名 を確認しておこう．</p>
 <p>コンソール画面 or 前項の Read 処理でデータを確認し，データが更新されていれば OK！</p>
-<pre><code class="language-bash">$ $ curl -X PUT -H &quot;Content-Type: application/json&quot; -d '{&quot;tweet&quot;:&quot;Nest.js&quot;,&quot;user_id&quot;:2}' localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
+<pre><code class="language-bash">$ curl -X PUT -H &quot;Content-Type: application/json&quot; -d '{&quot;tweet&quot;:&quot;Nest.js&quot;,&quot;user_id&quot;:2}' localhost:3001/tweet/1JXLilqdOqU7rCrwjEpA
 
 {
   &quot;status&quot;: 200,
