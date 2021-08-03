@@ -10,7 +10,7 @@
 |`/tweet/:id`|GET|find|データ1件取得|
 |`/tweet`|POST|store|データ作成処理|
 |`/tweet/:id`|PUT|update|データ更新処理|
-|`/tweet/:id`|DELETE|delete|データ削除処理|
+|`/tweet/:id`|DELETE|destroy|データ削除処理|
 
 ## 役割分担
 
