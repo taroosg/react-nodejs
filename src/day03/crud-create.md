@@ -45,7 +45,7 @@ export const createTweetData = async (req, res, next) => {
       throw new Error('something is blank');
     }
     const result = await insertTweetData({
-      data: { tweet: tweet, user_id: user_id },
+      data: { tweet: tweet, user_id: Number(user_id) },
     });
     return res.status(200).json({
       status: 200,
