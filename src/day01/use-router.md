@@ -28,18 +28,18 @@ $ npm install react-router-dom
 
 ```jsx
 // App.jsx
-import React from 'react';
-import Booklist from './components/Booklist';
-import { BrowserRouter, Route, Link } from 'react-router-dom';  // 追加
+import React from "react";
+import Booklist from "./components/Booklist";
+import { BrowserRouter, Route, Link } from "react-router-dom";  // 追加
 
 const App = () => {
-  const languages = ['React', 'Vue', 'Angular'];
+  const languages = ["React", "Vue", "Angular"];
   return (
     <BrowserRouter>
       <h1>react app</h1>
-      <Route exact path='/' component={Booklist} />
-      <Route path='/vue' component={Booklist} />
-      <Route path='/angular' component={Booklist} />
+      <Route exact path="/" component={Booklist} />
+      <Route path="/vue" component={Booklist} />
+      <Route path="/angular" component={Booklist} />
     </BrowserRouter>
   );
 }
@@ -47,7 +47,7 @@ export default App;
 ```
 
 - `<BrowserRouter>`の中に`<Route>`を置き，`path`に対応させたい URL を，`component`に描画したいコンポーネントを渡す．
-- `exact`を設定しないと`path`が入力した URL に前方一致していれば描画されるため（全部`/`で認識されてしまう），`path='/'`には`exact`を設定している．
+- `exact`を設定しないと`path`が入力した URL に前方一致していれば描画されるため（全部`/`で認識されてしまう），`path="/"`には`exact`を設定している．
 - この時点では，各コンポーネントに`props`を渡していないため，URL を変更しても表示は変化しない．
 
 >**💡 Key Point**
@@ -67,7 +67,7 @@ export default App;
 // App.jsx
 import React from "react";
 import { Booklist } from "./components/Booklist";
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 const App = () => {
   const languages = ["React", "Vue", "Angular"];
@@ -113,7 +113,7 @@ export default App;
 // App.jsx
 import React from "react";
 import { Booklist } from "./components/Booklist";
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 const App = () => {
   const languages = ["React", "Vue", "Angular"];

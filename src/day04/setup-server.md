@@ -7,7 +7,7 @@
 サーバ側の規定の動作として「異なるオリジンからのアクセスをブロックする」というものが存在する．
 
 ```txt
-https://www.twilio.com
+https://www.emperor-crimson.com
   ^       ^
   |       |
 scheme hostname
@@ -20,7 +20,9 @@ scheme hostname  port
 
 ```
 
-したがって，実際の運用でサーバとクライアントを分ける場合には「サーバ側でクライアントのオリジンからのアクセスを許可する実装」が必要となる．
+>**Key Point**💡
+>
+>実際の運用でサーバとクライアントを分ける場合には「サーバ側でクライアントのオリジンからのアクセスを許可する実装」が必要となる．
 
 ## 実装
 
@@ -36,12 +38,12 @@ $ npm i cors
 
 今回はとりあえずリクエスト元を問わず受け付ける指定にしている．
 
-より詳しい設定はドキュメントを参照．
+より詳しい設定はドキュメントを参照．API 毎にアクセスを許可したり拒否したりできる．
 
 [https://github.com/expressjs/cors](https://github.com/expressjs/cors)
 
 ```js
-import express from "express";
+import express from 'express';
 // ↓ 追加
 import cors from 'cors';
 

@@ -15,9 +15,9 @@ import React, { useState } from "react";
 
 export const TweetIndex = () => {
   const dummyTweetList = [
-    { id: 'qwerty', data: { tweet: 'test1', user_id: '1', created_at: JSON.stringify(new Date()), } },
-    { id: 'asdfgh', data: { tweet: 'test2', user_id: '2', created_at: JSON.stringify(new Date()), } },
-    { id: 'zxcvbn', data: { tweet: 'test3', user_id: '3', created_at: JSON.stringify(new Date()), } },
+    { id: "qwerty", data: { tweet: "test1", user_id: "1", created_at: JSON.stringify(new Date()), } },
+    { id: "asdfgh", data: { tweet: "test2", user_id: "2", created_at: JSON.stringify(new Date()), } },
+    { id: "zxcvbn", data: { tweet: "test3", user_id: "3", created_at: JSON.stringify(new Date()), } },
   ];
 
   const [tweetList, setTweetList] = useState(dummyTweetList);
@@ -51,20 +51,20 @@ test3 by 3 at "2021-08-10T04:47:27.316Z"
 // src/pages/TweetIndex.jsx
 
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export const TweetIndex = () => {
   const dummyTweetList = [
-    { id: 'qwerty', data: { tweet: 'test1', user_id: '1', created_at: JSON.stringify(new Date()), } },
-    { id: 'asdfgh', data: { tweet: 'test2', user_id: '2', created_at: JSON.stringify(new Date()), } },
-    { id: 'zxcvbn', data: { tweet: 'test3', user_id: '3', created_at: JSON.stringify(new Date()), } },
+    { id: "qwerty", data: { tweet: "test1", user_id: "1", created_at: JSON.stringify(new Date()), } },
+    { id: "asdfgh", data: { tweet: "test2", user_id: "2", created_at: JSON.stringify(new Date()), } },
+    { id: "zxcvbn", data: { tweet: "test3", user_id: "3", created_at: JSON.stringify(new Date()), } },
   ];
 
   const [tweetList, setTweetList] = useState(null);
 
   useEffect(() => {
     const getAllTweet = async () => {
-      const result = await axios.get('http://localhost:3002/tweet');
+      const result = await axios.get("http://localhost:3002/tweet");
       setTweetList(result.data.result);
       return result;
     };

@@ -21,7 +21,7 @@ $ npm i react-hook-form
 ```js
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+import axios from "axios";
 
 export const TweetPost = () => {
   const { register, handleSubmit } = useForm();
@@ -63,7 +63,7 @@ form の動きは確認できたので，サーバ側に入力内容を送信す
 ```js
 const postFormData = async (postData) => {
   setFormData(JSON.stringify(postData));
-  const result = await axios.post('http://localhost:3001/tweet', postData);
+  const result = await axios.post("http://localhost:3001/tweet", postData);
   console.log(result);
   return result;
 };

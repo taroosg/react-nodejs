@@ -12,7 +12,7 @@
 // src/components/Tweet.jsx
 
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export const Tweet = ({ key, id, tweet, user_id, created_at }) => {
   return (
@@ -34,8 +34,8 @@ export const Tweet = ({ key, id, tweet, user_id, created_at }) => {
 // src/pages/TweetFind.jsx
 
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
-import axios from 'axios';
+import { useParams } from "react-router-dom"
+import axios from "axios";
 
 export const TweetFind = () => {
   const { id } = useParams();

@@ -31,7 +31,7 @@ SWR を使用すると，様々なタイミングでデータ取得の処理を�
     revalidateOnFocus: true,
   }
 
-  const { data, error } = useSWR('http://localhost:3001/tweet', fetcher, options)
+  const { data, error } = useSWR("http://localhost:3001/tweet", fetcher, options)
 
   // 省略
 

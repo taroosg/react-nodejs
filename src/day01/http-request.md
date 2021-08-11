@@ -21,13 +21,13 @@ $ npm install axios
 
 ```jsx
 // App.jsx
-import axios from 'axios';	// 追加
+import axios from "axios";	// 追加
 
 // ...省略
 
 // 関数の内容を編集
 const getDataFromAPI = async (keyword) => {
-  const requestUrl = 'https://www.googleapis.com/books/v1/volumes?q=intitle:'
+  const requestUrl = "https://www.googleapis.com/books/v1/volumes?q=intitle:"
   const result = await axios.get(`${requestUrl}${keyword}`);
   return result;
 }

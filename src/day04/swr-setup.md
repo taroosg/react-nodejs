@@ -63,9 +63,9 @@ $ npm i swr
 // src/pages/TweetIndex.jsx
 
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import { Tweet } from '../components/Tweet';
-import useSWR from 'swr'
+import axios from "axios";
+import { Tweet } from "../components/Tweet";
+import useSWR from "swr"
 
 export const TweetIndex = () => {
 
@@ -75,7 +75,7 @@ export const TweetIndex = () => {
   const fetcher = async (url) => (await axios.get(url)).data.result;
 
   // ↓ 追加
-  const { data, error } = useSWR('http://localhost:3001/tweet', fetcher)
+  const { data, error } = useSWR("http://localhost:3001/tweet", fetcher)
 
   // ↓ 追加
   return (

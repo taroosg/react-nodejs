@@ -7,7 +7,7 @@
 |パス|画面の概要|
 |-|-|
 |`/tweet/`|tweet 一覧画面|
-|`/tweet/{id}`|tweet 1 件表示画面|
+|`/tweet/:id`|tweet 1 件表示画面|
 |`/tweet/post`|tweet 入力 & 送信画面|
 
 ## 必要なファイルの準備
@@ -17,6 +17,8 @@
     - `TweetIndex.jsx`
     - `TweetFind.jsx`
     - `TweetPost.jsx`
+
+ディレクトリは任意の構造にできるが，「ページを表すコンポーネント」と「部品としてのコンポーネント」を分けておくと管理しやすい．
 
 それぞれ以下のように内容を記述する．
 
@@ -61,16 +63,16 @@ export const TweetPost = () => {
 
 `App.jsx`を以下のように編集する．
 
-（これまでのコードは適宜コメントアウトしておく）
+（これまでのコードは適宜コメントアウトしておくこと）
 
 ```js
 // src/App.jsx
 
 import React from "react";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import { TweetIndex } from "./pages/TweetIndex";
 import { TweetFind } from "./pages/TweetFind";
 import { TweetPost } from "./pages/TweetPost";
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 
 const NotFound = () => {
   return (

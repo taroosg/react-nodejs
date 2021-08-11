@@ -29,9 +29,9 @@ export const Tweet = () => {
 
 ```js
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 // ↓ 追加
-import { Tweet } from '../components/Tweet';
+import { Tweet } from "../components/Tweet";
 
 export const TweetIndex = () => {
 
