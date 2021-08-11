@@ -179,13 +179,13 @@
 <h2 id="リクエスト関数を実装"><a class="header" href="#リクエスト関数を実装">リクエスト関数を実装</a></h2>
 <p><code>App.jsx</code>の<code>getDataFromAPI</code>関数を編集する．</p>
 <pre><code class="language-jsx">// App.jsx
-import axios from 'axios';	// 追加
+import axios from &quot;axios&quot;;	// 追加
 
 // ...省略
 
 // 関数の内容を編集
 const getDataFromAPI = async (keyword) =&gt; {
-  const requestUrl = 'https://www.googleapis.com/books/v1/volumes?q=intitle:'
+  const requestUrl = &quot;https://www.googleapis.com/books/v1/volumes?q=intitle:&quot;
   const result = await axios.get(`${requestUrl}${keyword}`);
   return result;
 }

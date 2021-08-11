@@ -184,18 +184,18 @@
 <p><code>react-router</code>の機能を用いてルーティングを実装する．</p>
 <p><code>App.jsx</code>を以下のように編集する．</p>
 <pre><code class="language-jsx">// App.jsx
-import React from 'react';
-import Booklist from './components/Booklist';
-import { BrowserRouter, Route, Link } from 'react-router-dom';  // 追加
+import React from &quot;react&quot;;
+import Booklist from &quot;./components/Booklist&quot;;
+import { BrowserRouter, Route, Link } from &quot;react-router-dom&quot;;  // 追加
 
 const App = () =&gt; {
-  const languages = ['React', 'Vue', 'Angular'];
+  const languages = [&quot;React&quot;, &quot;Vue&quot;, &quot;Angular&quot;];
   return (
     &lt;BrowserRouter&gt;
       &lt;h1&gt;react app&lt;/h1&gt;
-      &lt;Route exact path='/' component={Booklist} /&gt;
-      &lt;Route path='/vue' component={Booklist} /&gt;
-      &lt;Route path='/angular' component={Booklist} /&gt;
+      &lt;Route exact path=&quot;/&quot; component={Booklist} /&gt;
+      &lt;Route path=&quot;/vue&quot; component={Booklist} /&gt;
+      &lt;Route path=&quot;/angular&quot; component={Booklist} /&gt;
     &lt;/BrowserRouter&gt;
   );
 }
@@ -203,7 +203,7 @@ export default App;
 </code></pre>
 <ul>
 <li><code>&lt;BrowserRouter&gt;</code>の中に<code>&lt;Route&gt;</code>を置き，<code>path</code>に対応させたい URL を，<code>component</code>に描画したいコンポーネントを渡す．</li>
-<li><code>exact</code>を設定しないと<code>path</code>が入力した URL に前方一致していれば描画されるため（全部<code>/</code>で認識されてしまう），<code>path='/'</code>には<code>exact</code>を設定している．</li>
+<li><code>exact</code>を設定しないと<code>path</code>が入力した URL に前方一致していれば描画されるため（全部<code>/</code>で認識されてしまう），<code>path=&quot;/&quot;</code>には<code>exact</code>を設定している．</li>
 <li>この時点では，各コンポーネントに<code>props</code>を渡していないため，URL を変更しても表示は変化しない．</li>
 </ul>
 <blockquote>
@@ -220,7 +220,7 @@ export default App;
 <pre><code class="language-jsx">// App.jsx
 import React from &quot;react&quot;;
 import { Booklist } from &quot;./components/Booklist&quot;;
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from &quot;react-router-dom&quot;;
 
 const App = () =&gt; {
   const languages = [&quot;React&quot;, &quot;Vue&quot;, &quot;Angular&quot;];
@@ -259,7 +259,7 @@ export default App;
 <pre><code class="language-jsx">// App.jsx
 import React from &quot;react&quot;;
 import { Booklist } from &quot;./components/Booklist&quot;;
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from &quot;react-router-dom&quot;;
 
 const App = () =&gt; {
   const languages = [&quot;React&quot;, &quot;Vue&quot;, &quot;Angular&quot;];
