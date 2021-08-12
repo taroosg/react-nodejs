@@ -1,6 +1,6 @@
 # tweet 個別表示画面の作成
 
-各 tweet の個別画面を実装する．
+各 tweet の個別画面を実装する．一覧画面で各 tweet をクリックすると個別の画面を表示するようにしたい．
 
 ## tweet コンポーネントの編集
 
@@ -28,7 +28,7 @@ export const Tweet = ({ key, id, tweet, user_id, created_at }) => {
 
 `useParams`を用いることで，URL に付加された id を取得することができる．
 
-この id を用いてサーバ側にリクエストを送信する．
+この id を用いてサーバ側にリクエストを送信する（サーバ側では，前回の内容で id 指定して 1 件データ取得する処理を実装した）．
 
 ```js
 // src/pages/TweetFind.jsx
@@ -67,3 +67,28 @@ export const TweetFind = () => {
 ## 動作確認
 
 一覧画面の作成日時部分のリンクから個別ページに遷移し，個別のデータが表示されればOK．
+
+
+## 補足
+
+オブジェクトのプロパティにアクセスする場合，該当しないキーにアクセスすると`undefined`となる．そのため，更に下位のキーを指定するとエラーとなるため処理が止まってしまう．
+
+このような場合，`?.`を使用するとエラーではなく`undefined`として処理することができる．
+
+```js
+const someObject = {
+  hoge: 1,
+  fuga: 2,
+  piyo: 3,
+};
+
+console.log(someObject.foo);
+// undefined
+
+console.log(someObject.foo.bar);
+// Uncaught TypeError: Cannot read property 'bar' of undefined
+
+console.log(someObject.foo?.bar);
+// undefined
+
+```

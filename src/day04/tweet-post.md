@@ -4,9 +4,11 @@
 
 ## Form を扱うライブラリの準備
 
-前回の API と連携させるため，画面に入力したデータを POST で送信する必要がある．
+前回の API と連携させるため，画面に入力したデータを POST で送信する必要がある（前回はターミナルでリクエストを送信していた）．
 
-form を扱うのは面倒なのでライブラリを使用するのが得策．
+form を扱うのは面倒なのでライブラリを使用するのが得策．ちょうど`useState`や`useEffect`などの「Hooks」と合わせて使用できる「React Hook Form」が提供されている．
+
+[https://react-hook-form.com/jp/](https://react-hook-form.com/jp/)
 
 下記コマンドでインストールする．
 
@@ -58,6 +60,8 @@ export const TweetPost = () => {
 
 form の動きは確認できたので，サーバ側に入力内容を送信する．
 
+POST で送信する場合は`axios.post()`を用いる．第 1 引数にリクエスト URL を，第 2 引数に送信するデータを入れる．
+
 `postFormData`関数を以下のように編集する．
 
 ```js
@@ -98,7 +102,7 @@ const postFormData = async (postData) => {
       "content-type": "application/json; charset=utf-8"
   },
   "config": {
-    "url": "http://localhost:3002/tweet",
+    "url": "http://localhost:3001/tweet",
       "method": "post",
         "data": "{\"tweet\":\"test\",\"user_id\":\"4\"}",
           "headers": {
