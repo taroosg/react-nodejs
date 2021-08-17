@@ -35,7 +35,7 @@
   - [Delete の処理](./day03/crud-delete.md)
   - [まとめ](./day03/summary.md)
 
-<!-- - [Day04](./day04/readme.md)
+- [Day04](./day04/readme.md)
 
   - [サーバ側の準備](./day04/setup-server.md)
   - [必要な画面の準備](./day04/create-pages.md)
@@ -45,5 +45,5 @@
   - [tweet 個別表示画面の作成](./day04/tweet-find.md)
   - [データ取得タイミングの最適化](./day04/swr-setup.md)
   - [データ取得タイミングの調整](./day04/swr-polling.md)
-  - [まとめ](./day04/summary.md) -->
+  - [まとめ](./day04/summary.md)
 
