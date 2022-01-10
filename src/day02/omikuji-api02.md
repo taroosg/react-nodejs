@@ -1,4 +1,4 @@
-# API実装2（おみくじ中級編）
+# API 実装 2（おみくじ中級編）
 
 簡単な API を実装するだけならば，ここまでの内容で十分である．おみくじの処理部分に適当な記述をすれば問題ないであろう．
 
@@ -6,19 +6,18 @@
 
 そこで，処理中の役割毎に別ファイルに記述できるようにディレクトリ構成を変更する（責務の分離，などと呼ばれる）．
 
-
 ## ディレクトリ構造と役割
 
 大きく`routes`，`controllers`，`services`の 3 つに分離する．DB などと組み合わせてデータを扱う場合は他に`model`を用意するが今回は省略する．
 
 各要素の役割は以下の通り．
 
-|項目|意味合い|
-|-|-|
-|routes|URI と実行する処理の対応．|
-|controllers| リクエストパラメータの検証，レスポンス送信．|
-|services|リクエストに対する処理のメインロジックを記述．|
-|repositories|DB関連の処理を記述．今回は出番なし．|
+| 項目         | 意味合い                                       |
+| ------------ | ---------------------------------------------- |
+| routes       | URI と実行する処理の対応．                     |
+| controllers  | リクエストパラメータの検証，レスポンス送信．   |
+| services     | リクエストに対する処理のメインロジックを記述． |
+| repositories | DB 関連の処理を記述．今回は出番なし．          |
 
 このような役割分担とするため，以下のようにディレクトリとファイルを作成する．
 
@@ -36,7 +35,6 @@
     └── omikuji.service.js
 
 ```
-
 
 ## 実行ファイルの実装
 
@@ -71,9 +69,7 @@ app.get("/janken", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
 ```
-
 
 ## ルーティングの実装
 
@@ -85,14 +81,12 @@ URI と対応するコントローラの処理を記述する．
 // routes/omikuji.route.js
 
 import express from "express";
-import { getResult } from "../controllers/omikuji.controller.js"
+import { getResult } from "../controllers/omikuji.controller.js";
 
 export const omikujiRouter = express.Router();
 
 omikujiRouter.get("/", (req, res) => getResult(req, res));
-
 ```
-
 
 ## コントローラの実装
 
@@ -111,15 +105,13 @@ export const getResult = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       result: result,
-      message: "Succesfully get Omikuji!",
+      message: "Successfully get Omikuji!",
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-
 ```
-
 
 ## サービスの実装
 
@@ -141,7 +133,6 @@ export const getOmikuji = async (query) => {
     throw Error("Error while getting Omikuji.");
   }
 };
-
 ```
 
 処理の順序としては以下のようになる．
@@ -153,10 +144,9 @@ routes/omikuji.route.js    |
    ↓                       |
 controllers/omikuji.controller.js
    ↓           ↑
-ervices/omikuji.service.js
+services/omikuji.service.js
 
 ```
-
 
 ## 動作確認
 
@@ -170,13 +160,13 @@ $ curl localhost:3001/omikuji
 
 ```bash
 $ curl localhost:3001/omikuji
-{"status":200,"result":{"result":"凶"},"message":"Succesfully get Omikuji!"}
+{"status":200,"result":{"result":"凶"},"message":"Successfully get Omikuji!"}
 
 $ curl localhost:3001/omikuji
-{"status":200,"result":{"result":"大凶"},"message":"Succesfully get Omikuji!"}
+{"status":200,"result":{"result":"大凶"},"message":"Successfully get Omikuji!"}
 
 $ curl localhost:3001/omikuji
-{"status":200,"result":{"result":"中吉"},"message":"Succesfully get Omikuji!"}
+{"status":200,"result":{"result":"中吉"},"message":"Successfully get Omikuji!"}
 
 $ curl localhost:3001/omikuji
 {"status":200,"result":{"result":"大吉"},"message":"Succesfully get Omikuji!"}
@@ -186,4 +176,3 @@ $ curl localhost:3001/omikuji
 ユーザに返すレスポンスを変更したい場合はコントローラを，処理の内容を更新したい場合はサービスを書き換えれば良い．このように，各責務を別の場所に置くことでメンテナンスしやすいプロダクトになる．
 
 これでおみくじの実装は完了である．
-

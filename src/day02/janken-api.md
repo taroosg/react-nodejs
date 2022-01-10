@@ -1,4 +1,4 @@
-# API実装3（じゃんけん）
+# API 実装 3（じゃんけん）
 
 おみくじの実装ができたので，ユーザ側からデータを送信してじゃんけんの結果を返す API を実装してみる．
 
@@ -26,12 +26,11 @@
 
 ```
 
-
 ## 各ファイルの実装
 
 `app.js`を以下のように編集する．
 
-じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには`express.urlencoded({ extended: true })`とJSONデータの扱いで`express.json()`が必要になるため読み込んでいる．
+じゃんけんのルーティングを読み込む．また，POST メソッドでデータを受け取るためには`express.urlencoded({ extended: true })`と JSON データの扱いで`express.json()`が必要になるため読み込んでいる．
 
 ```js
 // app.js
@@ -62,9 +61,7 @@ app.use("/janken", (req, res) => jankenRouter(req, res));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
 ```
-
 
 ## ルーティングの実装
 
@@ -81,9 +78,7 @@ import { getResult } from "../controllers/janken.controller.js";
 export const jankenRouter = express.Router();
 
 jankenRouter.post("/", (req, res) => getResult(req, res));
-
 ```
-
 
 ## コントローラの実装
 
@@ -108,9 +103,7 @@ export const getResult = async (req, res, next) => {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-
 ```
-
 
 ## サービスの実装
 
@@ -128,9 +121,7 @@ export const getJanken = async (query) => {
     throw Error("Error while getting Janken");
   }
 };
-
 ```
-
 
 ## 動作確認
 
@@ -141,11 +132,10 @@ export const getJanken = async (query) => {
 ```bash
 $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"パー"}' localhost:3001/janken
 
-{"status":200,"result":{"yourHand":"パー","comHand":"グー","result":"テスト中"},"message":"Succesfully get Janken!"}
+{"status":200,"result":{"yourHand":"パー","comHand":"グー","result":"テスト中"},"message":"Successfully get Janken!"}
 ```
 
 サーバに対して`{"myhand":"パー"}`という JSON 形式のデータを POST メソッドで送信している．
-
 
 ## 【演習】じゃんけんの実装
 
@@ -160,11 +150,11 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"グー"}' loca
 
 $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"チョキ"}' localhost:3001/janken
 
-{"status":200,"result":{"yourHand":"チョキ","comHand":"パー","result":"Win"},"message":"Succesfully get Janken!"}
+{"status":200,"result":{"yourHand":"チョキ","comHand":"パー","result":"Win"},"message":"Successfully get Janken!"}
 
 $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"パー"}' localhost:3001/janken
 
-{"status":200,"result":{"yourHand":"パー","comHand":"チョキ","result":"Lose"},"message":"Succesfully get Janken!"}
+{"status":200,"result":{"yourHand":"パー","comHand":"チョキ","result":"Lose"},"message":"Successfully get Janken!"}
 
 ```
 
@@ -173,7 +163,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"パー"}' loca
 ```bash
 $ curl -X POST -H "Content-Type: application/json" -d '{"myhand":"無敵のアレ"}' localhost:3001/janken
 
-{"status":200,"result":{"message":"Invalid hand..."},"message":"Succesfully get Janken!"}
+{"status":200,"result":{"message":"Invalid hand..."},"message":"Successfully get Janken!"}
 
 ```
 
@@ -202,5 +192,4 @@ export const getJanken = async (query) => {
     throw Error("Error while getting Janken");
   }
 };
-
 ```
