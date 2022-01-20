@@ -1,39 +1,41 @@
 # Summary
 
-- [Day01](./day02/readme.md)
+- [サーバ編 ①（Node.js）](./api-01/readme.md)
 
-  - [Node.js とは](./day02/about-nodejs.md)
-  - [API 実装の準備](./day02/prepare-api.md)
-  - [Express のインストール](./day02/install-express.md)
-  - [API 実装 1（おみくじ初級編）](./day02/omikuji-api01.md)
-  - [コマンドの追加](./day02/add-command.md)
-  - [API 実装 2（おみくじ中級編）](./day02/omikuji-api02.md)
-  - [API 実装 3（じゃんけん）](./day02/janken-api.md)
-  - [まとめ](./day02/summary.md)
+  - [Node.js とは](./api-01/about-nodejs.md)
+  - [API 実装の準備](./api-01/prepare-api.md)
+  - [Express のインストール](./api-01/install-express.md)
+  - [API 実装 1（おみくじ初級編）](./api-01/omikuji-api01.md)
+  - [コマンドの追加](./api-01/add-command.md)
+  - [API 実装 2（おみくじ中級編）](./api-01/omikuji-api02.md)
+  - [API 実装 3（じゃんけん）](./api-01/janken-api.md)
+  - [まとめ](./api-01/summary.md)
 
-<!-- - [Day02](./day03/readme.md)
+- [サーバ編 ②（Node.js）](./api-02/readme.md)
 
-  - [データの永続化について](./day03/about-perpetuation.md)
-  - [Firestore の準備](./day03/setup-firestore.md)
-  - [ファイル作成と動作確認](./day03/setup-files.md)
-  - [Create の処理](./day03/crud-create.md)
-  - [Read の処理（全件）](./day03/crud-read-all.md)
-  - [Read の処理（1 件）](./day03/crud-read-one.md)
-  - [Update の処理](./day03/crud-update.md)
-  - [Delete の処理](./day03/crud-delete.md)
-  - [まとめ](./day03/summary.md) -->
+  - [データの永続化について](./api-02/about-perpetuation.md)
+  - [Supabase の準備](./api-02/setup-supabase.md)
+  - [ファイル作成と動作確認](./api-02/setup-files.md)
+  - [Create の処理](./api-02/crud-create.md)
+  - [Read の処理（全件）](./api-02/crud-read-all.md)
+  - [Read の処理（本日以前）](./api-02/crud-read-today.md)
+  - [Update の処理](./api-02/crud-update.md)
+  - [Delete の処理](./api-02/crud-delete.md)
+    <!-- - [Slack 連携設定](./api-02/connect-to-slack.md) -->
+    <!-- - [Slack 連携実装](./api-02/post-to-slack.md) -->
+  - [まとめ](./api-02/summary.md)
 
-<!-- - [Day03](./day01/readme.md)
+<!-- - [Day03](./app-01/readme.md)
 
-  - [React とは](./day01/about-react.md)
-  - [アプリケーション実装の準備](./day01/construct-app.md)
-  - [コンポーネント](./day01/use-component.md)
-  - [props の活用](./day01/use-props.md)
-  - [router 機能](./day01/use-router.md)
-  - [子コンポーネントへの関数入力](./day01/props-function.md)
-  - [http リクエストの実装](./day01/http-request.md)
-  - [表示の調整](./day01/ui.md)
-  - [課題（任意）](./day01/work.md) -->
+  - [React とは](./app-01/about-react.md)
+  - [アプリケーション実装の準備](./app-01/construct-app.md)
+  - [コンポーネント](./app-01/use-component.md)
+  - [props の活用](./app-01/use-props.md)
+  - [router 機能](./app-01/use-router.md)
+  - [子コンポーネントへの関数入力](./app-01/props-function.md)
+  - [http リクエストの実装](./app-01/http-request.md)
+  - [表示の調整](./app-01/ui.md)
+  - [課題（任意）](./app-01/work.md) -->
 
 <!-- - [Day04](./day04/readme.md)
 
