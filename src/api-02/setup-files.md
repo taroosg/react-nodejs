@@ -66,8 +66,11 @@ app.listen(port, () => {
 新しく以下のファイルを作成する．前回の役割に加えて，今回は DB 関連の処理が必要となるため `repositories` フォルダを作成してファイルを追加する．
 
 - `routes/todo.route.js`
+
 - `controllers/todo.controller.js`
+
 - `services/todo.service.js`
+
 - `repositories/todo.repository.js`
 
 まずそれぞれのファイルが連携できることを確認するため，DB と接続せずに固定のデータを返す処理を実装する．

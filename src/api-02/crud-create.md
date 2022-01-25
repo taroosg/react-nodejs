@@ -95,8 +95,11 @@ export const insertTodoData = async ({ params }) => {
 ポイントは以下のとおり．
 
 - `dotenv` で環境変数を読み込む．
+
 - `createClient` で Supabase との連携を確立する．
+
 - `insert()` でデータを作成する．
+
 - `created_at`と`updated_at`は Supabase 側で初期値（現在日時）を設定しているため投稿不要．
 
 参考：[https://supabase.com/docs/reference/javascript/insert](https://supabase.com/docs/reference/javascript/insert)

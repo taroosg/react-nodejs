@@ -17,7 +17,9 @@ SQL を用いてデータ管理を行う DB．柔軟な集計や結合ができ�
 ### 例
 
 - MySQL
+
 - PostgreSQL
+
 - OracleDB
 
 ## NoSQL
@@ -29,11 +31,17 @@ Not Only SQL．SQL を前提としたデータ構造に縛られない DB．「�
 RDB と比較して後発のためにより直感的に扱えるものが多い一方で，データの格納および取得が高度に最適化されているが故に，機能性を最小限にしているものもある．
 
 - MongoDB
+
 - Firebase Firestore Database
+
 - Firebase Realtime Database
+
 - Redis
+
 - DynamoDB
+
 - Neo4j
+
 - Supabase
 
 ## 使い分け
@@ -49,9 +57,13 @@ RDB と比較して後発のためにより直感的に扱えるものが多い�
 GitHub アカウントで使用できる．特徴は以下のとおり．
 
 - オンライン上にデータを保存できる．
+
 - DB の構成がテーブル管理であるため NoSQL の中では RDB に近く，SQL ライクな操作ができる．
+
   - PostgreSQL が元．
+
 - DB 以外にも Auth，Storage など利用可能．
+
 - 各種言語やフレームワーク用のライブラリが充実しており開発がしやすい（個人の感想）．
 
 ドキュメント

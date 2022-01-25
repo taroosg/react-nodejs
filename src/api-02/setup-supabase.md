@@ -40,6 +40,7 @@ Supabase のコンソール（[https://app.supabase.io/](https://app.supabase.io
 ## Node.js と Supabase の連携
 
 1. Supabase の管理画面から「`⚙`」→「`API`」の順にクリックする．
+
 2. `Project API keys` と `Config` の `URL` が必要になるので確認する．
 
 ![Supabaseアクセス情報](./img/supabase-03.png)
