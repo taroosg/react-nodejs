@@ -74,7 +74,7 @@ export const editTodoData = async (req, res, next) => {
     }
     const result = await updateTodoData({
       id: id,
-      data: {
+      params: {
         user_id: user_id,
         todo: todo,
         deadline: deadline,
