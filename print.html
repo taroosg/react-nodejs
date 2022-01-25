@@ -766,9 +766,15 @@ export const getJanken = async (query) =&gt; {
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="サーバ編-②nodejs"><a class="header" href="#サーバ編-②nodejs">サーバ編 ②（Node.js）</a></h1>
 <h2 id="今回のゴール-1"><a class="header" href="#今回のゴール-1">今回のゴール</a></h2>
 <ul>
-<li>Supabase を用いたデータの永続化を実装する．</li>
-<li>「todo リスト」を実装し，CRUD 処理とデータの構造を把握する．</li>
-<li>DB との連携方法やアーキテクチャを考えることのメリットを知る．</li>
+<li>
+<p>Supabase を用いたデータの永続化を実装する．</p>
+</li>
+<li>
+<p>「todo リスト」を実装し，CRUD 処理とデータの構造を把握する．</p>
+</li>
+<li>
+<p>DB との連携方法やアーキテクチャを考えることのメリットを知る．</p>
+</li>
 </ul>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="データの永続化について"><a class="header" href="#データの永続化について">データの永続化について</a></h1>
 <h2 id="nodejs-におけるデータ永続化"><a class="header" href="#nodejs-におけるデータ永続化">Node.js におけるデータ永続化</a></h2>
@@ -780,22 +786,42 @@ export const getJanken = async (query) =&gt; {
 <p>できることは非常に幅広く，データを扱う上でできないことはほぼないと考えて良い．</p>
 <h3 id="例"><a class="header" href="#例">例</a></h3>
 <ul>
-<li>MySQL</li>
-<li>PostgreSQL</li>
-<li>OracleDB</li>
+<li>
+<p>MySQL</p>
+</li>
+<li>
+<p>PostgreSQL</p>
+</li>
+<li>
+<p>OracleDB</p>
+</li>
 </ul>
 <h2 id="nosql"><a class="header" href="#nosql">NoSQL</a></h2>
 <p>Not Only SQL．SQL を前提としたデータ構造に縛られない DB．「値」およびそれを取得するための「キー」だけを格納できる Key-Value 型の DB などが代表的だ．</p>
 <p>下記の例においてもそれぞれデータ構造が異なるため，プロジェクトの目的に合致した DB を選択する必要がある．</p>
 <p>RDB と比較して後発のためにより直感的に扱えるものが多い一方で，データの格納および取得が高度に最適化されているが故に，機能性を最小限にしているものもある．</p>
 <ul>
-<li>MongoDB</li>
-<li>Firebase Firestore Database</li>
-<li>Firebase Realtime Database</li>
-<li>Redis</li>
-<li>DynamoDB</li>
-<li>Neo4j</li>
-<li>Supabase</li>
+<li>
+<p>MongoDB</p>
+</li>
+<li>
+<p>Firebase Firestore Database</p>
+</li>
+<li>
+<p>Firebase Realtime Database</p>
+</li>
+<li>
+<p>Redis</p>
+</li>
+<li>
+<p>DynamoDB</p>
+</li>
+<li>
+<p>Neo4j</p>
+</li>
+<li>
+<p>Supabase</p>
+</li>
 </ul>
 <h2 id="使い分け"><a class="header" href="#使い分け">使い分け</a></h2>
 <p>ケースバイケース．</p>
@@ -804,14 +830,21 @@ export const getJanken = async (query) =&gt; {
 <p><strong>今回は環境構築が不要でオンラインにデータを保存できる「Supabase」を使用する．</strong></p>
 <p>GitHub アカウントで使用できる．特徴は以下のとおり．</p>
 <ul>
-<li>オンライン上にデータを保存できる．</li>
-<li>DB の構成がテーブル管理であるため NoSQL の中では RDB に近く，SQL ライクな操作ができる．
+<li>
+<p>オンライン上にデータを保存できる．</p>
+</li>
+<li>
+<p>DB の構成がテーブル管理であるため NoSQL の中では RDB に近く，SQL ライクな操作ができる．</p>
 <ul>
 <li>PostgreSQL が元．</li>
 </ul>
 </li>
-<li>DB 以外にも Auth，Storage など利用可能．</li>
-<li>各種言語やフレームワーク用のライブラリが充実しており開発がしやすい（個人の感想）．</li>
+<li>
+<p>DB 以外にも Auth，Storage など利用可能．</p>
+</li>
+<li>
+<p>各種言語やフレームワーク用のライブラリが充実しており開発がしやすい（個人の感想）．</p>
+</li>
 </ul>
 <p>ドキュメント</p>
 <p><a href="https://supabase.com/docs">https://supabase.com/docs</a></p>
@@ -845,8 +878,12 @@ export const getJanken = async (query) =&gt; {
 </tbody></table>
 <h2 id="nodejs-と-supabase-の連携"><a class="header" href="#nodejs-と-supabase-の連携">Node.js と Supabase の連携</a></h2>
 <ol>
-<li>Supabase の管理画面から「<code>⚙</code>」→「<code>API</code>」の順にクリックする．</li>
-<li><code>Project API keys</code> と <code>Config</code> の <code>URL</code> が必要になるので確認する．</li>
+<li>
+<p>Supabase の管理画面から「<code>⚙</code>」→「<code>API</code>」の順にクリックする．</p>
+</li>
+<li>
+<p><code>Project API keys</code> と <code>Config</code> の <code>URL</code> が必要になるので確認する．</p>
+</li>
 </ol>
 <p><img src="api-02/./img/supabase-03.png" alt="Supabaseアクセス情報" /></p>
 <ol start="3">
@@ -928,10 +965,18 @@ app.listen(port, () =&gt; {
 <h2 id="必要なファイルの作成"><a class="header" href="#必要なファイルの作成">必要なファイルの作成</a></h2>
 <p>新しく以下のファイルを作成する．前回の役割に加えて，今回は DB 関連の処理が必要となるため <code>repositories</code> フォルダを作成してファイルを追加する．</p>
 <ul>
-<li><code>routes/todo.route.js</code></li>
-<li><code>controllers/todo.controller.js</code></li>
-<li><code>services/todo.service.js</code></li>
-<li><code>repositories/todo.repository.js</code></li>
+<li>
+<p><code>routes/todo.route.js</code></p>
+</li>
+<li>
+<p><code>controllers/todo.controller.js</code></p>
+</li>
+<li>
+<p><code>services/todo.service.js</code></p>
+</li>
+<li>
+<p><code>repositories/todo.repository.js</code></p>
+</li>
 </ul>
 <p>まずそれぞれのファイルが連携できることを確認するため，DB と接続せずに固定のデータを返す処理を実装する．</p>
 <h2 id="ルーティングの作成"><a class="header" href="#ルーティングの作成">ルーティングの作成</a></h2>
@@ -1077,10 +1122,18 @@ export const insertTodoData = async ({ params }) =&gt; {
 <p>データ永続化に関するコードをリポジトリのレイヤーに閉じ込めることで，DB の種類が変更された場合にもコントローラやサービスのコードに影響ない状態にすることができる．</p>
 <p>ポイントは以下のとおり．</p>
 <ul>
-<li><code>dotenv</code> で環境変数を読み込む．</li>
-<li><code>createClient</code> で Supabase との連携を確立する．</li>
-<li><code>insert()</code> でデータを作成する．</li>
-<li><code>created_at</code>と<code>updated_at</code>は Supabase 側で初期値（現在日時）を設定しているため投稿不要．</li>
+<li>
+<p><code>dotenv</code> で環境変数を読み込む．</p>
+</li>
+<li>
+<p><code>createClient</code> で Supabase との連携を確立する．</p>
+</li>
+<li>
+<p><code>insert()</code> でデータを作成する．</p>
+</li>
+<li>
+<p><code>created_at</code>と<code>updated_at</code>は Supabase 側で初期値（現在日時）を設定しているため投稿不要．</p>
+</li>
 </ul>
 <p>参考：<a href="https://supabase.com/docs/reference/javascript/insert">https://supabase.com/docs/reference/javascript/insert</a></p>
 <pre><code class="language-js">// repositories/todo.repository.js

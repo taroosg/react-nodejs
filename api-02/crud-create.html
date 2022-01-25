@@ -242,10 +242,18 @@ export const insertTodoData = async ({ params }) =&gt; {
 <p>データ永続化に関するコードをリポジトリのレイヤーに閉じ込めることで，DB の種類が変更された場合にもコントローラやサービスのコードに影響ない状態にすることができる．</p>
 <p>ポイントは以下のとおり．</p>
 <ul>
-<li><code>dotenv</code> で環境変数を読み込む．</li>
-<li><code>createClient</code> で Supabase との連携を確立する．</li>
-<li><code>insert()</code> でデータを作成する．</li>
-<li><code>created_at</code>と<code>updated_at</code>は Supabase 側で初期値（現在日時）を設定しているため投稿不要．</li>
+<li>
+<p><code>dotenv</code> で環境変数を読み込む．</p>
+</li>
+<li>
+<p><code>createClient</code> で Supabase との連携を確立する．</p>
+</li>
+<li>
+<p><code>insert()</code> でデータを作成する．</p>
+</li>
+<li>
+<p><code>created_at</code>と<code>updated_at</code>は Supabase 側で初期値（現在日時）を設定しているため投稿不要．</p>
+</li>
 </ul>
 <p>参考：<a href="https://supabase.com/docs/reference/javascript/insert">https://supabase.com/docs/reference/javascript/insert</a></p>
 <pre><code class="language-js">// repositories/todo.repository.js
