@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Node.js とは - React-Node.js</title>
+        <title>Read の処理（全件） - React-Node.js</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../day02/index.html"><strong aria-hidden="true">1.</strong> Day01</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day02/about-nodejs.html" class="active"><strong aria-hidden="true">1.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="../day02/prepare-api.html"><strong aria-hidden="true">1.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="../day02/install-express.html"><strong aria-hidden="true">1.3.</strong> Express のインストール</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api01.html"><strong aria-hidden="true">1.4.</strong> API 実装 1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="../day02/add-command.html"><strong aria-hidden="true">1.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="../day02/omikuji-api02.html"><strong aria-hidden="true">1.6.</strong> API 実装 2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="../day02/janken-api.html"><strong aria-hidden="true">1.7.</strong> API 実装 3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="../day02/summary.html"><strong aria-hidden="true">1.8.</strong> まとめ</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../api-01/index.html"><strong aria-hidden="true">1.</strong> サーバ編 ①（Node.js）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../api-01/about-nodejs.html"><strong aria-hidden="true">1.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="../api-01/prepare-api.html"><strong aria-hidden="true">1.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="../api-01/install-express.html"><strong aria-hidden="true">1.3.</strong> Express のインストール</a></li><li class="chapter-item expanded "><a href="../api-01/omikuji-api01.html"><strong aria-hidden="true">1.4.</strong> API 実装 1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="../api-01/add-command.html"><strong aria-hidden="true">1.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="../api-01/omikuji-api02.html"><strong aria-hidden="true">1.6.</strong> API 実装 2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="../api-01/janken-api.html"><strong aria-hidden="true">1.7.</strong> API 実装 3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="../api-01/summary.html"><strong aria-hidden="true">1.8.</strong> まとめ</a></li></ol></li><li class="chapter-item expanded "><a href="../api-02/index.html"><strong aria-hidden="true">2.</strong> サーバ編 ②（Node.js）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../api-02/about-perpetuation.html"><strong aria-hidden="true">2.1.</strong> データの永続化について</a></li><li class="chapter-item expanded "><a href="../api-02/setup-supabase.html"><strong aria-hidden="true">2.2.</strong> Supabase の準備</a></li><li class="chapter-item expanded "><a href="../api-02/setup-files.html"><strong aria-hidden="true">2.3.</strong> ファイル作成と動作確認</a></li><li class="chapter-item expanded "><a href="../api-02/crud-create.html"><strong aria-hidden="true">2.4.</strong> Create の処理</a></li><li class="chapter-item expanded "><a href="../api-02/crud-read-all.html" class="active"><strong aria-hidden="true">2.5.</strong> Read の処理（全件）</a></li><li class="chapter-item expanded "><a href="../api-02/crud-read-today.html"><strong aria-hidden="true">2.6.</strong> Read の処理（本日以前）</a></li><li class="chapter-item expanded "><a href="../api-02/crud-update.html"><strong aria-hidden="true">2.7.</strong> Update の処理</a></li><li class="chapter-item expanded "><a href="../api-02/crud-delete.html"><strong aria-hidden="true">2.8.</strong> Delete の処理</a></li><li class="chapter-item expanded "><a href="../api-02/summary.html"><strong aria-hidden="true">2.9.</strong> まとめ</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -165,30 +165,84 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="nodejs-とは"><a class="header" href="#nodejs-とは">Node.js とは</a></h1>
-<p>サーバで JavaScript を動かす環境のこと．
-「Node.js」という言語があるわけではないので認識違いに注意．</p>
-<h2 id="web-アプリケーションの仕組みapi-を実装する場合"><a class="header" href="#web-アプリケーションの仕組みapi-を実装する場合">Web アプリケーションの仕組み（API を実装する場合）</a></h2>
-<p>基本は「リクエスト」と「レスポンス」．PHP など他の言語と同じ．</p>
-<p>サーバ側でリクエストを受ける URI（Uniform Resource Identifier の略．URL とほぼ同義）を用意しておき，そこにクライアント（ブラウザなど）からリクエストを送信する．</p>
-<p>リクエストを受けると記述されたコードが実行され，データなどが返される（JSON 形式が多い）．</p>
-<h2 id="express"><a class="header" href="#express">Express</a></h2>
-<p>Express は Node.js を用いて Web アプリケーションを構築するためのフレームワーク．</p>
-<p>Node.js は自由度が非常に高く，そのまま書くと人によって千差万別となる．したがって，Web 開発をするときは Express を使用するのがデファクトスタンダードとなっている状態である（他にもフレームワークは存在するが，Express を基にしたものが多い）．</p>
-<p>Express は構造が簡易であり，API の実装も非常に簡単である．今回は Express を使っていくつかの API を実装してみる．</p>
+                        <h1 id="read-の処理全件"><a class="header" href="#read-の処理全件">Read の処理（全件）</a></h1>
+<h2 id="データ全件取得の処理"><a class="header" href="#データ全件取得の処理">データ全件取得の処理</a></h2>
+<p>Read の処理では，ルーティングとコントローラとサービスははじめにつくったものを使用する．</p>
+<p>リポジトリに以下の内容を記述する．テーブルを指定してデータをすべて取得する．<code>order()</code> を使用してデータを並び替えることができる．</p>
+<p>参考：<a href="https://supabase.com/docs/reference/javascript/using-modifiers">https://supabase.com/docs/reference/javascript/using-modifiers</a></p>
+<pre><code class="language-js">// repositories/todo.repository.js
+
+import dotenv from &quot;dotenv&quot;;
+import { createClient } from &quot;@supabase/supabase-js&quot;;
+
+dotenv.config();
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_API_KEY
+);
+
+// 🔽 編集
+export const findAll = async () =&gt; {
+  try {
+    const { data, error } = await supabase
+      .from(&quot;todo_table&quot;)
+      .select()
+      .order(&quot;deadline&quot;, { ascending: true })
+      .order(&quot;todo&quot;, { ascending: true });
+    return data;
+  } catch (e) {
+    throw Error(&quot;Error while getting Todo Data&quot;);
+  }
+};
+
+export const store = async ({ params }) =&gt; {
+  // 省略
+};
+</code></pre>
+<h2 id="動作確認全件取得"><a class="header" href="#動作確認全件取得">動作確認（全件取得）</a></h2>
+<p>記述したら動作確認する．下記コマンドを実行して，保存されているデータが全件取得できれば OK（下記はデータ 2 件登録時の例）．</p>
+<pre><code class="language-bash">$ curl localhost:3000/todo
+
+{
+  &quot;status&quot;: 200,
+  &quot;result&quot;: [
+    {
+      &quot;id&quot;: 2,
+      &quot;user_id&quot;: 1,
+      &quot;todo&quot;: &quot;react&quot;,
+      &quot;deadline&quot;: &quot;2021-12-21&quot;,
+      &quot;is_done&quot;: false,
+      &quot;created_at&quot;: &quot;2021-12-16T06:23:58.614838+00:00&quot;,
+      &quot;updated_at&quot;: &quot;2021-12-16T06:23:58.614838+00:00&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;user_id&quot;: 1,
+      &quot;todo&quot;: &quot;node.js&quot;,
+      &quot;deadline&quot;: &quot;2021-12-31&quot;,
+      &quot;is_done&quot;: false,
+      &quot;created_at&quot;: &quot;2021-12-16T06:21:31.592284+00:00&quot;,
+      &quot;updated_at&quot;: &quot;2021-12-16T06:21:31.592284+00:00&quot;
+    }
+  ],
+  &quot;message&quot;: &quot;Successfully get All Todo Data!&quot;
+}
+
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../day02/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../api-02/crud-create.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../day02/prepare-api.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../api-02/crud-read-today.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -200,13 +254,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="../day02/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../api-02/crud-create.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="../day02/prepare-api.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../api-02/crud-read-today.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
