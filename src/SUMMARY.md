@@ -25,7 +25,7 @@
     <!-- - [Slack 連携実装](./api-02/post-to-slack.md) -->
   - [まとめ](./api-02/summary.md)
 
-<!-- - [Day03](./app-01/readme.md)
+- [Day03](./app-01/readme.md)
 
   - [React とは](./app-01/about-react.md)
   - [アプリケーション実装の準備](./app-01/construct-app.md)
@@ -35,7 +35,7 @@
   - [子コンポーネントへの関数入力](./app-01/props-function.md)
   - [http リクエストの実装](./app-01/http-request.md)
   - [表示の調整](./app-01/ui.md)
-  - [課題（任意）](./app-01/work.md) -->
+  - [課題（任意）](./app-01/work.md)
 
 <!-- - [Day04](./day04/readme.md)
 
