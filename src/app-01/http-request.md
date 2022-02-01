@@ -84,18 +84,27 @@ export const Booklist = ({ language, getData }) => {
 ## 【解説】useState
 
 - useState は関数コンポーネントが値（今回は API から取得したデータ）を保持するための機能．
+
 - `const [bookData, setBookData] = useState(null);` の
+
   - `bookData` がデータを保持するための変数名．
+
   - `setBookData` がデータを更新するための関数．
+
   - `useState(null)` の `null` が `bookData` の初期値．
+
 - `setBookData(最新の値)` のように記述することで， `bookData` の値が最新の値に更新される．
+
 - `bookData` に保存した内容を表示したいときなどは通常の変数のように扱えば OK．
 
 ## 【解説】useEffect
 
 - 関数外の副作用（外部からのデータ取得や DOM の更新など）を扱うための機能．
+
 - React では，コンポーネント内でデータの更新があると再レンダリングされるため，API からデータを取得すると毎回レンダリングが発生して無限ループとなってしまう．
+
 - useEffect はレンダリングを制限し，特定の値が更新されたときのみ処理が実行されるようにしてくれる機能．
+
 - 書式は以下のような感じ．
 
 ```jsx
@@ -106,6 +115,6 @@ useEffect(() => {
 
 > **💡 Key Point**
 >
-> `useState`と`useEffect`以外にも hooks には便利な機能が存在する．
+> `useState` と `useEffect` 以外にも hooks には便利な機能が存在する．
 >
 > まずはこの 2 つを使うことで多くの処理を実装可能であるため，まずはこの 2 つを扱えるようになろう．

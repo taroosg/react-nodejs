@@ -38,6 +38,7 @@ export const Booklist = ({ language, getData }) => {
 三項演算子を使用して，`bookData` の有無で表示を切り替えることで回避できる．
 
 - `bookData` が `null` の場合はローディング中のメッセージを表示．
+
 - データが取得できたらリスト表示に切り替え．
 
 ```jsx
