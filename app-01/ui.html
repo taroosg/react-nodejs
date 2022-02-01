@@ -196,8 +196,12 @@ export const Booklist = ({ language, getData }) =&gt; {
 <p>このエラーの原因は，まだ API からデータを取得していない状態でレンダリングしようとして <code>map()</code> 関数が実行されているためである．<code>map()</code> 関数は配列に対して処理を行う関数だが，配列のデータが存在しない状態で実行しようとしているためエラーとなる．</p>
 <p>三項演算子を使用して，<code>bookData</code> の有無で表示を切り替えることで回避できる．</p>
 <ul>
-<li><code>bookData</code> が <code>null</code> の場合はローディング中のメッセージを表示．</li>
-<li>データが取得できたらリスト表示に切り替え．</li>
+<li>
+<p><code>bookData</code> が <code>null</code> の場合はローディング中のメッセージを表示．</p>
+</li>
+<li>
+<p>データが取得できたらリスト表示に切り替え．</p>
+</li>
 </ul>
 <pre><code class="language-jsx">// Booklist.jsx
 

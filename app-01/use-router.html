@@ -175,9 +175,15 @@
 <blockquote>
 <p>【解説】ルーティング</p>
 <ul>
-<li>通常，React で web アプリケーションを実装すると，コンポーネントが切り替わっても URL は変化しない．</li>
-<li>この 2 つを関連づけて，URL からアプリ内の特定のコンポーネントにアクセスできるようにしたり，逆にアプリ内での状態変化を URL に反映させたりすることをルーティングと呼ぶ．</li>
-<li>ルーティングしておくと，ブラウザの戻るボタンで戻ったり，URL を打って特定のページに直接アクセスできたりするのでいい感じになる．</li>
+<li>
+<p>通常，React で web アプリケーションを実装すると，コンポーネントが切り替わっても URL は変化しない．</p>
+</li>
+<li>
+<p>この 2 つを関連づけて，URL からアプリ内の特定のコンポーネントにアクセスできるようにしたり，逆にアプリ内での状態変化を URL に反映させたりすることをルーティングと呼ぶ．</p>
+</li>
+<li>
+<p>ルーティングしておくと，ブラウザの戻るボタンで戻ったり，URL を打って特定のページに直接アクセスできたりするのでいい感じになる．</p>
+</li>
 </ul>
 </blockquote>
 <blockquote>
@@ -210,8 +216,12 @@ const App = () =&gt; {
 export default App;
 </code></pre>
 <ul>
-<li><code>&lt;BrowserRouter&gt;</code> の中に <code>&lt;Routes&gt;</code> と <code>&lt;Route&gt;</code> を置き，<code>path</code> に対応させたい URL を，<code>element</code> に描画したいコンポーネントを渡す．</li>
-<li><code>element</code> 内にコンポーネントを記述した場合でも <code>props</code> の渡し方は同様である．</li>
+<li>
+<p><code>&lt;BrowserRouter&gt;</code> の中に <code>&lt;Routes&gt;</code> と <code>&lt;Route&gt;</code> を置き，<code>path</code> に対応させたい URL を，<code>element</code> に描画したいコンポーネントを渡す．</p>
+</li>
+<li>
+<p><code>element</code> 内にコンポーネントを記述した場合でも <code>props</code> の渡し方は同様である．</p>
+</li>
 </ul>
 <blockquote>
 <p><strong>💡 Key Point</strong></p>
@@ -221,9 +231,15 @@ export default App;
 <p><img src="./img/mainview06.png" alt="メイン画面6" /></p>
 <h2 id="リンクを貼る"><a class="header" href="#リンクを貼る">リンクを貼る</a></h2>
 <ul>
-<li>毎回 URL 入力はダルい．</li>
-<li>せっかくルーティングを実装したので，リンクを張ってブラウザ上で移動できるようにしたい．</li>
-<li><code>react-router</code> の <code>Link</code> 機能を使うと簡単にリンクを作成できる．</li>
+<li>
+<p>毎回 URL 入力はダルい．</p>
+</li>
+<li>
+<p>せっかくルーティングを実装したので，リンクを張ってブラウザ上で移動できるようにしたい．</p>
+</li>
+<li>
+<p><code>react-router</code> の <code>Link</code> 機能を使うと簡単にリンクを作成できる．</p>
+</li>
 </ul>
 <p><code>App.jsx</code>を以下のように編集する．</p>
 <pre><code class="language-jsx">// App.jsx

@@ -169,9 +169,15 @@
 <p>ここから，実際にコンポーネントを実装してみる．</p>
 <p>まずは必要なファイルを準備しよう．</p>
 <ul>
-<li><code>src</code> ディレクトリに <code>components</code> ディレクトリを作成する．</li>
-<li><code>components</code> ディレクトリ内に <code>Booklist.jsx</code> を作成する．</li>
-<li><code>Booklist.jsx</code> に以下の内容を記述する．</li>
+<li>
+<p><code>src</code> ディレクトリに <code>components</code> ディレクトリを作成する．</p>
+</li>
+<li>
+<p><code>components</code> ディレクトリ内に <code>Booklist.jsx</code> を作成する．</p>
+</li>
+<li>
+<p><code>Booklist.jsx</code> に以下の内容を記述する．</p>
+</li>
 </ul>
 <pre><code class="language-jsx">// Booklist.jsx
 
@@ -186,18 +192,34 @@ export const Booklist = (props) =&gt; {
 <blockquote>
 <p>【解説】コンポーネントの作成</p>
 <ul>
-<li>コンポーネントには「class コンポーネント」と「関数コンポーネント」の 2 種類が存在する．</li>
-<li>class コンポーネントは「状態を持つことができる（ステートフル）」という特徴があるが，関数コンポーネントでは「状態を持つことができない（ステートレス）」．</li>
-<li>しかし，関数コンポーネントでも「React hooks」という技術を使うことで同様の振る舞いを実現することができる．</li>
-<li>「state」というのはコンポーネント自体が持つ値であり，他にコンポーネントが外から受け取る「props」が存在する．</li>
-<li>コンポーネント作成の際には，できるだけ state を持たないよう設計すると動作確認が楽になるだけでなく，バグの生まれる可能性も低減できる．</li>
-<li>そのため，本記事ではすべて関数コンポーネントを使用してアプリケーションを構築し，必要に応じて「React hooks」を使用して状態を管理する．</li>
+<li>
+<p>コンポーネントには「class コンポーネント」と「関数コンポーネント」の 2 種類が存在する．</p>
+</li>
+<li>
+<p>class コンポーネントは「状態を持つことができる（ステートフル）」という特徴があるが，関数コンポーネントでは「状態を持つことができない（ステートレス）」．</p>
+</li>
+<li>
+<p>しかし，関数コンポーネントでも「React hooks」という技術を使うことで同様の振る舞いを実現することができる．</p>
+</li>
+<li>
+<p>「state」というのはコンポーネント自体が持つ値であり，他にコンポーネントが外から受け取る「props」が存在する．</p>
+</li>
+<li>
+<p>コンポーネント作成の際には，できるだけ state を持たないよう設計すると動作確認が楽になるだけでなく，バグの生まれる可能性も低減できる．</p>
+</li>
+<li>
+<p>そのため，本記事ではすべて関数コンポーネントを使用してアプリケーションを構築し，必要に応じて「React hooks」を使用して状態を管理する．</p>
+</li>
 </ul>
 </blockquote>
 <h2 id="コンポーネントの構造"><a class="header" href="#コンポーネントの構造">コンポーネントの構造</a></h2>
 <ul>
-<li>関数 <code>Booklist</code> は呼び出し元のコンポーネントから<code>props</code>を受け取り，html 要素を出力する．</li>
-<li><code>export const Booklist = ...</code> とすることで，他のコンポーネントから <code>import { Booklist } ...</code> のように記述して呼び出せるようにしている．</li>
+<li>
+<p>関数 <code>Booklist</code> は呼び出し元のコンポーネントから<code>props</code>を受け取り，html 要素を出力する．</p>
+</li>
+<li>
+<p><code>export const Booklist = ...</code> とすることで，他のコンポーネントから <code>import { Booklist } ...</code> のように記述して呼び出せるようにしている．</p>
+</li>
 </ul>
 <h2 id="コンポーネントの呼び出し1"><a class="header" href="#コンポーネントの呼び出し1">コンポーネントの呼び出し（1）</a></h2>
 <p><code>Booklist</code> コンポーネントを作成したので，<code>App</code> コンポーネントから呼び出してみる．</p>

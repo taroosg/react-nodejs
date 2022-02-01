@@ -179,10 +179,18 @@ $ npm -v
 </code></pre>
 <h2 id="プロジェクトの作成"><a class="header" href="#プロジェクトの作成">プロジェクトの作成</a></h2>
 <ul>
-<li>React はプロジェクト単位でアプリケーションを開発する．</li>
-<li>専用のコマンドが用意されているので，以下のようにプロジェクトを作成する．</li>
-<li><code>npx</code> を使用すると，インストールしていないパッケージを実行できる．グローバルに残らないので，汚染の心配がない．</li>
-<li>最後の <code>react-app</code> はプロジェクト名なので好きな名前で OK．</li>
+<li>
+<p>React はプロジェクト単位でアプリケーションを開発する．</p>
+</li>
+<li>
+<p>専用のコマンドが用意されているので，以下のようにプロジェクトを作成する．</p>
+</li>
+<li>
+<p><code>npx</code> を使用すると，インストールしていないパッケージを実行できる．グローバルに残らないので，汚染の心配がない．</p>
+</li>
+<li>
+<p>最後の <code>react-app</code> はプロジェクト名なので好きな名前で OK．</p>
+</li>
 </ul>
 <pre><code class="language-bash">$ npx create-react-app react-app
 </code></pre>
@@ -198,17 +206,31 @@ $ npm start
 <p><strong>💡 Key Point</strong></p>
 <p>React の開発手順について</p>
 <ul>
-<li><code>npm start</code> を実行した状態でファイルを編集すると自動的にコンパイルが行われ，最新の状態がブラウザ画面に反映される．</li>
-<li><code>npm start</code> 実行 -&gt; vs code でコード編集 -&gt; ブラウザで動作確認 の繰り返し．</li>
-<li>ライブラリ追加時などはサーバを再起動しないと反映されないため．動作しない場合は <code>control + c</code> して再度 <code>npm start</code> でサーバを起動する．</li>
+<li>
+<p><code>npm start</code> を実行した状態でファイルを編集すると自動的にコンパイルが行われ，最新の状態がブラウザ画面に反映される．</p>
+</li>
+<li>
+<p><code>npm start</code> 実行 -&gt; vs code でコード編集 -&gt; ブラウザで動作確認 の繰り返し．</p>
+</li>
+<li>
+<p>ライブラリ追加時などはサーバを再起動しないと反映されないため．動作しない場合は <code>control + c</code> して再度 <code>npm start</code> でサーバを起動する．</p>
+</li>
 </ul>
 </blockquote>
 <h2 id="react-の大まかな仕組み"><a class="header" href="#react-の大まかな仕組み">React の大まかな仕組み</a></h2>
 <ul>
-<li>アプリケーションは全て <code>public/index.html</code> 上で実行される．</li>
-<li>実行時には <code>src/index.js</code> が実行され，<code>App</code> コンポーネントが <code>index.html</code> 上にマウントされる．</li>
-<li>実際に画面に表示されるのは <code>App.js</code> 内に記述された内容となる．</li>
-<li>この <code>App.js</code> から様々なコンポーネントを読み込むことでアプリケーションが動作する．</li>
+<li>
+<p>アプリケーションは全て <code>public/index.html</code> 上で実行される．</p>
+</li>
+<li>
+<p>実行時には <code>src/index.js</code> が実行され，<code>App</code> コンポーネントが <code>index.html</code> 上にマウントされる．</p>
+</li>
+<li>
+<p>実際に画面に表示されるのは <code>App.js</code> 内に記述された内容となる．</p>
+</li>
+<li>
+<p>この <code>App.js</code> から様々なコンポーネントを読み込むことでアプリケーションが動作する．</p>
+</li>
 </ul>
 <h2 id="メイン画面の編集と不要なファイルの削除"><a class="header" href="#メイン画面の編集と不要なファイルの削除">メイン画面の編集と不要なファイルの削除</a></h2>
 <p>メインの画面は <code>App.js</code> であり，このファイルが <code>index.html</code> の <code>id=root</code> に描画される．</p>
@@ -227,9 +249,15 @@ export default App;
 </code></pre>
 <p>以下のファイルを削除する．</p>
 <ul>
-<li><code>src/App.css</code></li>
-<li><code>src/App.test.js</code></li>
-<li><code>src/logo.svg</code></li>
+<li>
+<p><code>src/App.css</code></p>
+</li>
+<li>
+<p><code>src/App.test.js</code></p>
+</li>
+<li>
+<p><code>src/logo.svg</code></p>
+</li>
 </ul>
 <p>また，<code>index.js</code> の内容を以下のように編集する．</p>
 <pre><code class="language-js">// index.js
@@ -256,8 +284,12 @@ reportWebVitals();
 <blockquote>
 <p>【補足】js と jsx</p>
 <ul>
-<li>js：Javascript のファイル．</li>
-<li>jsx：React 要素を生成する Javascript の拡張．React ではこちらを使うとたくさんいいことがある．</li>
+<li>
+<p>js：Javascript のファイル．</p>
+</li>
+<li>
+<p>jsx：React 要素を生成する Javascript の拡張．React ではこちらを使うとたくさんいいことがある．</p>
+</li>
 </ul>
 </blockquote>
 

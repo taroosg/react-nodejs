@@ -232,23 +232,44 @@ export const Booklist = ({ language, getData }) =&gt; {
 <p><img src="./img/mainview09.png" alt="メイン画面9" /></p>
 <h2 id="解説usestate"><a class="header" href="#解説usestate">【解説】useState</a></h2>
 <ul>
-<li>useState は関数コンポーネントが値（今回は API から取得したデータ）を保持するための機能．</li>
-<li><code>const [bookData, setBookData] = useState(null);</code> の
+<li>
+<p>useState は関数コンポーネントが値（今回は API から取得したデータ）を保持するための機能．</p>
+</li>
+<li>
+<p><code>const [bookData, setBookData] = useState(null);</code> の</p>
 <ul>
-<li><code>bookData</code> がデータを保持するための変数名．</li>
-<li><code>setBookData</code> がデータを更新するための関数．</li>
-<li><code>useState(null)</code> の <code>null</code> が <code>bookData</code> の初期値．</li>
+<li>
+<p><code>bookData</code> がデータを保持するための変数名．</p>
+</li>
+<li>
+<p><code>setBookData</code> がデータを更新するための関数．</p>
+</li>
+<li>
+<p><code>useState(null)</code> の <code>null</code> が <code>bookData</code> の初期値．</p>
+</li>
 </ul>
 </li>
-<li><code>setBookData(最新の値)</code> のように記述することで， <code>bookData</code> の値が最新の値に更新される．</li>
-<li><code>bookData</code> に保存した内容を表示したいときなどは通常の変数のように扱えば OK．</li>
+<li>
+<p><code>setBookData(最新の値)</code> のように記述することで， <code>bookData</code> の値が最新の値に更新される．</p>
+</li>
+<li>
+<p><code>bookData</code> に保存した内容を表示したいときなどは通常の変数のように扱えば OK．</p>
+</li>
 </ul>
 <h2 id="解説useeffect"><a class="header" href="#解説useeffect">【解説】useEffect</a></h2>
 <ul>
-<li>関数外の副作用（外部からのデータ取得や DOM の更新など）を扱うための機能．</li>
-<li>React では，コンポーネント内でデータの更新があると再レンダリングされるため，API からデータを取得すると毎回レンダリングが発生して無限ループとなってしまう．</li>
-<li>useEffect はレンダリングを制限し，特定の値が更新されたときのみ処理が実行されるようにしてくれる機能．</li>
-<li>書式は以下のような感じ．</li>
+<li>
+<p>関数外の副作用（外部からのデータ取得や DOM の更新など）を扱うための機能．</p>
+</li>
+<li>
+<p>React では，コンポーネント内でデータの更新があると再レンダリングされるため，API からデータを取得すると毎回レンダリングが発生して無限ループとなってしまう．</p>
+</li>
+<li>
+<p>useEffect はレンダリングを制限し，特定の値が更新されたときのみ処理が実行されるようにしてくれる機能．</p>
+</li>
+<li>
+<p>書式は以下のような感じ．</p>
+</li>
 </ul>
 <pre><code class="language-jsx">useEffect(() =&gt; {
   実行したい処理
@@ -256,7 +277,7 @@ export const Booklist = ({ language, getData }) =&gt; {
 </code></pre>
 <blockquote>
 <p><strong>💡 Key Point</strong></p>
-<p><code>useState</code>と<code>useEffect</code>以外にも hooks には便利な機能が存在する．</p>
+<p><code>useState</code> と <code>useEffect</code> 以外にも hooks には便利な機能が存在する．</p>
 <p>まずはこの 2 つを使うことで多くの処理を実装可能であるため，まずはこの 2 つを扱えるようになろう．</p>
 </blockquote>
 
