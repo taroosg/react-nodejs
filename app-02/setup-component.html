@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>コンポーネントの最適化 - React-Node.js</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../api-01/index.html"><strong aria-hidden="true">1.</strong> サーバ編 ①（Node.js）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../api-01/about-nodejs.html"><strong aria-hidden="true">1.1.</strong> Node.js とは</a></li><li class="chapter-item expanded "><a href="../api-01/prepare-api.html"><strong aria-hidden="true">1.2.</strong> API 実装の準備</a></li><li class="chapter-item expanded "><a href="../api-01/install-express.html"><strong aria-hidden="true">1.3.</strong> Express のインストール</a></li><li class="chapter-item expanded "><a href="../api-01/omikuji-api01.html"><strong aria-hidden="true">1.4.</strong> API 実装 1（おみくじ初級編）</a></li><li class="chapter-item expanded "><a href="../api-01/add-command.html"><strong aria-hidden="true">1.5.</strong> コマンドの追加</a></li><li class="chapter-item expanded "><a href="../api-01/omikuji-api02.html"><strong aria-hidden="true">1.6.</strong> API 実装 2（おみくじ中級編）</a></li><li class="chapter-item expanded "><a href="../api-01/janken-api.html"><strong aria-hidden="true">1.7.</strong> API 実装 3（じゃんけん）</a></li><li class="chapter-item expanded "><a href="../api-01/summary.html"><strong aria-hidden="true">1.8.</strong> まとめ</a></li></ol></li><li class="chapter-item expanded "><a href="../api-02/index.html"><strong aria-hidden="true">2.</strong> サーバ編 ②（Node.js）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../api-02/about-perpetuation.html"><strong aria-hidden="true">2.1.</strong> データの永続化について</a></li><li class="chapter-item expanded "><a href="../api-02/setup-supabase.html"><strong aria-hidden="true">2.2.</strong> Supabase の準備</a></li><li class="chapter-item expanded "><a href="../api-02/setup-files.html"><strong aria-hidden="true">2.3.</strong> ファイル作成と動作確認</a></li><li class="chapter-item expanded "><a href="../api-02/crud-create.html"><strong aria-hidden="true">2.4.</strong> Create の処理</a></li><li class="chapter-item expanded "><a href="../api-02/crud-read-all.html"><strong aria-hidden="true">2.5.</strong> Read の処理（全件）</a></li><li class="chapter-item expanded "><a href="../api-02/crud-read-today.html"><strong aria-hidden="true">2.6.</strong> Read の処理（本日以前）</a></li><li class="chapter-item expanded "><a href="../api-02/crud-update.html"><strong aria-hidden="true">2.7.</strong> Update の処理</a></li><li class="chapter-item expanded "><a href="../api-02/crud-delete.html"><strong aria-hidden="true">2.8.</strong> Delete の処理</a></li><li class="chapter-item expanded "><a href="../api-02/summary.html"><strong aria-hidden="true">2.9.</strong> まとめ</a></li></ol></li><li class="chapter-item expanded "><a href="../app-01/index.html"><strong aria-hidden="true">3.</strong> フロント編 ①（React）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app-01/about-react.html"><strong aria-hidden="true">3.1.</strong> React とは</a></li><li class="chapter-item expanded "><a href="../app-01/construct-app.html"><strong aria-hidden="true">3.2.</strong> アプリケーション実装の準備</a></li><li class="chapter-item expanded "><a href="../app-01/use-component.html"><strong aria-hidden="true">3.3.</strong> コンポーネント</a></li><li class="chapter-item expanded "><a href="../app-01/use-props.html"><strong aria-hidden="true">3.4.</strong> props の活用</a></li><li class="chapter-item expanded "><a href="../app-01/use-router.html"><strong aria-hidden="true">3.5.</strong> router 機能</a></li><li class="chapter-item expanded "><a href="../app-01/props-function.html"><strong aria-hidden="true">3.6.</strong> 子コンポーネントへの関数入力</a></li><li class="chapter-item expanded "><a href="../app-01/http-request.html"><strong aria-hidden="true">3.7.</strong> http リクエストの実装</a></li><li class="chapter-item expanded "><a href="../app-01/ui.html"><strong aria-hidden="true">3.8.</strong> 表示の調整</a></li><li class="chapter-item expanded "><a href="../app-01/work.html"><strong aria-hidden="true">3.9.</strong> 課題（任意）</a></li></ol></li><li class="chapter-item expanded "><a href="../app-02/index.html"><strong aria-hidden="true">4.</strong> フロント編 ②（React）</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../app-02/setup-server.html"><strong aria-hidden="true">4.1.</strong> サーバ側の準備</a></li><li class="chapter-item expanded "><a href="../app-02/create-pages.html"><strong aria-hidden="true">4.2.</strong> 必要な画面の準備</a></li><li class="chapter-item expanded "><a href="../app-02/todo-post.html"><strong aria-hidden="true">4.3.</strong> todo 送信画面の作成</a></li><li class="chapter-item expanded "><a href="../app-02/todo-index.html"><strong aria-hidden="true">4.4.</strong> todo 一覧画面（全件）の作成</a></li><li class="chapter-item expanded "><a href="../app-02/setup-component.html" class="active"><strong aria-hidden="true">4.5.</strong> コンポーネントの最適化</a></li><li class="chapter-item expanded "><a href="../app-02/todo-update.html"><strong aria-hidden="true">4.6.</strong> todo 更新処理の作成</a></li><li class="chapter-item expanded "><a href="../app-02/todo-delete.html"><strong aria-hidden="true">4.7.</strong> todo 削除処理の作成</a></li><li class="chapter-item expanded "><a href="../app-02/todo-today.html"><strong aria-hidden="true">4.8.</strong> todo 一覧画面（本日）の作成</a></li><li class="chapter-item expanded "><a href="../app-02/swr-setup.html"><strong aria-hidden="true">4.9.</strong> データ取得タイミングの最適化</a></li><li class="chapter-item expanded "><a href="../app-02/swr-polling.html"><strong aria-hidden="true">4.10.</strong> データ取得タイミングの調整</a></li><li class="chapter-item expanded "><a href="../app-02/summary.html"><strong aria-hidden="true">4.11.</strong> まとめ</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">React-Node.js</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="コンポーネントの最適化"><a class="header" href="#コンポーネントの最適化">コンポーネントの最適化</a></h1>
+<p>各 todo の内容はシンプルなのでこのままでも問題ないが，より複雑な情報を扱う場合には個別のコンポーネントに分けることが望ましい．</p>
+<p>また，todo リストのアプリケーションなので，完了未完了が区別できるようチェックボックスを追加する．</p>
+<h2 id="必要なファイルの準備"><a class="header" href="#必要なファイルの準備">必要なファイルの準備</a></h2>
+<p><code>src/components</code>フォルダの中に各 todo を表示する<code>Todo.jsx</code>を作成する．</p>
+<p>以下の内容を記載する．</p>
+<pre><code class="language-js">// src/components/Todo.jsx
+
+export const Todo = () =&gt; {
+  return (
+    &lt;li&gt;
+      &lt;p&gt;deadline todo by user_id at created_at and updated_at&lt;/p&gt;
+    &lt;/li&gt;
+  );
+};
+</code></pre>
+<h2 id="一覧画面の編集"><a class="header" href="#一覧画面の編集">一覧画面の編集</a></h2>
+<p><code>TodoIndex.jsx</code>を以下のように編集する．</p>
+<pre><code class="language-js">import { useState, useEffect } from &quot;react&quot;;
+import axios from &quot;axios&quot;;
+// 🔽 追加
+import { Todo } from &quot;../components/Todo&quot;;
+
+export const TodoIndex = () =&gt; {
+  // 省略
+
+  // 🔽 編集
+  return (
+    &lt;ul&gt;
+      {todoList?.map((x) =&gt; (
+        &lt;Todo
+          id={x.id}
+          todo={x.todo}
+          deadline={x.deadline}
+          is_done={x.is_done}
+          user_id={x.user_id}
+          created_at={x.created_at}
+          updated_at={x.updated_at}
+        /&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+};
+</code></pre>
+<h2 id="個別ツイートコンポーネントの実装"><a class="header" href="#個別ツイートコンポーネントの実装">個別ツイートコンポーネントの実装</a></h2>
+<p><code>Todo.jsx</code>コンポーネントを以下のように編集する．</p>
+<p>このコンポーネントは<code>id</code>，<code>todo</code>， <code>deadline</code>, <code>is_done</code>, <code>user_id</code>，<code>created_at</code>，<code>updated_at</code>の 7 つのパラメータを入力することとする．</p>
+<pre><code class="language-js">// src/components/Todo.jsx
+
+export const Todo = ({
+  id,
+  todo,
+  deadline,
+  is_done,
+  user_id,
+  created_at,
+  updated_at,
+}) =&gt; {
+  return (
+    &lt;li key={id} id={id}&gt;
+      &lt;input type=&quot;checkbox&quot; checked={is_done} /&gt;
+      &lt;p&gt;
+        {deadline} {todo} by {user_id} at {created_at} and {updated_at}
+      &lt;/p&gt;
+    &lt;/li&gt;
+  );
+};
+</code></pre>
+<h2 id="動作確認"><a class="header" href="#動作確認">動作確認</a></h2>
+<p>これまでと同様に todo の一覧が表示されれば OK．</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../app-02/todo-index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../app-02/todo-update.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../app-02/todo-index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../app-02/todo-update.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
