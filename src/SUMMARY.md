@@ -25,7 +25,7 @@
     <!-- - [Slack 連携実装](./api-02/post-to-slack.md) -->
   - [まとめ](./api-02/summary.md)
 
-- [Day03](./app-01/readme.md)
+- [フロント編 ①（React）](./app-01/readme.md)
 
   - [React とは](./app-01/about-react.md)
   - [アプリケーション実装の準備](./app-01/construct-app.md)
@@ -37,14 +37,16 @@
   - [表示の調整](./app-01/ui.md)
   - [課題（任意）](./app-01/work.md)
 
-<!-- - [Day04](./day04/readme.md)
+- [フロント編 ②（React）](./app-02/readme.md)
 
-  - [サーバ側の準備](./day04/setup-server.md)
-  - [必要な画面の準備](./day04/create-pages.md)
-  - [tweet 送信画面の作成](./day04/tweet-post.md)
-  - [tweet 一覧画面の作成](./day04/tweet-index.md)
-  - [コンポーネントの最適化](./day04/setup-component.md)
-  - [tweet 個別表示画面の作成](./day04/tweet-find.md)
-  - [データ取得タイミングの最適化](./day04/swr-setup.md)
-  - [データ取得タイミングの調整](./day04/swr-polling.md)
-  - [まとめ](./day04/summary.md) -->
+  - [サーバ側の準備](./app-02/setup-server.md)
+  - [必要な画面の準備](./app-02/create-pages.md)
+  - [todo 送信画面の作成](./app-02/todo-post.md)
+  - [todo 一覧画面（全件）の作成](./app-02/todo-index.md)
+  - [コンポーネントの最適化](./app-02/setup-component.md)
+  - [todo 更新処理の作成](./app-02/todo-update.md)
+  - [todo 削除処理の作成](./app-02/todo-delete.md)
+  - [todo 一覧画面（本日）の作成](./app-02/todo-today.md)
+  - [データ取得タイミングの最適化](./app-02/swr-setup.md)
+  - [データ取得タイミングの調整](./app-02/swr-polling.md)
+  - [まとめ](./app-02/summary.md)
